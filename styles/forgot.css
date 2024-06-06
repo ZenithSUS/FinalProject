@@ -1,0 +1,58 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.forgotForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    border: 0.2rem solid var(--dark-color);
+    border-radius: 1rem;
+    background-color: var(--light-color);
+    width: 100%;
+    max-width: 400px;
+}
+
+.container h1 {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.container .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.forgotForm label {
+    font-weight: bold;
+}
+
+.forgotForm input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    border: 0.2rem solid var(--dark-color);
+}
+
+.forgotForm button {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    border: 0.2rem solid var(--dark-color);
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    cursor: pointer;
+}
+
+.forgotForm button:hover {
+    transition: background-color 0.3s ease-in-out;
+    background-color: var(--light-color);
+    color: var(--dark-color);
+}
+
