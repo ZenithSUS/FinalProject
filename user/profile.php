@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="global.css">
-    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="../global.css">
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="../profile.css">
     <title>Greek Myth</title>
 </head>
 <body>
@@ -22,7 +23,7 @@
             <input type="text" placeholder="Search" id="search" class="search">
         </div>
         <div class="profile-link">
-            <img src="img/default.jpg" alt="user" class="user">
+            <img src="../img/default.jpg" alt="user" class="user">
             <?php echo "<strong style='font-size: 20px;'>".$_SESSION['username']."</strong>"; ?>
         </div>
     </nav>
@@ -30,32 +31,40 @@
     <main>
         <div class="main-content">
             <div class="nav-links"> 
-                <a href="index.php">Home</a>
-                <a href="friends.php">Friends</a>
-                <a href="auth/actions/logout.php">Logout</a>
+                <a href="../index.php">Home</a>
+                <a href="../friends.php">Friends</a>
+                <a href="../auth/actions/logout.php">Logout</a>
             </div>
             <div class="posts">
-                <div class="createPost-box">
-                    <?php $userId = $_SESSION['user_id']; ?>
-                    <a href="user/profile.php?user_id=<?php echo $userId ?>"><img src="img/default.jpg" alt="user"></a>
-                    <a class="createPost" href="user/createPost.php">Create Post<a>
+                <div class="profile-box">
+                <?php
+                    include "../db.php";
+
+                    $userId = $_GET['user_id'];
+                    $result = $conn->query("SELECT * FROM users WHERE user_id = '$userId'");
+
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<img src='img/user.png' alt='user'>";
+                        echo "<h3>" . $row['username'] . "</h3>";
+                        echo "<p>" . $row['bio'] . "</p>";
+                    }
+                ?>
                 </div>
-                <?php include "components/posts.php"; ?>
             </div>
             <div class="discussion">
                 <h2>Greek Heroes Page</h2>
                 <div class="heroes">
                     <div class="hero-box">
-                        <img src="img/hero.png" alt="hero"> <p> Zeus</p>
+                        <img src="../img/hero.png" alt="hero"> <p> Zeus</p>
                     </div>
                     <div class="hero-box">
-                        <img src="img/hero.png" alt="hero"> <p> Poseidon</p>
+                        <img src="../img/hero.png" alt="hero"> <p> Poseidon</p>
                     </div>
                     <div class="hero-box">
-                        <img src="img/hero.png" alt="hero"> <p> Heracles</p>
+                        <img src="../img/hero.png" alt="hero"> <p> Heracles</p>
                     </div>
                     <div class="hero-box">
-                        <img src="img/hero.png" alt="hero"> <p> Perseus</p>
+                        <img src="../img/hero.png" alt="hero"> <p> Perseus</p>
                     </div>
                 </div>
             </div>

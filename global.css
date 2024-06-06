@@ -49,4 +49,8 @@ main {
     nav {
         flex-direction: column;
     }
+
+    nav .profile-link {
+        display: none;
+    }
 }

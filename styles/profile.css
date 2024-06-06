@@ -1,0 +1,12 @@
+.posts .profile-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 0.2rem solid var(--dark-color);
+    border-radius: 1rem;
+    background-color: var(--light-color);
+    width: 100%;
+    max-width: 400px;
+}
