@@ -9,27 +9,27 @@
 
     if(isset($_POST['submit'])) {
         if(empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
-            header("Location: ../register.php?error=Fill all the fields&username=".$username."&email=".$email);
+            header("Location: ../auth/register.php?error=Fill all the fields&username=".$username."&email=".$email);
             exit();
         }
         else if(!filter_var($email, FILTER_VALIDATE_EMAIL) && !preg_match("/^[a-zA-Z0-9]*$/", $username)) {
-            header("Location: ../register.php?emailError=invalidmail&username=".$username);
+            header("Location: ../auth/register.php?emailError=invalidmail&username=".$username);
             exit();
         }
         else if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            header("Location: ../register.php?emailError=invalidmail&username=".$username);
+            header("Location: ../auth/register.php?emailError=invalidmail&username=".$username);
             exit();
         }
         else if(!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
-            header("Location: ../register.php?userError=invalidusername&email=".$email);
+            header("Location: ../auth/register.php?userError=invalidusername&email=".$email);
             exit();
         }
         else if(strlen($password) < 8) {
-            header("Location: ../register.php?passError=Password must be at least 8 characters&username=".$username."&email=".$email);
+            header("Location: ../auth/register.php?passError=Password must be at least 8 characters&username=".$username."&email=".$email);
             exit();
         }
         else if($password !== $confirm_password) {
-            header("Location: ../register.php?passError=Password did not match&username=".$username."&email=".$email);
+            header("Location: ../auth/register.php?passError=Password did not match&username=".$username."&email=".$email);
             exit();
         }
         else {
@@ -56,13 +56,13 @@
                     if($result->num_rows > 0) {
                         $row = $result->fetch_assoc();
                         if($row['username'] === $username) {
-                            header("Location: ../register.php?userError=User aleady exists&username=".$username."&email=".$email);
+                            header("Location: ../auth/register.php?userError=User aleady exists&username=".$username."&email=".$email);
                         }
                     } 
                     if($result2->num_rows > 0) {
                         $row = $result2->fetch_assoc();
                         if($row['email'] === $email) {
-                            header("Location: ../register.php?emailError=Email aleady exists&username=".$username."&email=".$email);
+                            header("Location: ../auth/register.php?emailError=Email aleady exists&username=".$username."&email=".$email);
                         }
                     }
                     exit();

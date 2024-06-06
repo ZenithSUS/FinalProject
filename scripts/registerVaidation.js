@@ -5,7 +5,7 @@ function emailAvailable() {
     let email = emailInput.value;
     if (email) {
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", "../auth/actions/checkEmail.php?email=" + email, true);
+        xhr.open("GET", "../actions/checkEmail.php?email=" + email, true);
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 let response = this.responseText;
@@ -25,7 +25,7 @@ function userAvailable() {
     let user = userInput.value;
     if (user) {
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", "../auth/actions/checkUser.php?user=" + user, true);
+        xhr.open("GET", "../actions/checkUser.php?user=" + user, true);
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 let response = this.responseText;

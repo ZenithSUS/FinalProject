@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <form action="actions/forgot_act.php" method="post" class="forgotForm">
+        <form action="../actions/forgot_act.php" method="post" class="forgotForm">
             <h1>Account Recovery</h1>
             <div class="form-group">
                 <label for="email">Email</label>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../global.css">
     <link rel="stylesheet" href="../styles/index.css">
-    <link rel="stylesheet" href="../profile.css">
+    <link rel="stylesheet" href="../styles/profile.css">
     <title>Greek Myth</title>
 </head>
 <body>
@@ -33,22 +33,39 @@
             <div class="nav-links"> 
                 <a href="../index.php">Home</a>
                 <a href="../friends.php">Friends</a>
-                <a href="../auth/actions/logout.php">Logout</a>
+                <a href="../actions/logout.php">Logout</a>
             </div>
             <div class="posts">
-                <div class="profile-box">
-                <?php
-                    include "../db.php";
+                <div class="profile-container">
+                    <div class="profile-box">
+                        <?php
+                            include "../db.php";
 
-                    $userId = $_GET['user_id'];
-                    $result = $conn->query("SELECT * FROM users WHERE user_id = '$userId'");
+                            $userId = $_GET['user_id'];
+                            $result = $conn->query("SELECT * FROM users WHERE user_id = '$userId'");
 
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<img src='img/user.png' alt='user'>";
-                        echo "<h3>" . $row['username'] . "</h3>";
-                        echo "<p>" . $row['bio'] . "</p>";
-                    }
+                            $user = $result->fetch_assoc();
+                            $date = strtotime($user['created_at']);
+                            $date = date('F d, Y', $date);
+                            $formattedDate = date('F d, Y', strtotime($date));
+
+                            echo "<div>
+                                    <img src='../img/default.jpg' alt='user'>
+                                </div>";
+                            echo "<div class='profile-info'>
+                                    <h3>" . $user['username'] . "</h3>
+                                    <h4>" ."Email: ". $user['email'] . "</h4>
+                                    <h4>" . "Joined " . $formattedDate . "</h4>
+                                    <p>" . $user['bio'] . "</p>
+                                    <div class='profile-settings'>
+                                        <a href='user/editProfile.php?user_id=" . $user['user_id'] . "'>Edit Profile</a>
+                                        <a href='user/changePassword.php?user_id=" . $user['user_id'] . "'>Change Password</a>
+                                    </div>
+                                </div>";
+                            echo "<hr>";
+                        
                 ?>
+                    </div>
                 </div>
             </div>
             <div class="discussion">

@@ -1,5 +1,5 @@
 <?php
-    include "../../db.php";
+    include "../db.php";
     session_start();
 
     $username = $_POST['useracc'];
@@ -7,7 +7,7 @@
 
     if(isset($_POST['submit'])) {
         if(empty($username) || empty($password)) {
-            header("Location: ../login.php?error=Fill all the fields");
+            header("Location: auth/login.php?error=Fill all the fields");
             exit();
         }
         else {
@@ -15,7 +15,7 @@
            login($username, $password);
         }
     } else {
-        header("Location: ../login.php");
+        header("Location: auth/login.php");
         exit();
     }
 ?>

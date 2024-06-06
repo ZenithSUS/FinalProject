@@ -1,12 +1,56 @@
+.posts .profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .posts .profile-box {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: start;
     gap: 1rem;
     padding: 1rem;
-    border: 0.2rem solid var(--dark-color);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, .5);
     border-radius: 1rem;
     background-color: var(--light-color);
     width: 100%;
-    max-width: 400px;
+    max-width: 600px;
+}
+
+.posts .profile-box img {
+    border-radius: 100%;
+    border: 0.2rem solid var(--dark-color);
+    width: 10rem;
+    height: 10rem;
+}
+
+.posts .profile-box .profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.posts .profile-box .profile-settings {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.posts .profile-box .profile-settings a {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: fit-content;
+    border-radius: 0.5rem;
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    cursor: pointer;
+    border: 0.2rem solid var(--dark-color);
+}
+
+.posts .profile-box .profile-settings a:hover {
+    background-color: var(--light-color);
+    color: var(--dark-color);
+    transition: background-color 0.3s ease-in-out;
 }

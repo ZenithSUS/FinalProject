@@ -155,7 +155,7 @@ nav .user {
 }
 
 .discussion {
-    width: 35%;
+    width: fit-content;
     display: flex;
     flex-direction: column;
     gap: 1rem;

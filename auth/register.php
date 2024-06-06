@@ -13,7 +13,7 @@
     ?>
     <?php endif; ?>
     <div class="container">
-        <form action="actions/register_act.php" method="post" class="regForm">
+        <form action="../actions/register_act.php" method="post" class="regForm">
             <h1>Register</h1>
             <div class="form-group">
                 <label for="username">Username</label>

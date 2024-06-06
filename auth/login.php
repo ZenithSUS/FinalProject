@@ -15,7 +15,7 @@
     <?php endif; ?>
     <!-- Login Container -->
     <div class="container">
-        <form action="actions/login_act.php" method="post" class="loginForm">
+        <form action="../actions/login_act.php" method="post" class="loginForm">
         <h1>Login</h1>
             <div class="form-group">
                 <label for="useracc">Username or Email</label>

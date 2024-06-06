@@ -32,7 +32,7 @@
             <div class="nav-links"> 
                 <a href="index.php">Home</a>
                 <a href="friends.php">Friends</a>
-                <a href="auth/actions/logout.php">Logout</a>
+                <a href="actions/logout.php">Logout</a>
             </div>
             <div class="posts">
                 <div class="createPost-box">
@@ -40,7 +40,10 @@
                     <a href="user/profile.php?user_id=<?php echo $userId ?>"><img src="img/default.jpg" alt="user"></a>
                     <a class="createPost" href="user/createPost.php">Create Post<a>
                 </div>
-                <?php include "components/posts.php"; ?>
+                <?php 
+                    include "actions/queries.php"; 
+                    posts();
+                ?>
             </div>
             <div class="discussion">
                 <h2>Greek Heroes Page</h2>
