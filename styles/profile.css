@@ -1,6 +1,8 @@
 .posts .profile-container {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    gap: 2rem;
     align-items: center;
 }
 
@@ -53,4 +55,17 @@
     background-color: var(--light-color);
     color: var(--dark-color);
     transition: background-color 0.3s ease-in-out;
+}
+
+.posts .profile-box .profile-activity {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+
+@media (min-width: 200px) and (max-width: 600px) {
+    .posts .profile-box .profile-info {
+       
+    }
 }

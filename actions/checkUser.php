@@ -1,5 +1,5 @@
 <?php
-    include "../../db.php";
+    include "../db.php";
     $username = $_GET['user'];
     $sql = "SELECT * FROM users WHERE username = '$username'";
 

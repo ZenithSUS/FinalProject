@@ -1,5 +1,5 @@
 <?php
-    include "../../db.php";
+    include "../db.php";
     $email = $_GET['email'];
     $sql = "SELECT * FROM users WHERE email = '$email'";
 

@@ -1,5 +1,5 @@
 <?php
-    include "../../db.php";
+    include "../db.php";
     session_start();
 
     $username = $_POST['username'];
@@ -8,10 +8,13 @@
     $confirm_password = $_POST['confirm_password'];
 
     if(isset($_POST['submit'])) {
+        //Check if fields are empty
         if(empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
             header("Location: ../auth/register.php?error=Fill all the fields&username=".$username."&email=".$email);
             exit();
         }
+
+        //Check if email and username are valid
         else if(!filter_var($email, FILTER_VALIDATE_EMAIL) && !preg_match("/^[a-zA-Z0-9]*$/", $username)) {
             header("Location: ../auth/register.php?emailError=invalidmail&username=".$username);
             exit();
@@ -24,10 +27,12 @@
             header("Location: ../auth/register.php?userError=invalidusername&email=".$email);
             exit();
         }
+        //Check if password less than 8
         else if(strlen($password) < 8) {
             header("Location: ../auth/register.php?passError=Password must be at least 8 characters&username=".$username."&email=".$email);
             exit();
         }
+        //Check if passwords are equal
         else if($password !== $confirm_password) {
             header("Location: ../auth/register.php?passError=Password did not match&username=".$username."&email=".$email);
             exit();

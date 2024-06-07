@@ -16,15 +16,12 @@
     if(isset($_SESSION['user_id'])): 
     ?>
     <nav>
-        <div>
-            <h2> Greek Myth </h2>
-        </div>
-        <div> 
+        <h2> Greek Myth </h2>
             <input type="text" placeholder="Search" id="search" class="search">
-        </div>
         <div class="profile-link">
-            <img src="../img/default.jpg" alt="user" class="user">
-            <?php echo "<strong style='font-size: 20px;'>".$_SESSION['username']."</strong>"; ?>
+            <?php $userId = $_SESSION['user_id']; ?>
+            <a href="profile.php?user_id=<?php echo $userId ?>"><img src="../img/default.jpg" alt="user" class="user"></a>
+        <?php echo "<strong style='font-size: 20px;'>".$_SESSION['username']."</strong>"; ?>
         </div>
     </nav>
 
@@ -33,42 +30,23 @@
             <div class="nav-links"> 
                 <a href="../index.php">Home</a>
                 <a href="../friends.php">Friends</a>
-                <a href="../actions/logout.php">Logout</a>
+                <a href="../actions/logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
             </div>
             <div class="posts">
                 <div class="profile-container">
                     <div class="profile-box">
                         <?php
-                            include "../db.php";
-
+                            include "../actions/queries.php";
                             $userId = $_GET['user_id'];
-                            $result = $conn->query("SELECT * FROM users WHERE user_id = '$userId'");
-
-                            $user = $result->fetch_assoc();
-                            $date = strtotime($user['created_at']);
-                            $date = date('F d, Y', $date);
-                            $formattedDate = date('F d, Y', strtotime($date));
-
-                            echo "<div>
-                                    <img src='../img/default.jpg' alt='user'>
-                                </div>";
-                            echo "<div class='profile-info'>
-                                    <h3>" . $user['username'] . "</h3>
-                                    <h4>" ."Email: ". $user['email'] . "</h4>
-                                    <h4>" . "Joined " . $formattedDate . "</h4>
-                                    <p>" . $user['bio'] . "</p>
-                                    <div class='profile-settings'>
-                                        <a href='user/editProfile.php?user_id=" . $user['user_id'] . "'>Edit Profile</a>
-                                        <a href='user/changePassword.php?user_id=" . $user['user_id'] . "'>Change Password</a>
-                                    </div>
-                                </div>";
-                            echo "<hr>";
-                        
-                ?>
+                            profile($userId);
+                        ?>
+                    </div>
+                    <div class="profile-box">
+                        <?php activities($userId); ?>
                     </div>
                 </div>
             </div>
-            <div class="discussion">
+            <div class="others">
                 <h2>Greek Heroes Page</h2>
                 <div class="heroes">
                     <div class="hero-box">
@@ -89,7 +67,7 @@
     </main>
 
     
-    <?php else: header("Location: auth/login.php") ?>
+    <?php else: header("Location: ../auth/login.php") ?>
     <?php endif; ?>
 </body>
 </html>

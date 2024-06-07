@@ -15,15 +15,12 @@
     if(isset($_SESSION['user_id'])): 
     ?>
     <nav>
-        <div>
-            <h2> Greek Myth </h2>
-        </div>
-        <div> 
+        <h2> Greek Myth </h2>
             <input type="text" placeholder="Search" id="search" class="search">
-        </div>
         <div class="profile-link">
-            <img src="img/default.jpg" alt="user" class="user">
-            <?php echo "<strong style='font-size: 20px;'>".$_SESSION['username']."</strong>"; ?>
+            <?php $userId = $_SESSION['user_id']; ?>
+            <a href="user/profile.php?user_id=<?php echo $userId ?>"><img src="img/default.jpg" alt="user" class="user"></a>
+        <?php echo "<strong style='font-size: 20px;'>".$_SESSION['username']."</strong>"; ?>
         </div>
     </nav>
 
@@ -32,33 +29,60 @@
             <div class="nav-links"> 
                 <a href="index.php">Home</a>
                 <a href="friends.php">Friends</a>
-                <a href="actions/logout.php">Logout</a>
+                <a href="actions/logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
             </div>
             <div class="posts">
                 <div class="createPost-box">
-                    <?php $userId = $_SESSION['user_id']; ?>
                     <a href="user/profile.php?user_id=<?php echo $userId ?>"><img src="img/default.jpg" alt="user"></a>
-                    <a class="createPost" href="user/createPost.php">Create Post<a>
+                    <a class="createPost" href="user/createPost.php?user_id=<?php echo $userId ?>">Create Post</a>
                 </div>
                 <?php 
-                    include "actions/queries.php"; 
-                    posts();
+                    include "actions/queries.php";
+                    if(isset($_GET['sort'])){
+                        $sort = $_GET['sort'];
+                        if($sort == 'date') {
+                            postsByDate();
+                        } 
+                        else if($sort == 'likes') {
+                            postsByLikes();
+                        }
+                        else if($sort == 'random') {
+                            posts();
+                        }
+                        else if($sort == 'comments') {
+                            postsByComments();
+                        }
+                    } else { 
+                        posts(); 
+                    }
                 ?>
             </div>
-            <div class="discussion">
-                <h2>Greek Heroes Page</h2>
-                <div class="heroes">
-                    <div class="hero-box">
-                        <img src="img/hero.png" alt="hero"> <p> Zeus</p>
+            <div class="other-content">
+                <div class="sortPosts">
+                    <h2>Sort Posts by</h2>
+                    <div class="sort-btn">
+                        <a href="index.php?sort=date">Date</a>
+                        <a href="index.php?sort=likes">Likes</a>
+                        <a href="index.php?sort=random">Random</a>
+                        <a href="index.php?sort=comments">Comments</a>
                     </div>
-                    <div class="hero-box">
-                        <img src="img/hero.png" alt="hero"> <p> Poseidon</p>
-                    </div>
-                    <div class="hero-box">
-                        <img src="img/hero.png" alt="hero"> <p> Heracles</p>
-                    </div>
-                    <div class="hero-box">
-                        <img src="img/hero.png" alt="hero"> <p> Perseus</p>
+                </div>
+                <div class="others">
+                    <h2>Greek Heroes Page</h2>
+                        <div class="heroes">
+                            <div class="hero-box">
+                                <img src="img/hero.png" alt="hero"> <p> Zeus</p>
+                            </div>
+                            <div class="hero-box">
+                                <img src="img/hero.png" alt="hero"> <p> Poseidon</p>
+                            </div>
+                            <div class="hero-box">
+                                <img src="img/hero.png" alt="hero"> <p> Heracles</p>
+                            </div>
+                            <div class="hero-box">
+                                <img src="img/hero.png" alt="hero"> <p> Perseus</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

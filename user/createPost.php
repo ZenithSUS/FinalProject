@@ -1,3 +1,11 @@
+<?php
+    if($_SERVER['REQUEST_METHOD'] == 'POST' ) {
+        include "../actions/queries.php";
+        createPost();
+    }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../global.css">
     <link rel="stylesheet" href="../styles/index.css">
-    <link rel="stylesheet" href="../styles/comment.css">
+    <link rel="stylesheet" href="../styles/createPost.css">
     <title>Greek Myth</title>
 </head>
 <body>
@@ -15,7 +23,7 @@
     // Check if the session is set
     if(isset($_SESSION['user_id'])): 
     ?>
-    <nav>
+    <nav> 
         <h2> Greek Myth </h2>
             <input type="text" placeholder="Search" id="search" class="search">
         <div class="profile-link">
@@ -29,26 +37,22 @@
         <div class="main-content">
             <div class="nav-links"> 
                 <a href="../index.php">Home</a>
-                <a href="friends.php">Friends</a>
+                <a href="../friends.php">Friends</a>
                 <a href="../actions/logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
             </div>
-            <div class="posts">
-            <?php include "../actions/queries.php";
-                $postId = $_GET['post_id'];
-                $userId = $_SESSION['user_id'];
-                currentPost($postId, $userId);  
-                comments();?>
-                
-       
-            <div class='comment-form'>
-                <h2>What are your thoughts</h2>
-                <form action='actions/comment_act.php' method='post'>
-                <input type='hidden' name='post_id' value='" . $postId . "'>
-                <textarea name='comment' id='comment' cols='30' rows='10'></textarea>
-                <button type='submit' name='submit'>Post</button>
-                </form>
-            </div>
-
+            <div class="createPost">
+                <div class="createForm-container">
+                    <h2>Create Post</h2>
+                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+                        <input type="text" name="title" placeholder="Title">
+                        <?php if(isset($_GET['error'])) { echo "<p class='error'>" . $_GET['error'] . "</p>"; } ?>
+                        <textarea name="content" id="" cols="30" rows="10" placeholder="Write something..."></textarea>
+                        <div class="createPost-btn">
+                            <button type="submit" name="createPost">Post</button>
+                            <a href="../index.php">Go back</a>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="other-content">
                 <div class="others">
