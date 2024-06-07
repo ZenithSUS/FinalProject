@@ -1,25 +1,4 @@
 <?php
-    //Function to register
-    function register($username, $email, $password) {
-        include "../db.php";
-        $sql = "INSERT INTO users (user_id, username, email, password) VALUES (?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        if(!$stmt->prepare($sql)) {
-           die("SQL error: " . $conn->error);
-            exit();
-        } else {
-            $user_id = mysqli_real_escape_string($conn, uniqid());
-            $joined_at = date("Y-m-d H:i:s");
-            $stmt->bind_param("ssss", $user_id, $username, $email, $hashed_password);
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $stmt->execute();
-            $_SESSION['user_id'] = $user_id;
-            $_SESSION['username'] = $username;
-            echo "<script>alert('Registered successfully!')</script>";
-            echo "<script>window.location.href = '../index.php';</script>";
-        }
-    }
-
     //Function to login
     function login($username, $password) {
         include "../db.php";
@@ -50,6 +29,28 @@
         }
     }
 
+    //Function to register
+    function register($username, $email, $password) {
+        include "../db.php";
+        $sql = "INSERT INTO users (user_id, username, email, password) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        if(!$stmt->prepare($sql)) {
+           die("SQL error: " . $conn->error);
+            exit();
+        } else {
+            $user_id = mysqli_real_escape_string($conn, uniqid());
+            $stmt->bind_param("ssss", $user_id, $username, $email, $hashed_password);
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $stmt->execute();
+            $stmt->close();
+            $conn->close();
+            $_SESSION['user_id'] = $user_id;
+            $_SESSION['username'] = $username;
+            echo "<script>alert('Registered successfully!')</script>";
+            echo "<script>window.location.href = '../auth/uploadProfile.php';</script>";
+        }
+    }
+
     //Function to display posts in random order
     function posts() {    
         include "db.php";
@@ -60,9 +61,16 @@
             while ($row = $result->fetch_assoc()) {
                 $created_date = $row['created_at'];
                 echo "<div class='post'>";
-                echo "<p> <a href='user/profile.php?user_id=" . $row['author'] . "'><img src='img/user.png' alt='user'></a> " . $row['username'] . " " .date('F j, Y, g:i a', strtotime($created_date)) . "</p>";
-                echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "'><h3>" . $row['title'] . "</h3></a>";
-                echo "<p>" . $row['content'] . "</p>";
+                echo "<p class='author'><a href='user/profile.php?user_id=" . $row['author'] . "'>";
+                if ($row['profile_pic'] != NULL) {
+                    echo "<img src='img/u/" . $row['profile_pic'] . "' alt='user' class='profilePic'>";
+                } else {
+                    echo "<img src='img/default.jpg' alt='user' class='profilePic'>"; // Provide a default text if no profile picture exists
+                }
+                echo "</a>";
+                echo $row['username'] . " " . date('F j, Y, g:i a', strtotime($created_date)) . "</p>";
+                echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "&title=" . $row['title'] . "'><h3>" . $row['title'] . "</h3>";
+                echo "<p>" . $row['content'] . "</p></a>";
                 echo "<div class='vote'>
                         <p><img src='img/like.png' alt='like'> " . $row['likes'] . "</p>
                         <p><img src='img/dislike.png' alt='dislike'> " . $row['dislikes'] . "</p>
@@ -88,8 +96,8 @@
             $created_date = $row['created_at'];
             echo "<div class='post'>";
             echo "<p> <a href='user/profile.php?user_id=" . $row['user_id'] . "'><img src='img/user.png' alt='user'></a> " . $row['username'] . " " .date('F j, Y, g:i a', strtotime($created_date)) . "</p>";
-            echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "'><h3>" . $row['title'] . "</h3></a>";
-            echo "<p>" . $row['content'] . "</p>";
+            echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "&title=" . $row['title'] . "'><h3>" . $row['title'] . "</h3>";
+            echo "<p>" . $row['content'] . "</p></a>";
             echo "<div class='vote'>
                 <p><img src='img/like.png' alt='like'> " . $row['likes'] . "</p>
                 <p><img src='img/dislike.png' alt='dislike'> " . $row['dislikes'] . "</p>
@@ -110,8 +118,8 @@
             $created_date = $row['created_at'];
             echo "<div class='post'>";
             echo "<p> <a href='user/profile.php?user_id=" . $row['author'] . "'><img src='img/user.png' alt='user'></a> " . $row['username'] . " " .date('F j, Y, g:i a', strtotime($created_date)) . "</p>";
-            echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "'><h3>" . $row['title'] . "</h3></a>";
-            echo "<p>" . $row['content'] . "</p>";
+            echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "&title=" . $row['title'] . "'><h3>" . $row['title'] . "</h3>";
+            echo "<p>" . $row['content'] . "</p></a>";
             echo "<div class='vote'>
                 <p><img src='img/like.png' alt='like'> " . $row['likes'] . "</p>
                 <p><img src='img/dislike.png' alt='dislike'> " . $row['dislikes'] . "</p>
@@ -134,8 +142,8 @@
             $created_at = $row['created_at'];
             echo "<div class='post'>";
             echo "<p> <a href='user/profile.php?user_id=" . $row['author'] . "'><img src='img/user.png' alt='user'></a> " . $row['username'] . " " .date('F j, Y, g:i a', strtotime($created_at)). "</p>";
-            echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "'><h3>" . $row['title'] . "</h3></a>";
-            echo "<p>" . $row['content'] . "</p>";
+            echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "&title=" . $row['title'] . "''><h3>" . $row['title'] . "</h3>";
+            echo "<p>" . $row['content'] . "</p></a>";
             echo "<div class='vote'>
                 <img src='img/like.png' alt='like'><p> " . $row['likes'] . "</p>
                 <img src='img/dislike.png' alt='dislike'><p> " . $row['dislikes'] . "</p>
@@ -191,6 +199,7 @@
                 exit();
             }
             $stmt->execute();
+            $stmt->close();
 
             //Get post id related to the user
             $sql = "SELECT post_id FROM posts WHERE author = '$author' AND title = '$title'";
@@ -201,6 +210,45 @@
             
 
             header("Location: ../index.php");
+        }
+    }
+
+    //Function to edit post
+    function editPost($postId) {
+        include "../db.php";
+        session_start();
+        //Get post id
+        if(isset($_POST['editPost'])) {
+            $sql = "UPDATE posts SET title = ?, content = ? WHERE post_id = ?";
+            //Prepare statement
+            $stmt = $conn->prepare($sql);
+            
+            // Get data from form
+            $title = $_POST['title'];
+            $content = $_POST['content'];
+            $author = $_SESSION['user_id'];
+            $output = nl2br($content);
+
+            //Bind parameters
+            $stmt->bind_param("sss", $title, $output, $postId);
+
+            //Check if title is empty
+            if($title == "" || empty($title)) {
+                header("Location: ../user/editPost.php?post_id=" . $postId . "&error=The title cannot be empty");
+                exit();
+            } 
+            //Execute statement
+            $stmt->execute();
+
+            //Get post id related to the user
+            $sql = "SELECT post_id FROM posts WHERE author = '$author' AND title = '$title'";
+            $result = $conn->query($sql);
+            $row = $result->fetch_assoc();
+            $postId = $row['post_id'];
+
+            
+            addActivity($author, "edited a post with title " . $title, $postId, null);
+            header("Location: ../index.php?post_id=" . $postId);
         }
     }
 
@@ -250,9 +298,13 @@
             $date = date('F d, Y', $date);
             $formattedDate = date('F d, Y', strtotime($date));
             // Display profile
-            echo "<div>
-                    <img src='../img/default.jpg' alt='user'>
-                </div>";
+            echo "<div>";
+            if($user['profile_pic'] == null) {
+                echo "<img src='../img/default.jpg' alt='profile'>";
+            } else {
+                echo "<img src='../img/u/" . $user['profile_pic'] . "' alt='profile'>";
+            }
+            echo "</div>";
             echo "<div class='profile-info'>
                     <h3>" . $user['username'] . "</h3>
                     <h4>" ."Email: ". $user['email'] . "</h4>

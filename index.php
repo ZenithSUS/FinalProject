@@ -18,9 +18,17 @@
         <h2> Greek Myth </h2>
             <input type="text" placeholder="Search" id="search" class="search">
         <div class="profile-link">
-            <?php $userId = $_SESSION['user_id']; ?>
-            <a href="user/profile.php?user_id=<?php echo $userId ?>"><img src="img/default.jpg" alt="user" class="user"></a>
-        <?php echo "<strong style='font-size: 20px;'>".$_SESSION['username']."</strong>"; ?>
+            <?php 
+            $userId = $_SESSION['user_id'];
+            include "db.php";
+            $result = $conn->query("SELECT * FROM users WHERE user_id = '$userId'");
+            $row = $result->fetch_assoc(); 
+            ?>
+                <a href="user/profile.php?user_id=<?php echo $userId ?>">
+                   <?php if(isset($row['profile_pic'])) {
+                       echo "<img src='img/u/" . $row['profile_pic'] . "' alt='user' class='user'>";
+                   } else { echo "<img src='img/default.jpg' alt='user' class='user'>";}?>
+            <?php echo $_SESSION['username']; ?></a>
         </div>
     </nav>
 
@@ -33,7 +41,14 @@
             </div>
             <div class="posts">
                 <div class="createPost-box">
-                    <a href="user/profile.php?user_id=<?php echo $userId ?>"><img src="img/default.jpg" alt="user"></a>
+                    <a href="user/profile.php?user_id=<?php echo $userId ?>">
+                        <?php 
+                        //Check if profile pic exists
+                        if(isset($row['profile_pic'])) {
+                            echo "<img src='img/u/" . $row['profile_pic'] . "' alt='user'>";
+                        } else { 
+                            echo "<img src='img/default.jpg' alt='user'>";
+                        }?>
                     <a class="createPost" href="user/createPost.php?user_id=<?php echo $userId ?>">Create Post</a>
                 </div>
                 <?php 

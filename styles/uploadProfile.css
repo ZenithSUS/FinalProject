@@ -1,0 +1,69 @@
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+    height: 100vh;
+}
+
+.profile-container h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--dark-color);
+    text-align: center;
+}
+
+.profile-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+    border-radius: 1rem;
+    background-color: var(--light-color);
+    width: 100%;
+    max-width: 500px;
+}
+
+.profile-container form img {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 100%;
+    border: 0.2rem solid var(--dark-color);
+}
+
+.profile-container form .form-group {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+}
+
+.profile-container form label {
+    font-weight: bold;
+}
+
+.profile-container form input {
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.profile-container form button {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    border: 0.2rem solid var(--dark-color);
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    cursor: pointer;
+}
+
+.profile-container form button:hover {
+    background-color: var(--light-color);
+    color: var(--dark-color);
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+

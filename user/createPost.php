@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../global.css">
     <link rel="stylesheet" href="../styles/index.css">
     <link rel="stylesheet" href="../styles/createPost.css">
-    <title>Greek Myth</title>
+    <title>Create Post</title>
 </head>
 <body>
     <!-- Start Session -->
@@ -27,9 +27,21 @@
         <h2> Greek Myth </h2>
             <input type="text" placeholder="Search" id="search" class="search">
         <div class="profile-link">
-            <?php $userId = $_SESSION['user_id']; ?>
-            <a href="profile.php?user_id=<?php echo $userId ?>"><img src="../img/default.jpg" alt="user" class="user"></a>
-        <?php echo "<strong style='font-size: 20px;'>".$_SESSION['username']."</strong>"; ?>
+            <?php 
+            $userId = $_SESSION['user_id'];
+            include "../db.php";
+            $result = $conn->query("SELECT * FROM users WHERE user_id = '$userId'");
+            $row = $result->fetch_assoc(); 
+            ?>
+                <a href="profile.php?user_id=<?php echo $userId ?>">
+                   <?php 
+                    //Check if profile pic exists
+                    if(isset($row['profile_pic'])) {
+                       echo "<img src='../img/u/" . $row['profile_pic'] . "' alt='user' class='user'>";
+                   } else { 
+                    echo "<img src='../img/default.jpg' alt='user' class='user'>";
+                    }?>
+            <?php echo $_SESSION['username']; ?></a>
         </div>
     </nav>
 
@@ -44,9 +56,15 @@
                 <div class="createForm-container">
                     <h2>Create Post</h2>
                     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
-                        <input type="text" name="title" placeholder="Title">
-                        <?php if(isset($_GET['error'])) { echo "<p class='error'>" . $_GET['error'] . "</p>"; } ?>
-                        <textarea name="content" id="" cols="30" rows="10" placeholder="Write something..."></textarea>
+                        <div class="form-group"> 
+                            <label for="title">Title</label>
+                                <input type="text" name="title" placeholder="Title">
+                            <?php if(isset($_GET['error'])) { echo "<p class='error'>" . $_GET['error'] . "</p>"; } ?>
+                        </div>
+                        <div class="form-group">
+                            <label for="content">Content</label>
+                            <textarea name="content" id="" cols="30" rows="10" placeholder="Write something..."></textarea>
+                        </div>
                         <div class="createPost-btn">
                             <button type="submit" name="createPost">Post</button>
                             <a href="../index.php">Go back</a>
