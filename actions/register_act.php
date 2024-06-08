@@ -1,7 +1,10 @@
 <?php
+    //Include db connection
     include "../db.php";
+    //Iniaties a session
     session_start();
 
+    //Get form data by POST method
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -19,10 +22,12 @@
             header("Location: ../auth/register.php?emailError=invalidmail&username=".$username);
             exit();
         }
+        //Check if email is valid
         else if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             header("Location: ../auth/register.php?emailError=invalidmail&username=".$username);
             exit();
         }
+        //Check if username is valid using only letters and numbers
         else if(!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
             header("Location: ../auth/register.php?userError=invalidusername&email=".$email);
             exit();
@@ -38,17 +43,21 @@
             exit();
         }
         else {
+            //Check if username or email already exists
             $sql = "SELECT username FROM users WHERE username=?";
             $sql2 = "SELECT email FROM users WHERE email=?";
 
+            //Prepare statements
             $stmt = $conn->prepare($sql);
             $stmt2 = $conn->prepare($sql2);
 
+            //Checks if username or email already exists
             if(!$stmt->prepare($sql) || !$stmt2->prepare($sql2)) {
                 header("Location: ../register.php?error=sqlerror");
                 exit();
             }
             else {
+                //Bind parameters and execute queries
                 $stmt->bind_param("s", $username);
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -57,6 +66,7 @@
                 $stmt2->execute();
                 $result2 = $stmt2->get_result();
                 
+                //Check if username or email already exists
                 if($result->num_rows > 0 || $result2->num_rows > 0) {
                     if($result->num_rows > 0) {
                         $row = $result->fetch_assoc();
@@ -72,11 +82,14 @@
                     }
                     exit();
                 } else {
+                    //Register user
                     include "queries.php";
+                    //Call function register
                     register($username, $email, $password);
                     exit();
                 }
             }
+            //Close statements
             $stmt->close();
             $conn->close();
         }

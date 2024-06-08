@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="../global.css">
     <link rel="stylesheet" href="../styles/index.css">
     <link rel="stylesheet" href="../styles/editPost.css">
+    <!-- Title -->
     <title>Edit Post</title>
 </head>
 <body>
@@ -44,6 +46,7 @@
             <div class="nav-links"> 
                 <a href="../index.php">Home</a>
                 <a href="../friends.php">Friends</a>
+                <a href="../heroes.php">Heroes</a>
                 <a href="../actions/logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
             </div>
 
@@ -66,19 +69,25 @@
                 ?>
                 <!-- Edit Post Form -->
                 <div class="editForm-container">
+                    <!-- Heading or Title -->
                     <h2>Edit Post</h2>
+                    <!-- Edit Post Form -->
                     <form action="editPost_act.php?post_id=<?php echo $post['post_id']; ?>" method="POST">
+                        <!-- Title Field -->
                         <div class="form-group"> 
                             <label for="title">Title</label>
                             <input type="text" name="title" placeholder="Title" value="<?php echo $post['title']; ?>">
                         </div>
+                        <!-- Error Message -->
                         <?php if(isset($_GET['error'])) { echo "<p class='error'>" . $_GET['error'] . "</p>"; } ?>
+                        <!-- Content Field -->
                         <div class="form-group">
                             <label for="content">Content</label>
-                                <textarea name="content" id="" cols="30" rows="10" placeholder="Write something..." >
-                                    <?php echo $cleanedText; ?>
-                                </textarea>
+                            <textarea name="content" id="" cols="30" rows="10" placeholder="Write something..." >
+                                <?php echo $cleanedText; ?>
+                            </textarea>
                         </div>
+                        <!-- Edit Post Button -->
                         <div class="editPost-btn">
                             <button type="submit" name="editPost">Edit</button>
                             <a href="../index.php">Go back</a>
@@ -86,11 +95,16 @@
                     </form>
                 </div>
             </div>
-            <!-- Other Content -->
+
+            <!-- Other Content Area -->
             <div class="other-content">
+                <!-- Others Container -->
                 <div class="others">
+                    <!-- Heading or Title -->
                     <h2>Greek Heroes Page</h2>
+                        <!-- Heroes Container -->
                         <div class="heroes">
+                            <!-- Hero Boxes -->
                             <div class="hero-box">
                                 <img src="../img/hero.png" alt="hero"> <p> Zeus</p>
                             </div>
@@ -112,6 +126,7 @@
 
     <!-- if not logged in redirect to login page -->
     <?php else: header("Location: auth/login.php") ?>
+    <!-- End If Statement -->
     <?php endif; ?>
 </body>
 </html>

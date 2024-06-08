@@ -6,7 +6,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="global.css">
     <link rel="stylesheet" href="styles/index.css">
-    <title>Greek Myth</title>
+    <title>Friends</title>
 </head>
 <body>
     <!-- Start Session -->
@@ -76,30 +76,25 @@
                     //Display posts based on sorting
                     if(isset($_GET['sort'])){
                         $sort = $_GET['sort'];
-                        //Check if sort is set on date
                         if($sort == 'date') {
                             postsByDate();
-                        }
-                        //Check if sort is set on likes 
+                        } 
                         else if($sort == 'likes') {
                             postsByLikes();
                         }
-                        //Check if sort is set on random
                         else if($sort == 'random') {
                             posts();
                         }
-                        //Check if sort is set on comments
                         else if($sort == 'comments') {
                             postsByComments();
                         }
-                        //If sort is not set display posts
                     } else { 
                         posts(); 
                     }
                 ?>
             </div>
 
-            <!-- Others Content Area -->
+            <!-- Others Area -->
             <div class="other-content">
                 <div class="sortPosts">
                     <h2>Sort Posts by</h2>
@@ -113,7 +108,6 @@
                 </div>
                 <!-- Greek Heroes Page Area -->
                 <div class="others">
-                    <!-- Title -->
                     <h2>Greek Heroes Page</h2>
                         <!-- Heroes Container -->
                         <div class="heroes">

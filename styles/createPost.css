@@ -1,3 +1,5 @@
+/* Create Post Styling */
+
 .createPost {
     display: flex;
     flex-direction: column;
@@ -45,6 +47,7 @@
 
 .createPost .createForm-container form textarea {
     resize: vertical;
+    margin: 0.5rem 0;
 }
 
 .createPost .createForm-container form .createPost-btn {
