@@ -1,6 +1,6 @@
 <?php
     //Check if the form is submitted and the method is POST
-    if($_SERVER['REQUEST_METHOD'] == 'POST' ) {
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
         //Include queries
         include "../actions/queries.php";
 

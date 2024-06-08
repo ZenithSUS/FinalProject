@@ -112,9 +112,15 @@
                         <p><img src='img/like.png' alt='like'> " . $row['likes'] . "</p>
                         <p><img src='img/dislike.png' alt='dislike'> " . $row['dislikes'] . "</p>
                     </div>";
+
+                //Get number of comments
+                $sql2 = "SELECT COALESCE(COUNT(*), 0) AS total_comments FROM comments WHERE post_id = '" . $row['post_id'] . "'";
+                $result2 = $conn->query($sql2);
+                $row2 = $result2->fetch_assoc();
+
                 //Display comments
                 echo "<hr>";
-                echo "<a href='user/currentPost.php?post_id=" . $row['post_id'] . "'>comments 0</a>";
+                echo "<a href='user/currentPost.php?post_id=" . $row['post_id'] . "'>comments " . $row2['total_comments'] . "</a>";
                 echo "</div>";
             }
         //Else display no posts yet
@@ -162,9 +168,15 @@
                 <p><img src='img/like.png' alt='like'> " . $row['likes'] . "</p>
                 <p><img src='img/dislike.png' alt='dislike'> " . $row['dislikes'] . "</p>
             </div>";
+
+            //Get number of comments
+            $sql2 = "SELECT count(*) AS total_comments FROM comments WHERE post_id = '" . $row['post_id'] . "'";
+            $result2 = $conn->query($sql2);
+            $row2 = $result2->fetch_assoc();
+
             //Display comments
             echo "<hr>";
-            echo "<a href='user/currentPost.php?post_id=" . $row['post_id'] . "'>comments 0</a>";
+            echo "<a href='user/currentPost.php?post_id=" . $row['post_id'] . "'>comments " . $row2['total_comments'] . "</a>";
             echo "</div>";
         }
     }
@@ -174,8 +186,9 @@
         //Include db connection
         include "db.php";
         //Write query and join tables
-        $sql = "SELECT * FROM posts JOIN users ON posts.author = users.user_id 
-        ORDER BY posts.likes DESC";
+        $sql = "SELECT * FROM posts 
+        JOIN users ON posts.author = users.user_id
+        ORDER BY likes DESC";
         //Execute query
         $result = $conn->query($sql);
         //Check if posts exist
@@ -206,9 +219,18 @@
                         <p><img src='img/like.png' alt='like'> " . $row['likes'] . "</p>
                         <p><img src='img/dislike.png' alt='dislike'> " . $row['dislikes'] . "</p>
                     </div>";
+
+                //Get total comments
+                $postId = $row['post_id'];
+                $sql2 = "SELECT COUNT(comments.comment_id) AS 
+                total_comments, posts.post_id FROM comments 
+                JOIN posts ON comments.post_id = posts.post_id
+                WHERE posts.post_id = '$postId'";
+                $result2 = $conn->query($sql2);
+                $row2 = $result2->fetch_assoc();    
                 //Display comments
                 echo "<hr>";
-                echo "<a href='user/currentPost.php?post_id=" . $row['post_id'] . "'>comments 0</a>";
+                echo "<a href='user/currentPost.php?post_id=" . $row['post_id'] . "'>comments " . $row2['total_comments'] . "</a>";
                 echo "</div>";
             }
         } else {
@@ -218,11 +240,18 @@
 
     //Function to sort post by comments
     function postsByComments() {
+        //Include db connection
         include "db.php";
-        $sql = "SELECT * FROM posts 
-        JOIN users ON posts.author = users.user_id 
-        JOIN comments ON posts.post_id = comments.post 
-        ORDER BY comments.comments DESC";
+        //Write query and join tables including total comments
+        //Left join to get total comments even if there are no comments
+        //Group by post_id to get total comments
+        //Order by total comments
+        $sql = "SELECT users.*, posts.*, COALESCE(COUNT(comments.comment_id), 0) AS total_comments
+        FROM posts
+        JOIN users ON posts.author = users.user_id
+        LEFT JOIN comments ON posts.post_id = comments.post_id
+        GROUP BY posts.post_id
+        ORDER BY total_comments DESC;";
         //Execute query
         $result = $conn->query($sql);
         if($result !== false && $result->num_rows > 0) {
@@ -254,7 +283,7 @@
                     </div>";
                 //Display comments
                 echo "<hr>";
-                echo "<a href='user/currentPost.php?post_id=" . $row['post_id'] . "'>comments" . $row['comments'] . "</a>";
+                echo "<a href='user/currentPost.php?post_id=" . $row['post_id'] . "'>comments " . $row['total_comments'] . "</a>";
                 echo "</div>";
             }
         } else {
@@ -264,40 +293,6 @@
         $conn->close();
     }
 
-
-    //Function to display comments
-    function comments() {
-        //Include queries
-        include "../db.php";
-        //Get post id from url or using GET method
-        $postId = $_GET['post_id'];
-        //Write query and join tables to display comments
-        $sql = "SELECT * FROM comments 
-        JOIN users ON comments.author = users.user_id 
-        WHERE comments.post_id = '$postId'";
-        //Execute query
-        $result = $conn->query($sql);
-        //Check if comments exist
-        if($result !== false && $result->num_rows > 0) {
-            // Display comments
-            while ($row = $result->fetch_assoc()) {
-                //Display comments
-                echo "<div class='comment'>
-                        <img src='img/user.png' alt='user'>
-                            <h3>" . $row['username'] . "</h3>
-                            <p> " . $row['content'] . "</p>
-                        <hr>
-                    </div>";
-            }
-        //Display message if no comments
-        } else {
-            echo "<div class='comment'>";
-            echo    "<p>No comments yet</p>";
-            echo "</div>";
-        }
-        //Close connection
-        $conn->close();
-    }
 
     //Function to create post
     function createPost(){
@@ -318,14 +313,17 @@
             $post_id = uniqid();
             $title = $_POST['title'];
             $content = $_POST['content'];
-            $output = nl2br($content);
+            $output = mysqli_real_escape_string($conn, nl2br($content));
             $author = $_SESSION['user_id'];
+
+            //Execute query
+            $stmt->execute();
+
+            //Check if title is empty
             if($title == "" || empty($title)) {
                 header("Location: ../user/createPost.php?error=The title cannot be empty");
                 exit();
             }
-            $stmt->execute();
-            $stmt->close();
 
             //Get post id related to the user
             $sql = "SELECT post_id FROM posts WHERE author = '$author' AND title = '$title'";
@@ -334,7 +332,9 @@
             $post_id = $row['post_id'];
             addActivity($author, "created a post a with title " . $title, $post_id, null);
             
-
+            //Close statement
+            $stmt->execute();
+            $stmt->close();
             header("Location: ../index.php");
         }
     }
@@ -345,7 +345,7 @@
         session_start();
         //Get post id
         if(isset($_POST['editPost'])) {
-            $sql = "UPDATE posts SET title = ?, content = ? WHERE post_id = ?";
+            $sql = "UPDATE posts SET title = ?, content = ?, updated_at = NOW() WHERE post_id = ?";
             //Prepare statement
             $stmt = $conn->prepare($sql);
             
@@ -440,6 +440,90 @@
         $conn->query($sql);
         //Redirect to index
         header("Location: ../index.php");
+
+    }
+
+    //Function to display comments
+    function comments() {
+        //Include queries
+        include "../db.php";
+        //Get post id from url or using GET method
+        $postId = $_GET['post_id'];
+        //Write query and join tables to display comments
+        $sql = "SELECT * FROM comments 
+        JOIN users ON comments.author = users.user_id 
+        WHERE comments.post_id = '$postId' ORDER BY created_at DESC LIMIT 3";
+        //Execute query
+        $result = $conn->query($sql);
+        //Check if comments exist
+        if($result !== false && $result->num_rows > 0) {
+            // Display comments
+            while ($row = $result->fetch_assoc()) {
+                //Display comments
+                echo "<div class='comment'>";
+                //Display username and date of comment
+                echo "<p class='author'> <a href='profile.php?user_id=" . $row['author'] . "'>";
+                //Check if profile pic exists
+                if($row['profile_pic'] != NULL) {
+                    echo "<img src='../img/u/" . $row['profile_pic'] . "' alt='user' class='profilePic'>";
+                //Display default profile pic if profile pic does not exist
+                } else {
+                    echo "<img src='../img/default.jpg' alt='user' class='profilePic'>";
+                }
+                echo "</a>";
+                //Display username and date
+                echo $row['username'] . " " . date('F j, Y, g:i a', strtotime($row['created_at'])) . "</p>";
+                //Display comment
+                echo "<p>" . $row['content']. "</p>";
+                echo "</div>";
+            }
+        //Display message if no comments
+        } else {
+            echo "<div class='comment'>";
+            echo    "<p>No comments yet</p>";
+            echo "</div>";
+        }
+        //Close connection
+        $conn->close();
+    }
+
+    function createComment($userId, $postId, $content) {
+        //Include database
+        include "../db.php";
+        if(isset($_POST['commentForm'])) {
+            //Check if content is set and not null to create comment
+            if(isset($content) && !empty($content) && !is_null($content)) {
+                //Write query
+                $sql = "INSERT INTO comments (comment_id, author, post_id, content) VALUES (?, ?, ?, ?)";
+                //Prepare query
+                $stmt = $conn->prepare($sql);
+                //Get unique comment id
+                $comment_id = uniqid();
+            
+                //Bind parameters
+                $stmt->bind_param("ssss", $comment_id, $userId, $postId, $content);
+                //Execute query
+                $stmt->execute();
+
+                //Check if query executed
+                if($stmt == true) {
+                //fetch the inserted comment by using and getting comment id
+                    $sql = "SELECT comments.comment_id, posts.title FROM comments 
+                    JOIN posts ON comments.post_id = posts.post_id 
+                    WHERE comments.comment_id = '$comment_id'";
+                    $result = $conn->query($sql);
+                    $row = $result->fetch_assoc();
+
+
+                    //Get title from posts and comment relationship
+                    $title= $row['title'];
+                    addActivity($userId, "commennted on a post titled " . $title . "", NULL, $row['comment_id']);
+                }
+            }
+            //Get post id from url or using GET method
+            $postId = $_GET['post_id'];
+            header("Location: ../user/currentPost.php?post_id=" . $postId);
+        }
 
     }
 

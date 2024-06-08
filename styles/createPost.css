@@ -48,6 +48,11 @@
 .createPost .createForm-container form textarea {
     resize: vertical;
     margin: 0.5rem 0;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    border: 0.2rem solid var(--dark-color);
+    width: 100%;
 }
 
 .createPost .createForm-container form .createPost-btn {

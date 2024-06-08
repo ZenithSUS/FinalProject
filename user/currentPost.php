@@ -65,34 +65,38 @@
 
         <!-- Current Post Area -->
         <div class="posts current-posts">
-
+            <!-- Display Current Post -->
             <?php
-                //Include queries
-                include "../actions/queries.php";
+                 //Include queries
+                 include "../actions/queries.php";
 
-                //Get post id and user id from url or using GET method
-                $postId = $_GET['post_id'];
-                $userId = $_SESSION['user_id'];
-
-                //Call currentPost function
-                currentPost($postId, $userId);
-                //Call comments function  
-                comments();
+                 //Get post id and user id from url or using GET method
+                 $postId = $_GET['post_id'];
+                 $userId = $_SESSION['user_id'];
+ 
+                 //Call currentPost function
+                 currentPost($postId, $userId);
             ?>
-                
+
             <!-- Comment Form Container -->
             <div class='comment-form'>
                 <!-- Heading or Title -->
                 <h2>What are your thoughts</h2>
                 <!-- Comment Form -->
-                <form action='actions/comment_act.php' method='post'>
+                <form action='../actions/comment_act.php?post_id=<?php echo $postId ?>' method='post'>
                 <!-- Comment Field -->
-                <input type='hidden' name='post_id' value='" . $postId . "'>
                 <textarea name='comment' id='comment' cols='30' rows='10'></textarea>
                 <!-- Submit Button -->
-                <button type='submit' name='submit'>Post</button>
+                <button type='submit' name='commentForm'>Comment</button>
                 </form>
             </div>
+
+            <?php
+                //Call comments function  
+                comments();
+            ?>
+                
+            
         </div>
 
         <!-- Others Content Area -->

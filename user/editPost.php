@@ -72,7 +72,7 @@
                     <!-- Heading or Title -->
                     <h2>Edit Post</h2>
                     <!-- Edit Post Form -->
-                    <form action="editPost_act.php?post_id=<?php echo $post['post_id']; ?>" method="POST">
+                    <form action="../actions/editPost_act.php?post_id=<?php echo $post['post_id']; ?>" method="POST">
                         <!-- Title Field -->
                         <div class="form-group"> 
                             <label for="title">Title</label>
