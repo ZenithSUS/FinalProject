@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2024 at 04:41 PM
+-- Generation Time: Jun 09, 2024 at 10:34 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -41,9 +41,10 @@ CREATE TABLE `activities` (
 --
 
 INSERT INTO `activities` (`activity_id`, `post_id`, `comment_id`, `user_id`, `activity`, `timestamp`) VALUES
-(95, NULL, '66646a44b1ebf', '666324fad693b', 'commennted on your post titled Amongus', '2024-06-08 14:27:16'),
-(96, '66646a9b9dbe4', NULL, '666324fad693b', 'created a post a with title ads', '2024-06-08 14:28:43'),
-(97, '66646a9b9dbe4', NULL, '666324fad693b', 'edited a post with title ads', '2024-06-08 14:33:44');
+(151, '666544a89dab8', NULL, '666324fad693b', 'created a post a with title Hello World', '2024-06-09 05:59:04'),
+(152, '6665465aceb0b', NULL, '6662865c3867d', 'created a post a with title Hello World', '2024-06-09 06:06:19'),
+(153, '66655a92ca94f', NULL, '666324fad693b', 'created a post a with title hjgjgk', '2024-06-09 07:32:34'),
+(154, '66655e9147932', NULL, '66631c3c988a2', 'created a post a with title asdsa', '2024-06-09 07:49:37');
 
 -- --------------------------------------------------------
 
@@ -60,13 +61,6 @@ CREATE TABLE `comments` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `comments`
---
-
-INSERT INTO `comments` (`comment_id`, `post_id`, `parent_comment`, `author`, `content`, `created_at`) VALUES
-('66646a44b1ebf', 'fa7d0ad5-25a2-11ef-95c0-7c05075eb45f', NULL, '666324fad693b', 'adsasd', '2024-06-08 22:27:16');
-
 -- --------------------------------------------------------
 
 --
@@ -74,10 +68,22 @@ INSERT INTO `comments` (`comment_id`, `post_id`, `parent_comment`, `author`, `co
 --
 
 CREATE TABLE `friends` (
+  `user_id` varchar(36) NOT NULL,
   `friend_id` varchar(36) NOT NULL,
-  `user` varchar(36) NOT NULL,
-  `friend` varchar(36) NOT NULL,
-  `added_at` datetime NOT NULL
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `friend_requests`
+--
+
+CREATE TABLE `friend_requests` (
+  `requester_id` varchar(36) NOT NULL,
+  `requestee_id` varchar(36) NOT NULL,
+  `status` enum('pending','accepted','rejected') DEFAULT 'pending',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -130,8 +136,10 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`post_id`, `title`, `content`, `author`, `likes`, `dislikes`, `created_at`, `updated_at`) VALUES
-('66646a9b9dbe4', 'ads', 'sadsdaadsdsasda', '666324fad693b', 0, 0, '2024-06-08 22:28:43', '2024-06-08 22:33:44'),
-('fa7d0ad5-25a2-11ef-95c0-7c05075eb45f', 'Amongus', 'Amogusss', '6663eb029af37', 0, 0, '2024-06-08 22:25:38', '2024-06-08 22:25:38');
+('666544a89dab8', 'Hello World', 'Hello World', '666324fad693b', 0, 0, '2024-06-09 13:59:04', '2024-06-09 13:59:04'),
+('6665465aceb0b', 'Hello World', 'Hi', '6662865c3867d', 0, 0, '2024-06-09 14:06:18', '2024-06-09 14:06:18'),
+('66655a92ca94f', 'hjgjgk', 'jtggjjgjg', '666324fad693b', 0, 0, '2024-06-09 15:32:34', '2024-06-09 15:32:34'),
+('66655e9147932', 'asdsa', 'asdsad', '66631c3c988a2', 0, 0, '2024-06-09 15:49:37', '2024-06-09 15:49:37');
 
 -- --------------------------------------------------------
 
@@ -186,9 +194,15 @@ ALTER TABLE `comments`
 -- Indexes for table `friends`
 --
 ALTER TABLE `friends`
-  ADD PRIMARY KEY (`friend_id`),
-  ADD KEY `friends_ibfk_1` (`user`),
-  ADD KEY `friends_ibfk_2` (`friend`);
+  ADD PRIMARY KEY (`user_id`,`friend_id`),
+  ADD KEY `friends_ibfk_4` (`friend_id`);
+
+--
+-- Indexes for table `friend_requests`
+--
+ALTER TABLE `friend_requests`
+  ADD PRIMARY KEY (`requester_id`,`requestee_id`),
+  ADD KEY `friend_requests_ibfk_2` (`requestee_id`);
 
 --
 -- Indexes for table `greeks`
@@ -226,7 +240,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `activities`
 --
 ALTER TABLE `activities`
-  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
 
 --
 -- Constraints for dumped tables
@@ -252,8 +266,17 @@ ALTER TABLE `comments`
 -- Constraints for table `friends`
 --
 ALTER TABLE `friends`
-  ADD CONSTRAINT `friends_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `friends_ibfk_2` FOREIGN KEY (`friend`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `friends_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `friends_ibfk_2` FOREIGN KEY (`friend_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `friends_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `friend_requests` (`requester_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `friends_ibfk_4` FOREIGN KEY (`friend_id`) REFERENCES `friend_requests` (`requestee_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `friend_requests`
+--
+ALTER TABLE `friend_requests`
+  ADD CONSTRAINT `friend_requests_ibfk_1` FOREIGN KEY (`requester_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `friend_requests_ibfk_2` FOREIGN KEY (`requestee_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `likes`
