@@ -103,7 +103,7 @@
                 }
                 echo "</a>";
                 //Display username and date
-                echo $row['username'] . " " . date('F j, Y, g:i a', strtotime($created_date)) . "</p>";
+                echo "Posted by " . $row['username'] . " on " . date('F j, Y, g:i a', strtotime($created_date)) . "</p>";
                 //Display title and content
                 echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "&title=" . $row['title'] . "'><h3>" . $row['title'] . "</h3>";
                 echo "<p>" . $row['content'] . "</p></a>";
@@ -159,7 +159,7 @@
             }
             echo "</a>";
             //Display username and date
-            echo $row['username'] . " " . date('F j, Y, g:i a', strtotime($created_date)) . "</p>";
+            echo "Posted by " . $row['username'] . " on " . date('F j, Y, g:i a', strtotime($created_date)) . "</p>";
             //Display title and content
             echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "&title=" . $row['title'] . "'><h3>" . $row['title'] . "</h3>";
             echo "<p>" . $row['content'] . "</p></a>";
@@ -210,7 +210,7 @@
                 }
                 echo "</a>";
                 //Display username and date
-                echo $row['username'] . " " . date('F j, Y, g:i a', strtotime($created_date)) . "</p>";
+                echo "Posted by " . $row['username'] . " on " . date('F j, Y, g:i a', strtotime($created_date)) . "</p>";
                 //Display title and content
                 echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "&title=" . $row['title'] . "'><h3>" . $row['title'] . "</h3>";
                 echo "<p>" . $row['content'] . "</p></a>";
@@ -272,7 +272,7 @@
                 }
                 echo "</a>";
                 //Display username and date
-                echo $row['username'] . " " . date('F j, Y, g:i a', strtotime($created_date)) . "</p>";
+                echo "Posted by " . $row['username'] . " on " . date('F j, Y, g:i a', strtotime($created_date)) . "</p>";
                 //Display title and content
                 echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "&title=" . $row['title'] . "'><h3>" . $row['title'] . "</h3>";
                 echo "<p>" . $row['content'] . "</p></a>";
@@ -313,7 +313,7 @@
             $post_id = uniqid();
             $title = $_POST['title'];
             $content = $_POST['content'];
-            $output = mysqli_real_escape_string($conn, nl2br($content));
+            $output = nl2br($content);
             $author = $_SESSION['user_id'];
 
             //Execute query
@@ -353,7 +353,7 @@
             $title = $_POST['title'];
             $content = $_POST['content'];
             $author = $_SESSION['user_id'];
-            $output = strip_tags($content);
+            $output = nl2br($content);
 
             //Bind parameters
             $stmt->bind_param("sss", $title, $output, $postId);
@@ -407,7 +407,7 @@
         }
         echo "</a>";
         //Display username and date
-        echo $row['username'] . " " . date('F j, Y, g:i a', strtotime($created_at)) . "</p>";
+        echo "Posted by " .$row['username'] . " on " . date('F j, Y, g:i a', strtotime($created_at)) . "</p>";
         
         //Display post title and content
         echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "'><h3>" . $row['title'] . "</h3></a>";
@@ -568,23 +568,190 @@
                         <a href='user/changePassword.php?user_id=" . $user['user_id'] . "'>Change Password</a>
                     </div>";
                     } else {
-                        // Check if user is friend
-                        $sql = "SELECT * FROM friends WHERE user_id = '$userId'";
+                        //Get user id
+                        $userId = $_SESSION['user_id'];
+                        //Get friend id
+                        $friendId = $user['user_id'];
+
+                        //Write and Execute Query and check if user is a friend
+                        $sql = "SELECT * FROM friends JOIN users ON friends.user_id = users.user_id 
+                        WHERE friends.user_id = '$friendId'";
                         $result = $conn->query($sql);
                         // Display options to add or remove friend
                         if($result !== false && $result->num_rows > 0) {
                             echo "<div class='profile-settings'>
-                                <a href='actions/removeFriend.php?user_id=" . $user['user_id'] . "'>Remove Friend</a>
-                            </div>";
+                                    <form action='../actions/Friend_act.php?user_id=" . $friendId . "' method='POST'>
+                                        <button class='removeFriend-btn' id='removeFriend-btn' name='removeFriendForm' onclick=\"return confirm('Are you sure you want to remove this friend?')\">
+                                            <p class='removeFriend-text'>Remove Friend</p></button>
+                                    </form>
+                                </div>";
                         } else {
-                        echo "<div class='profile-settings'>
-                            <a href='actions/addFriend.php?user_id=" . $user['user_id'] . "'>Add Friend</a>
-                        </div>";
-                        }
+                            //Check if friend request is pending if the
+                            //user is the request reciever
+                            if(getFriendRequestStatus($userId, $friendId) == "waiting") {
+                                //Accept friend request button
+                                echo "<div class='request-container'>
+                                        <div class='profile-settings'>
+                                            <form action='../actions/Friend_act.php?user_id=" . $friendId . "' method='POST'>
+                                                <button class='acceptRequest-btn' id='acceptRequest-btn' name='acceptFriendForm'>
+                                                    <p class='acceptRequest-text'>Accept Request</p></button>
+                                            </form>
+                                        </div>";
+                                //Decline friend request button
+                                echo "<div class='profile-settings'>
+                                        <form action='../actions/Friend_act.php?user_id=" . $friendId . "' method='POST'>
+                                            <button class='declineRequest-btn' id='cancelRequest-btn' name='declineFriendForm'> 
+                                                <p class='declineRequest-text'>Decline Request</p>
+                                            </button>
+                                        </form>
+                                        </div>
+                                    </div>";
+                            //Check the friend request status
+                            //if the user is the request sender
+                            } else {
+                                //Get friend request status
+                                $friendRequestStatus = getFriendRequestStatus($userId, $friendId);
+                                $friendBtnText = "";
+                                if($friendRequestStatus == "pending") {
+                                    $friendBtnText = "Pending";
+                                } else {
+                                    $friendBtnText = "Add Friend";
+                                }
+                                    echo "<div class='profile-settings'>
+                                        <form action='../actions/Friend_act.php?user_id=" . $_GET['user_id'] . "&status=" . $friendRequestStatus . "' method='POST'>
+                                            <button class='addFriend-btn'' id='addFriend-btn' name='friendForm'>
+                                                <p class='addFriend-text' name='status'> " . $friendBtnText . "</p>
+                                            </button>
+                                        </form> 
+                                </div>";
+                            }
                     }
-            echo "</div>";
-            //Close connection
-            $conn->close();
+                }
+        echo "</div>";
+        //Close connection
+        $conn->close();
+    }
+
+    //Function to add friend
+    function addFriend($userId, $friendId) {
+        include "../db.php";
+        //Write and Query
+        $sql = "INSERT INTO friend_requests (requester_id, requestee_id) VALUES (?, ?)";
+        //Prepare and Bind
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $userId, $friendId);
+        //Execute Query
+        $stmt->execute();
+
+        //Redirect back to profile
+        header("Location: ../user/profile.php?user_id=" . $friendId);
+        
+        //Close connection
+        $stmt->close();
+        $conn->close();
+    }
+
+    //Function to delete friend request
+    function deleteFriendRequest($userId, $friendId) {
+        include "../db.php";
+        //Write and Query
+        $sql = "DELETE FROM friend_requests WHERE requester_id = ? AND requestee_id = ?
+        OR requester_id = ? AND requestee_id = ?";
+        //Prepare and Bind
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssss", $userId, $friendId, $friendId, $userId);
+        //Execute Query
+        $stmt->execute();
+        //Redirect back to profile
+        header("Location: ../user/profile.php?user_id=" . $friendId);
+        //Close connection
+        $stmt->close();
+        $conn->close();
+    }
+
+    //Function to delete friend
+    function deleteFriend($userId, $friendId) {
+        include "../db.php";
+        //Write and Query
+        $sql = "DELETE FROM friends WHERE user_id = ? AND friend_id = ?
+        OR user_id = ? AND friend_id = ?";
+        //Prepare and Bind
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssss", $userId, $friendId, $friendId, $userId);
+        //Execute Query
+        $stmt->execute();
+
+        //Delete friend request
+        deleteFriendRequest($userId, $friendId);
+        //Redirect back to profile
+        header("Location: ../user/profile.php?user_id=" . $friendId);
+        //Close connection
+        $stmt->close();
+        $conn->close();
+    }
+
+    //Function to get friend request status
+    function getFriendRequestStatus($userId, $friendId) {
+        include "../db.php";
+        //Write and Query the OR statement is to ensure that the 
+        //requester and requestee are not the same
+        $sql = "SELECT * FROM friend_requests WHERE requester_id = ? AND requestee_id = ?
+        OR requester_id = ? AND requestee_id = ?";
+        //Prepare and Bind
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssss", $userId, $friendId, $friendId, $userId);
+        //Execute Query
+        $stmt->execute();
+        //Get result
+        $result = $stmt->get_result();
+        //Get rows using fetch_assoc
+        $row = $result->fetch_assoc();
+
+        //Check if friend request exists
+        if($result !== false && $result->num_rows > 0) {
+            //Check if friend request is pending by using the requester id
+            //To check if the user is the requester
+            if($row['requester_id'] == $userId) {
+                return $row['status'];
+            } else {
+                return "waiting";
+            }
+            
+        //No friend request exists
+        } else {
+            return;
+        }
+
+        //Close connection
+        $stmt->close();
+        $conn->close();
+        
+    }
+
+    //Function to accept friend request
+    function acceptFriendRequest($userId, $friendId) {
+        include "../db.php";
+        //Write and Query
+        $sql = "UPDATE friend_requests SET status = 'accepted' WHERE requester_id = ? AND requestee_id = ?";
+        //Prepare and Bind
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $friendId, $userId);
+        //Execute Query
+        $stmt->execute();
+
+        //Insert Friend
+        $sql = "INSERT INTO friends (user_id, friend_id) VALUES (?, ?)";
+        //Prepare and Bind
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $friendId, $userId);
+        //Execute Query
+        $stmt->execute();
+
+        //Redirect back to profile
+        header("Location: ../user/profile.php?user_id=" . $friendId);
+        //Close connection
+        $stmt->close();
+        $conn->close();
     }
 
     //Function to display activities

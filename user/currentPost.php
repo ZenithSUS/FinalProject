@@ -81,13 +81,13 @@
             <!-- Comment Form Container -->
             <div class='comment-form'>
                 <!-- Heading or Title -->
-                <h2>What are your thoughts</h2>
+                <h2 id='commentTitle'>What are your thoughts</h2>
                 <!-- Comment Form -->
                 <form action='../actions/comment_act.php?post_id=<?php echo $postId ?>' method='post'>
                 <!-- Comment Field -->
                 <textarea name='comment' id='comment' cols='30' rows='10'></textarea>
                 <!-- Submit Button -->
-                <button type='submit' name='commentForm'>Comment</button>
+                <button type='submit' name='commentForm' id='commentBtn' onclick="disableCommentBtn()">Comment</button>
                 </form>
             </div>
 
@@ -126,6 +126,9 @@
             </div>
         </div>
     </main>
+
+    <!-- Scripts -->
+    <script src="../scripts/disableBtns.js"></script>
 
     <!-- If not logged in redirect to login page -->
     <?php else: header("Location: ../auth/login.php") ?>

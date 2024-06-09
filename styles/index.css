@@ -156,6 +156,7 @@ nav .user {
     display: flex;
     gap: 0.5rem;
 }
+    
 
 .posts .post .post-options {
     display: flex;
@@ -186,6 +187,11 @@ nav .user {
     text-decoration: none;
     color: var(--dark-color);
 }
+
+.main-content .posts .post p {
+    margin-top: 0.5rem;
+}
+
 
 /* Styling for Other Content */
 

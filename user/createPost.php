@@ -67,7 +67,7 @@
                 <!-- Create Post Container -->
                 <div class="createForm-container">
                     <!-- Heading or Title -->
-                    <h2>Create Post</h2>
+                    <h2 id="postTitle">Create Post</h2>
                     <!-- Create Post Form -->
                     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
                         <!-- Title Field -->
@@ -84,8 +84,8 @@
                         </div>
                         <!-- Submit Button -->
                         <div class="createPost-btn">
-                            <button type="submit" name="createPost">Post</button>
-                            <a href="../index.php">Go back</a>
+                            <button type="submit" name="createPost" id="postBtn" onclick="disablePostBtn()">Post</button>
+                            <a href="../index.php" id="backBtn">Go back</a>
                         </div>
                     </form>
                 </div>
@@ -118,6 +118,9 @@
             </div>
         </div>
     </main>
+
+    <!--Scripts-->
+    <script src="../scripts/disableBtns.js"></script>
 
     <!-- if not logged in redirect to login page -->
     <?php else: header("Location: ../auth/login.php") ?>

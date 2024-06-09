@@ -31,7 +31,7 @@
             $result = $conn->query("SELECT * FROM users WHERE user_id = '$userId'") or die($conn->error);
             //Get profile pic from database by using user id and associative array 
             $row = $result->fetch_assoc();
-            $profile = $row['profile_pic']; 
+            $profile = $row['profile_pic'];
             ?>
                 <a href="user/profile.php?user_id=<?php echo $userId ?>">
                    <?php

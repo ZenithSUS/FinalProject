@@ -22,3 +22,8 @@
     width: 3rem;
     height: 3rem;
 }
+
+.current-posts .post .vote p {
+    color: var(--dark-color);
+    margin-top: 0;
+}

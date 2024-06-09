@@ -74,7 +74,7 @@
                     <!-- Edit Post Form -->
                     <form action="../actions/editPost_act.php?post_id=<?php echo $post['post_id']; ?>" method="POST">
                         <!-- Title Field -->
-                        <div class="form-group"> 
+                        <div class="form-group">
                             <label for="title">Title</label>
                             <input type="text" name="title" placeholder="Title" value="<?php echo $post['title']; ?>">
                         </div>
@@ -83,9 +83,7 @@
                         <!-- Content Field -->
                         <div class="form-group">
                             <label for="content">Content</label>
-                            <textarea name="content" id="" cols="30" rows="10" placeholder="Write something..." >
-                                <?php echo $cleanedText; ?>
-                            </textarea>
+                            <textarea name="content" id="" cols="30" rows="10" placeholder="Write something..."><?php echo htmlspecialchars($cleanedText); ?></textarea>
                         </div>
                         <!-- Edit Post Button -->
                         <div class="editPost-btn">

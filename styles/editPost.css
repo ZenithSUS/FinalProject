@@ -47,6 +47,11 @@
 
 .editPost .editForm-container form textarea {
     resize: vertical;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    border: 0.2rem solid var(--dark-color);
+    width: 100%;
 }
 
 .editPost .editForm-container form .editPost-btn {

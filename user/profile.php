@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../global.css">
     <link rel="stylesheet" href="../styles/index.css">
@@ -79,29 +80,36 @@
                 </div>
             </div>
 
-            <!-- Others Area -->
-            <div class="others">
-                <!-- Title -->
-                <h2>Greek Heroes Page</h2>
-                <!-- Heroes Container -->
-                <div class="heroes">
-                    <!-- Hero Boxes -->
-                    <div class="hero-box">
-                        <img src="../img/hero.png" alt="hero"> <p> Zeus</p>
-                    </div>
-                    <div class="hero-box">
-                        <img src="../img/hero.png" alt="hero"> <p> Poseidon</p>
-                    </div>
-                    <div class="hero-box">
-                        <img src="../img/hero.png" alt="hero"> <p> Heracles</p>
-                    </div>
-                    <div class="hero-box">
-                        <img src="../img/hero.png" alt="hero"> <p> Perseus</p>
+            <!-- Others Content Area -->
+            <div class="other-content">
+                <!-- Others Container -->
+                <div class="others">
+                    <!-- Heading or Title -->
+                    <h2>Greek Heroes Page</h2>
+                    <!-- Heroes Container -->
+                        <div class="heroes">
+                            <!-- Hero Boxes -->
+                            <div class="hero-box">
+                                <img src="../img/hero.png" alt="hero"> <p> Zeus</p>
+                            </div>
+                            <div class="hero-box">
+                                <img src="../img/hero.png" alt="hero"> <p> Poseidon</p>
+                            </div>
+                            <div class="hero-box">
+                                <img src="../img/hero.png" alt="hero"> <p> Heracles</p>
+                            </div>
+                            <div class="hero-box">
+                                <img src="../img/hero.png" alt="hero"> <p> Perseus</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
+    
+    <!-- Scripts -->
+    <script src="../scripts/addFriendBtn.js"></script>
 
     <!-- If user is not logged in -->
     <?php else: header("Location: ../auth/login.php") ?>
