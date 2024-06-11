@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../global.css">
     <link rel="stylesheet" href="../styles/index.css">
@@ -18,6 +17,13 @@
     // Check if the session is set
     if(isset($_SESSION['user_id'])): 
     ?>
+    <?php
+        // include queries
+        include "../actions/queries/post_queries.php";
+        include "../actions/queries/profile_queries.php";
+        include "../actions/queries/friend_queries.php";
+        include "../actions/queries/activity_queries.php";
+    ?>
     <nav>
         <!-- Logo -->
         <h2> Greek Myth </h2>
@@ -26,9 +32,9 @@
         <!-- Profile Link -->
         <div class="profile-link">
         <?php 
+            include "../db.php";
             //Get user id
             $userId = $_SESSION['user_id'];
-            include "../db.php";
             // Execute query
             $result = $conn->query("SELECT * FROM users WHERE user_id = '$userId'");
             // Fetch result
@@ -53,7 +59,21 @@
             <!-- Nav Links -->
             <div class="nav-links"> 
                 <a href="../index.php">Home</a>
-                <a href="../friends.php">Friends</a>
+                <a href="../friends.php" class="friends">Friends
+                    <!-- Notify when there is friend request -->
+                    <?php
+                    //Get friend request count
+                    $sql = "SELECT * FROM friend_requests WHERE requestee_id = ? AND status = 'pending'";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("s", $userId);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $count = $result->num_rows;
+                    if($count > 0) {
+                        echo "<span class='notif'>" . $count . "</span>";
+                    }
+                    ?>
+                </a>
                 <a href="../heroes.php">Heroes</a>
                 <a href="../actions/logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
             </div>
@@ -64,9 +84,6 @@
                 <div class="profile-container">
                     <div class="profile-box">
                         <?php
-                            // include queries
-                            include "../actions/queries.php";
-
                             // Get user id from url
                             $userId = $_GET['user_id'];
                             // Display profile or call profile function

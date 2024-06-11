@@ -83,7 +83,7 @@
                     exit();
                 } else {
                     //Register user
-                    include "queries.php";
+                    include "queries/auth_queries.php";
                     //Call function register
                     register($username, $email, $password);
                     exit();

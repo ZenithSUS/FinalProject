@@ -37,6 +37,7 @@
             <!-- Submit Button -->
             <div class="form-group">
                 <button type="submit" name="submit">Upload</button>
+                <button type="submit" name="submit">Later</button>
             </div>
             <!-- Error Message -->
             <?php if(isset($_GET['error'])) { ?>

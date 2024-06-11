@@ -1,6 +1,6 @@
 <?php
     //Include queries
-    include "../actions/queries.php";
+    include "queries/comment_queries.php";
 
     //Initialize session
     session_start();

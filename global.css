@@ -30,7 +30,6 @@ nav {
     align-items: center;
     background-color: var(--secondary-color);
     padding: 1rem;
-    border-radius: 1rem;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 1);
 }
 

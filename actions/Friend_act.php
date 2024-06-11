@@ -1,6 +1,6 @@
 <?php
     //Include queries
-    include "../actions/queries.php";
+    include "queries/friend_queries.php";
 
     //Initialize session
     session_start();
@@ -48,6 +48,24 @@
         $friendId = $_GET['user_id'];
         //Call deleteFriend function
         deleteFriend($userId, $friendId);
+    }
+
+    //Check if in the friends page is press accept request
+    if(isset($_POST['accept'])) {
+        //Get data from url using GET method
+        $userId = $_SESSION['user_id'];
+        $friendId = $_GET['user_id'];
+        //Call acceptFriend function
+        acceptFriendRequest($userId, $friendId);
+    }
+
+    //Check if in the friends page is press decline request
+    if(isset($_POST['decline'])) {
+        //Get data from url using GET method
+        $userId = $_SESSION['user_id'];
+        $friendId = $_GET['user_id'];
+        //Call declineFriend function
+        deleteFriendRequest($userId, $friendId);
     }
 
 ?>

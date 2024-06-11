@@ -42,6 +42,11 @@
     gap: 0.5rem;
 }
 
+.profile-container form .form-group .buttons {
+    display: flex;
+    gap: 1rem;
+}
+
 .profile-container form label {
     font-weight: bold;
 }
@@ -49,6 +54,12 @@
 .profile-container form input {
     padding: 0.5rem;
     font-size: 1rem;
+}
+
+.profile-container form textarea {
+    padding: 0.5rem;
+    font-size: 1rem;
+    resize: none;
 }
 
 .profile-container form button {

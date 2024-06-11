@@ -1,6 +1,6 @@
 <?php
     //Include queries
-    include "../actions/queries.php";
+    include "queries/posts_queries.php";
 
     //Checks if the editform is submitted
     if(isset($_POST['editPost'])) {

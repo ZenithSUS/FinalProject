@@ -15,6 +15,11 @@
     // Check if the session is set
     if(isset($_SESSION['user_id'])): 
     ?>
+    <?php
+        // include queries
+        include "actions/queries/post_queries.php";
+        include "actions/queries/friend_queries.php";
+    ?>
     <!-- Header Area -->
     <nav>
         <!-- Logo -->
@@ -51,7 +56,16 @@
             <!-- Nav Links -->
             <div class="nav-links"> 
                 <a href="index.php">Home</a>
-                <a href="friends.php">Friends</a>
+                <a href="friends.php" class="friends">Friends
+                    <!-- Notify when there is friend request -->
+                    <?php
+                    //Get friend request count
+                    $count = getFriendRequestCount($userId);
+                    if($count > 0) {
+                        echo "<span class='notif'>" . $count . "</span>";
+                    }
+                    ?>
+                </a>
                 <a href="heroes.php">Heroes</a>
                 <a href="actions/logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
             </div>
@@ -71,8 +85,6 @@
                     <a class="createPost" href="user/createPost.php?user_id=<?php echo $userId ?>">Create Post</a>
                 </div>
                 <?php
-                    //Include queries 
-                    include "actions/queries.php";
                     //Display posts based on sorting
                     if(isset($_GET['sort'])){
                         $sort = $_GET['sort'];

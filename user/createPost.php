@@ -29,6 +29,11 @@
     // Check if the session is set
     if(isset($_SESSION['user_id'])): 
     ?>
+    <?php
+        //Include queries
+        include "../actions/queries/post_queries.php";
+        include "../actions/queries/friend_queries.php";
+    ?>
     <nav> 
         <h2> Greek Myth </h2>
             <input type="text" placeholder="Search" id="search" class="search">
@@ -57,7 +62,16 @@
             <!-- Nav Links -->
             <div class="nav-links"> 
                 <a href="../index.php">Home</a>
-                <a href="../friends.php">Friends</a>
+                <a href="friends.php" class="friends">Friends
+                    <!-- Notify when there is friend request -->
+                    <?php
+                    //Get friend request count
+                    $count = getFriendRequestCountUser($userId);
+                    if($count > 0) {
+                        echo "<span class='notif'>" . $count . "</span>";
+                    }
+                    ?>
+                </a>
                 <a href="../heroes.php">Heroes</a>
                 <a href="../actions/logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
             </div>

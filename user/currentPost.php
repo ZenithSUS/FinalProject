@@ -23,7 +23,14 @@
     // Check if the session is set
     if(isset($_SESSION['user_id'])): 
     ?>
-    <nav>
+    <?php
+        //Include queries
+        include "../actions/queries/post_queries.php";
+        include "../actions/queries/friend_queries.php";
+        include "../actions/queries/comment_queries.php";
+    ?>
+    <!-- Header Area -->
+        <nav>
         <!-- Logo -->
         <h2> Greek Myth </h2>
             <!-- Search Bar -->
@@ -58,7 +65,27 @@
             <!-- Nav Links -->
             <div class="nav-links"> 
                 <a href="../index.php">Home</a>
-                <a href="friends.php">Friends</a>
+                <a href="../friends.php" class="friends">Friends
+                    <!-- Notify when there is friend request -->
+                    <?php
+                    //Get friend request count
+                    $sql = "SELECT * FROM friend_requests WHERE requestee_id = ? AND status = 'pending'";
+                    $stmt = $conn->prepare($sql);
+                    //Bind parameter to statement
+                    $stmt->bind_param("s", $userId);
+                    //Execute statement
+                    $stmt->execute();
+                    //Get result from statement using get_result
+                    $result = $stmt->get_result();
+                    //Get number of rows
+                    $count = $stmt->num_rows;
+                    if($count > 0) {
+                        echo "<span class='notif'>" . $count . "</span>";
+                    }
+                    //Close statement
+                    $stmt->close();
+                    ?>
+                </a>
                 <a href="../heroes.php">Heroes</a>
                 <a href="../actions/logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
             </div>
@@ -67,9 +94,6 @@
         <div class="posts current-posts">
             <!-- Display Current Post -->
             <?php
-                 //Include queries
-                 include "../actions/queries.php";
-
                  //Get post id and user id from url or using GET method
                  $postId = $_GET['post_id'];
                  $userId = $_SESSION['user_id'];

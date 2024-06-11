@@ -6,6 +6,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="global.css">
     <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/friends.css">
     <title>Friends</title>
 </head>
 <body>
@@ -14,6 +15,11 @@
     session_start();
     // Check if the session is set
     if(isset($_SESSION['user_id'])): 
+    ?>
+    <?php
+        // Include queries
+        include "actions/queries/post_queries.php";
+        include "actions/queries/friend_queries.php";
     ?>
     <!-- Header Area -->
     <nav>
@@ -51,81 +57,105 @@
             <!-- Nav Links -->
             <div class="nav-links"> 
                 <a href="index.php">Home</a>
-                <a href="friends.php">Friends</a>
+                <a href="friends.php" class="friends">Friends
+                    <!-- Notify when there is friend request -->
+                    <?php
+                    //Get friend request count
+                    $count = getFriendRequestCount($userId);
+                    if($count > 0) {
+                        echo "<span class='notif'>" . $count . "</span>";
+                    }
+                    ?>
+                </a>
                 <a href="heroes.php">Heroes</a>
                 <a href="actions/logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
             </div>
 
-            <!-- Posts -->
-            <div class="posts">
-                <div class="createPost-box">
-                    <a href="user/profile.php?user_id=<?php echo $userId ?>">
-                        <?php 
-                        //Check if profile pic exists
-                        if(isset($profile) || !is_null($profile)) {
-                            echo "<img src='img/u/" . $row['profile_pic'] . "' alt='user'>";
-                        } else { 
-                            echo "<img src='img/default.jpg' alt='user'>";
-                        }?>
-                    </a>
-                    <a class="createPost" href="user/createPost.php?user_id=<?php echo $userId ?>">Create Post</a>
+            <!-- Posts / Friend Requests Area -->
+            <div class="friend-requests">
+                <!-- Friend Requests -->
+                <h2>Friend Requests</h2>
+                <div class="friend-requests-box">
+                    <div class="request-box">
+                        <?php
+                        //Get friend requests
+                        $result = getFriendRequests($userId);
+                        if($result->num_rows > 0) {
+                            while($row = $result->fetch_assoc()) {
+                                $profile = $row['profile_pic'];
+                                $username = $row['username'];
+                                $requester_id = $row['requester_id'];
+                                //Check if profile pic exists
+                                if(isset($profile) || !is_null($profile)) {
+                                    echo "<div class='request'>
+                                            <div class='profile-pic'>
+                                                <img src='img/u/" . $profile . "' alt='user'>
+                                                <p>" . $username . "</p>
+                                            </div>
+                                            <div class='request-box'>
+                                                <h3>" . $username . " has sent you a friend request" . "</h3>
+                                                <form action='actions/Friend_act.php?user_id=" . $requester_id . "' method='POST' class='request-btns'>
+                                                    <button type='submit' name='accept'>Accept</button>
+                                                    <button type='submit' name='decline'>Decline</button>
+                                                </form>
+                                            </div>
+                                        </div>";
+                                } else { 
+                                    echo "<div class='request'>
+                                            <div class='profile-pic'>
+                                                <img src='img/default.jpg' alt='user'>
+                                                <p>" . $username . "</p>
+                                            </div>
+                                            <div class='request-box'>
+                                                <h3>" . $username . " has sent you a friend request" . "</h3>
+                                                <form action='actions/Friend_act.php?user_id=" . $requester_id . "' method='POST' class='request-btns'>
+                                                    <button type='submit' name='accept'>Accept</button>
+                                                    <button type='submit' name='decline'>Decline</button>
+                                                </form>
+                                            </div>
+                                        </div>";
+                                }
+                            }
+                        } else {
+                            echo "<p>No friend requests</p>";
+                        }
+                        ?>
+                    </div>
                 </div>
-                <?php
-                    //Include queries 
-                    include "actions/queries.php";
-                    //Display posts based on sorting
-                    if(isset($_GET['sort'])){
-                        $sort = $_GET['sort'];
-                        if($sort == 'date') {
-                            postsByDate();
-                        } 
-                        else if($sort == 'likes') {
-                            postsByLikes();
-                        }
-                        else if($sort == 'random') {
-                            posts();
-                        }
-                        else if($sort == 'comments') {
-                            postsByComments();
-                        }
-                    } else { 
-                        posts(); 
-                    }
-                ?>
             </div>
 
-            <!-- Others Area -->
-            <div class="other-content">
-                <div class="sortPosts">
-                    <h2>Sort Posts by</h2>
-                    <!-- Sort Posts Buttons -->
-                    <div class="sort-btn">
-                        <a href="index.php?sort=date">Date</a>
-                        <a href="index.php?sort=likes">Likes</a>
-                        <a href="index.php?sort=random">Random</a>
-                        <a href="index.php?sort=comments">Comments</a>
-                    </div>
-                </div>
-                <!-- Greek Heroes Page Area -->
-                <div class="others">
-                    <h2>Greek Heroes Page</h2>
-                        <!-- Heroes Container -->
-                        <div class="heroes">
-                            <!-- Hero Boxes -->
-                            <div class="hero-box">
-                                <img src="img/hero.png" alt="hero"> <p> Zeus</p>
-                            </div>
-                            <div class="hero-box">
-                                <img src="img/hero.png" alt="hero"> <p> Poseidon</p>
-                            </div>
-                            <div class="hero-box">
-                                <img src="img/hero.png" alt="hero"> <p> Heracles</p>
-                            </div>
-                            <div class="hero-box">
-                                <img src="img/hero.png" alt="hero"> <p> Perseus</p>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Friends Area -->
+            <div class="friends-container">
+                <h2>Friends</h2>
+                <div class="friends-box">
+                    <?php
+                    //Get friends
+                    $result = getFriends($userId);
+                    if($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            $profile = $row['profile_pic'];
+                            $username = $row['username'];
+                            //Check if profile pic exists
+                            if(isset($profile) || !is_null($profile)) {
+                                echo "<div class='friend-details'>
+                                        <div class='profile-pic'>
+                                            <a href='user/profile.php?user_id=" . $row['user_id'] . "'><img src='img/u/" . $profile . "' alt='user'></a>
+                                            <p>" . $username . "</p>
+                                        </div>
+                                    </div>";
+                            } else { 
+                                echo "<div class='friend-details'>
+                                        <div class='profile-pic'>
+                                            <a href='user/profile.php?user_id=" . $row['user_id'] . "'><img src='img/default.jpg' alt='user'></a>
+                                            <p>" . $username . "</p>
+                                        </div>
+                                    </div>";
+                            }
+                        }
+                    } else {
+                        echo "<p>No friends</p>";
+                    }
+                    ?>
                 </div>
             </div>
         </div>
