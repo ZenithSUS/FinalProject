@@ -1,10 +1,9 @@
 <?php
     //Function to display profile
-    function profile($userId) {
-        //Include database
-        include "../db.php";
+    function profile($conn, $userId) {
         //Write and Execute Query
-        $result = $conn->query("SELECT * FROM users WHERE user_id = '$userId'");
+        $result = $conn->query("SELECT * FROM users WHERE user_id = '$userId'") 
+        or die($conn->error);
             //Get user data using fetch_assoc or fetch associative arrays
             $user = $result->fetch_assoc();
             // Format date
@@ -21,7 +20,7 @@
             }
             echo "</div>";
             //Display Profile Info
-            $total_friends = getTotalFriends($userId);
+            $total_friends = getTotalFriends($conn, $userId);
             echo "<div class='profile-info'>
                     <h3>" . $user['username'] . "</h3>
                     <h4> " . "Friends: " . $total_friends ."</h4>
@@ -61,7 +60,7 @@
                         } else {
                             //Check if friend request is pending if the
                             //user is the request reciever
-                            if(getFriendRequestStatus($userId, $friendId) == "waiting") {
+                            if(getFriendRequestStatus($conn, $userId, $friendId) == "waiting") {
                                 //Accept friend request button
                                 echo "<div class='request-container'>
                                         <div class='profile-settings'>
@@ -83,10 +82,10 @@
                             //if the user is the request sender
                             } else {
                                 //Get friend request status
-                                $friendRequestStatus = getFriendRequestStatus($userId, $friendId);
+                                $friendRequestStatus = getFriendRequestStatus($conn, $userId, $friendId);
                                 $friendBtnText = "";
                                 if($friendRequestStatus == "pending") {
-                                    $friendBtnText = "Pending";
+                                    $friendBtnText = "Cancel Request";
                                 } else {
                                     $friendBtnText = "Add Friend";
                                 }
@@ -101,7 +100,5 @@
                     }
                 }
         echo "</div>";
-        //Close connection
-        $conn->close();
     }
 ?>

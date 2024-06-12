@@ -17,8 +17,8 @@
         }
         else {
            //Call login function
-           include "queries/auth_queries.php";
-           login($username, $password);
+           include "../queries/auth.php";
+           login($conn, $username, $password);
         }
     //Redirect to index page if user is logged in or the form is not submitted
     } else {

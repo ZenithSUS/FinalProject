@@ -1,8 +1,6 @@
 <?php
     //Function to get all friends
-    function getFriends($userId) {
-        //Include db
-        include "db.php";
+    function getFriends($conn, $userId) {
         //Write query
         $sql = "SELECT * FROM friends JOIN users 
         ON friends.user_id = users.user_id 
@@ -15,14 +13,12 @@
         //Get result
         $result = $stmt->get_result();
         //Close connection
-        $conn->close();
+        
         //Return result
         return $result;
     }
     //Function the get number of friend requests
-    function getFriendRequestCount($userId) {
-        //Include db
-        include "db.php";
+    function getFriendRequestCount($conn, $userId) {
         //Write query
         $sql = "SELECT * FROM friend_requests WHERE requestee_id = ? AND status = 'pending'";
         //Prepare and Bind
@@ -36,15 +32,13 @@
         $count = $result->num_rows;
         //Close connection
         $stmt->close();
-        $conn->close();
+        
         //Return number of friend requests
         return $count;
     }
 
     //Function the get number of friend requests if the directiory is in user folder
-    function getFriendRequestCountUser($userId) {
-        //Include db
-        include "../db.php";
+    function getFriendRequestCountUser($conn, $userId) {
         //Write query
         $sql = "SELECT * FROM friend_requests WHERE requestee_id = ? AND status = 'pending'";
         //Prepare and Bind
@@ -58,16 +52,14 @@
         $count = $result->num_rows;
         //Close connection
         $stmt->close();
-        $conn->close();
+        
         //Return number of friend requests
         return $count;
     }
 
 
     //Function to get friend request
-    function getFriendRequests($userId) {
-        //Include db
-        include "db.php";
+    function getFriendRequests($conn, $userId) {
         //Write query
         $sql = "SELECT * FROM users JOIN friend_requests ON users.user_id = friend_requests.requester_id 
         WHERE friend_requests.requestee_id = ? AND friend_requests.status = 'pending'";
@@ -80,15 +72,13 @@
         $result = $stmt->get_result();
         //Close connection
         $stmt->close();
-        $conn->close();
+        
         //Return result
         return $result;
     }
 
     //Function to get total friends
-    function getTotalFriends($userId) {
-        //Include db
-        include "../db.php";
+    function getTotalFriends($conn, $userId) {
         //Write query
         $sql = "SELECT COUNT(*) AS total FROM friends WHERE user_id = ?";
         //Prepare and Bind
@@ -103,16 +93,14 @@
         $total = $row['total'];
         //Close connection
         $stmt->close();
-        $conn->close();
+        
         //Return result
         return $total;
     }
 
 
     //Function to add friend
-    function addFriend($userId, $friendId) {
-        include "../db.php";
-        //Write and Query
+    function addFriend($conn, $userId, $friendId) {
         $sql = "INSERT INTO friend_requests (id, requester_id, requestee_id) VALUES (?, ?, ?)";
         //Prepare and Bind
         $stmt = $conn->prepare($sql);
@@ -126,12 +114,11 @@
         
         //Close connection
         $stmt->close();
-        $conn->close();
     }
 
     //Function to delete friend request
-    function deleteFriendRequest($userId, $friendId) {
-        include "../db.php";
+    function deleteFriendRequest($conn, $userId, $friendId) {
+        //Write Query
         $sql = "UPDATE friend_requests SET 
         status = 'rejected' 
         WHERE requester_id = ? AND requestee_id = ? 
@@ -155,12 +142,10 @@
         header("Location: ../user/profile.php?user_id=" . $friendId);
         //Close connection
         $stmt->close();
-        $conn->close();
     }
 
     //Function to delete friend
-    function deleteFriend($userId, $friendId) {
-        include "../db.php";
+    function deleteFriend($conn, $userId, $friendId) {
         //Write and Query
         $sql = "DELETE FROM friends WHERE user_id = ? AND friend_id = ?
         OR user_id = ? AND friend_id = ?";
@@ -171,17 +156,15 @@
         $stmt->execute();
 
         //Delete friend request
-        deleteFriendRequest($userId, $friendId);
+        deleteFriendRequest($conn, $userId, $friendId);
         //Redirect back to profile
         header("Location: ../user/profile.php?user_id=" . $friendId);
         //Close connection
         $stmt->close();
-        $conn->close();
     }
 
     //Function to get friend request status
-    function getFriendRequestStatus($userId, $friendId) {
-        include "../db.php";
+    function getFriendRequestStatus($conn, $userId, $friendId) {
         //Write and Query the OR statement is to ensure that the 
         //requester and requestee are not the same
         $sql = "SELECT * FROM friend_requests WHERE requester_id = ? AND requestee_id = ?
@@ -213,13 +196,10 @@
 
         //Close connection
         $stmt->close();
-        $conn->close();
-        
     }
 
     //Function to accept friend request
-    function acceptFriendRequest($userId, $friendId) {
-        include "../db.php";
+    function acceptFriendRequest($conn, $userId, $friendId) {
         //Write and Query
         $sql = "UPDATE friend_requests SET status = 'accepted' WHERE requester_id = ? AND requestee_id = ?";
         //Prepare and Bind
@@ -258,6 +238,5 @@
         header("Location: ../user/profile.php?user_id=" . $friendId);
         //Close connection
         $stmt->close();
-        $conn->close();
     }
 ?>

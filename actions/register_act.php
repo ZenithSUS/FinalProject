@@ -83,15 +83,15 @@
                     exit();
                 } else {
                     //Register user
-                    include "queries/auth_queries.php";
+                    include "../queries/auth.php";
                     //Call function register
-                    register($username, $email, $password);
+                    register($conn, $username, $email, $password);
                     exit();
                 }
             }
             //Close statements
             $stmt->close();
-            $conn->close();
+            
         }
     }
 ?>

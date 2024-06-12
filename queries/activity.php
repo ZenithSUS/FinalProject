@@ -1,8 +1,6 @@
 <?php
     //Function to display activities
-    function activities($userId) {
-        //Include database
-        include "../db.php";
+    function activities($conn, $userId) {
         //Write query and join tables on user_id
         $sql = "SELECT * FROM users JOIN activities ON users.user_id = activities.user_id 
         WHERE activities.user_id = '$userId' ORDER BY timestamp DESC";
@@ -28,14 +26,10 @@
             echo "<p>No activity yet</p>";
         }
         echo "</div>";
-        //Close connection
-        $conn->close();
     }
 
     //Function to add activity
-    function addActivity($userId, $activity, $post_id=null, $comment_id=null) {
-        //Include database
-        include "../db.php";
+    function addActivity($conn, $userId, $activity, $post_id=null, $comment_id=null) {
         //Check if post_id is not null or comment_id is null
         if($post_id != null && $comment_id == null) {
             $sql = "INSERT INTO activities (user_id, activity, post_id) VALUES ('$userId', '$activity', '$post_id')";
@@ -58,7 +52,5 @@
         if(!$conn){
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
-        //Close connection
-        $conn->close();
     }
 ?>

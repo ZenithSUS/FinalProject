@@ -12,26 +12,40 @@
     <!-- Start Session -->
     <?php
     session_start();
+    // Include session checker
+    include "session.php";
     // Check if the session is set
-    if(isset($_SESSION['user_id'])): 
+    if(!isset($_SESSION['user_id']) && !isset($_COOKIE['user_id'])){
+        header("Location: auth/login.php");
+    } else {
+        // Call checkSessionTimeout function
+        checkSessionTimeout();
+    }
     ?>
     <?php
         // Include queries
-        include "actions/queries/post_queries.php" ;
-        include "actions/queries/friend_queries.php";
+        include "queries/post.php";
+        include "queries/friend.php";
+        // Include db connection
+        include "db.php";
     ?>
     <!-- Header Area -->
     <nav>
         <!-- Logo -->
         <h2> Greek Myth </h2>
-        <!-- Search Bar -->
-            <input type="text" placeholder="Search" id="search" class="search">
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <!-- Search Input -->
+                    <input type="text" placeholder="Search" id="searchInput" data-enter-pressed="false" class="search" oninput="search()">
+                    <button class="search-btn">Search</button>
+                <!-- Search Results -->
+                <div id="search-results" class="search-results"></div>
+            </div>
         <!-- Profile Link -->
         <div class="profile-link">
             <?php
             //Get user id 
             $userId = $_SESSION['user_id'];
-            include "db.php";
             // Execute query
             $result = $conn->query("SELECT * FROM users WHERE user_id = '$userId'") or die($conn->error);
             //Get profile pic from database by using user id and associative array 
@@ -61,7 +75,7 @@
                     <?php
 
                     //Get friend request count
-                    $count = getFriendRequestCount($userId);
+                    $count = getFriendRequestCount($conn, $userId);
                     if($count > 0) {
                         echo "<span class='notif'>" . $count . "</span>";
                     }
@@ -91,23 +105,23 @@
                         $sort = $_GET['sort'];
                         //Check if sort is set on date
                         if($sort == 'date') {
-                            postsByDate();
+                            postsByDate($conn);
                         }
                         //Check if sort is set on likes 
                         else if($sort == 'likes') {
-                            postsByLikes();
+                            postsByLikes($conn);
                         }
                         //Check if sort is set on random
                         else if($sort == 'random') {
-                            posts();
+                            posts($conn);
                         }
                         //Check if sort is set on comments
                         else if($sort == 'comments') {
-                            postsByComments();
+                            postsByComments($conn);
                         }
                         //If sort is not set display posts
                     } else { 
-                        posts(); 
+                        posts($conn); 
                     }
                 ?>
             </div>
@@ -157,9 +171,9 @@
         </div>
     </footer>
 
-    <!-- if not logged in redirect to login page -->
-    <?php else: header("Location: auth/login.php") ?>
-    <!-- End If Statement -->
-    <?php endif; ?>
+    <!-- Scripts -->
+    <script src="scripts/search.js"></script>
+
+   
 </body>
 </html>

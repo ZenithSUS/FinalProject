@@ -1,6 +1,7 @@
 <?php
     //Include queries
-    include "queries/friend_queries.php";
+    include "../db.php";
+    include "../queries/friend.php";
 
     //Initialize session
     session_start();
@@ -16,10 +17,10 @@
         //Call addFriend function
         if(!$status) {
             //Call addFriend function
-            addFriend($userId, $friendId);
+            addFriend($conn, $userId, $friendId);
         } else {
             //Call removeFriend function
-            deleteFriendRequest($userId, $friendId);
+            deleteFriendRequest($conn, $userId, $friendId);
         }
     }
 
@@ -29,7 +30,7 @@
         $userId = $_SESSION['user_id'];
         $friendId = $_GET['user_id'];
         //Call acceptFriend function
-        acceptFriendRequest($userId, $friendId);
+        acceptFriendRequest($conn, $userId, $friendId);
     }
 
     //Checks if declineFriendForm is submitted
@@ -38,7 +39,7 @@
         $userId = $_SESSION['user_id'];
         $friendId = $_GET['user_id'];
         //Call declineFriend function
-        deleteFriendRequest($userId, $friendId);
+        deleteFriendRequest($conn, $userId, $friendId);
     }
 
     //Checks if deleteFriendForm is submitted
@@ -47,7 +48,7 @@
         $userId = $_SESSION['user_id'];
         $friendId = $_GET['user_id'];
         //Call deleteFriend function
-        deleteFriend($userId, $friendId);
+        deleteFriend($conn, $userId, $friendId);
     }
 
     //Check if in the friends page is press accept request
@@ -56,7 +57,7 @@
         $userId = $_SESSION['user_id'];
         $friendId = $_GET['user_id'];
         //Call acceptFriend function
-        acceptFriendRequest($userId, $friendId);
+        acceptFriendRequest($conn, $userId, $friendId);
     }
 
     //Check if in the friends page is press decline request
@@ -65,7 +66,7 @@
         $userId = $_SESSION['user_id'];
         $friendId = $_GET['user_id'];
         //Call declineFriend function
-        deleteFriendRequest($userId, $friendId);
+        deleteFriendRequest($conn, $userId, $friendId);
     }
 
 ?>

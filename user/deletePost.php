@@ -1,7 +1,7 @@
 <?php
     //Include queries
-    include "../actions/queries.php";
+    include "../queries/post.php";
 
     //Call deletePost function
-    deletePost($_GET['post_id']);
+    deletePost($conn, $_GET['post_id']);
 ?>

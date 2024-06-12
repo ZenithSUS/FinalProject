@@ -1,84 +1,80 @@
-/** login.php and register.php **/
-
+/* Styling for Login and Register Containers */
 .container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
+
+    /* Styling for Login and Register Forms */
+    .loginForm {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+        box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+        border-radius: 1rem;
+        background-color: var(--light-color);
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .regForm {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+        box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+        border-radius: 1rem;
+        background-color: var(--light-color);
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    form h1 {
+        text-align: center;
+    }
+    
+    form label {
+        font-weight: bold;
+    }
+    
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    form input {
+        padding: 0.5rem;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+        border: 0.2rem solid var(--dark-color);
+    }
+    
+    form button {
+        padding: 0.5rem;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+        border: 0.2rem solid var(--dark-color);
+        background-color: var(--dark-color);
+        color: var(--light-color);
+        cursor: pointer;
+    }
+    
+    form button:hover {
+        transition: background-color 0.5s ease-in-out;
+        background-color: var(--light-color);
+        color: var(--dark-color);
+    }
+
+    .auth-options {
+        display: flex;
+        justify-content: space-between;
+    }
 }
-
-.container .loginForm {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
-    border-radius: 1rem;
-    background-color: var(--light-color);
-    width: 100%;
-    max-width: 500px;
-}
-
-.container .regForm {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
-    border-radius: 1rem;
-    background-color: var(--light-color);
-    width: 100%;
-    max-width: 400px;
-}
-
-.container form h1 {
-    text-align: center;
-}
-
-.container form label {
-    font-weight: bold;
-}
-
-.container .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.container form input {
-    padding: 0.5rem;
-    font-size: 1rem;
-    border-radius: 0.5rem;
-    border: 0.2rem solid var(--dark-color);
-}
-
-.container form button {
-    padding: 0.5rem;
-    font-size: 1rem;
-    border-radius: 0.5rem;
-    border: 0.2rem solid var(--dark-color);
-    background-color: var(--dark-color);
-    color: var(--light-color);
-    cursor: pointer;
-}
-
-.container form button:hover {
-    transition: background-color 0.5s ease-in-out;
-    background-color: var(--light-color);
-    color: var(--dark-color);
-}
-
-.auth-options {
-    display: flex;
-    justify-content: space-between;
-}
-
-
-
 
 /** media queries **/
-
 @media (max-width: 768px) {
     .container form {
        width: 80%;
@@ -123,7 +119,3 @@
         gap: 0.4rem;
     }
 }
-
-
-
-/** end login.php **/

@@ -1,8 +1,6 @@
 <?php
     //Function to display posts in random order
-    function posts() {  
-        //Include db connection  
-        include "db.php";
+    function posts($conn) {  
         //Write query and join tables
         $sql = "SELECT * FROM posts JOIN users ON posts.author = users.user_id
         ORDER BY RAND()";
@@ -53,13 +51,11 @@
             echo "</div>";
         }
         //Close connection
-        $conn->close();
+        
     }
 
     //Function to sort posts by date
-    function postsByDate() {
-        //Include db connection
-        include "db.php";
+    function postsByDate($conn) {
         //Write query and join tables
         $sql = "SELECT * FROM posts JOIN users ON posts.author = users.user_id 
         ORDER BY posts.created_at DESC";
@@ -105,9 +101,7 @@
     }
 
     //Function to sort post by likes
-    function postsByLikes() {
-        //Include db connection
-        include "db.php";
+    function postsByLikes($conn) {
         //Write query and join tables
         $sql = "SELECT * FROM posts 
         JOIN users ON posts.author = users.user_id
@@ -162,9 +156,7 @@
     }
 
     //Function to sort post by comments
-    function postsByComments() {
-        //Include db connection
-        include "db.php";
+    function postsByComments($conn) {
         //Write query and join tables including total comments
         //Left join to get total comments even if there are no comments
         //Group by post_id to get total comments
@@ -213,25 +205,22 @@
             echo "<div class='post'><p>No posts Found</p></div>";
         }
         //Close connection
-        $conn->close();
+        
     }
 
 
     //Function to create post
-    function createPost(){
-        //Include queries
-        include "../db.php";
+    function createPost($conn){
         //Initialize session
         session_start();
         //Check if form is submitted
         if(isset($_POST['createPost'])) {
+            
             //Write query
             $sql = "INSERT INTO posts (post_id, title, content, author) VALUES (?, ?, ?, ?)";
             //Prepare statement
             $stmt = $conn->prepare($sql);
 
-            //Bind parameters
-            $stmt->bind_param("ssss", $post_id, $title, $output, $author);
             //Set parameters
             $post_id = uniqid();
             $title = $_POST['title'];
@@ -239,6 +228,9 @@
             $output = nl2br($content);
             $author = $_SESSION['user_id'];
 
+            //Bind parameters
+            $stmt->bind_param("ssss", $post_id, $title, $output, $author);
+            
             //Execute query
             $stmt->execute();
 
@@ -253,7 +245,9 @@
             $result = $conn->query($sql);
             $row = $result->fetch_assoc();
             $post_id = $row['post_id'];
-            addActivity($author, "created a post a with title " . $title, $post_id, null);
+
+            //Add activity
+            addActivity($conn, $author, "created a post a with title " . $title, $post_id, null);
             
             //Close statement
             $stmt->execute();
@@ -263,8 +257,7 @@
     }
 
     //Function to edit post
-    function editPost($postId) {
-        include "../db.php";
+    function editPost($conn, $postId) {
         session_start();
         //Get post id
         if(isset($_POST['editPost'])) {
@@ -297,16 +290,16 @@
             //Get post id related to the user
             $postId = $row['post_id'];
 
+            //Include activity
+            include "activity.php";
             //Add activity or call function addActivity
-            addActivity($author, "edited a post with title " . $title, $postId, null);
+            addActivity($conn, $author, "edited a post with title " . $title, $postId, null);
             header("Location: ../index.php?post_id=" . $postId);
         }
     }
 
     //Function to display current post
-    function currentPost($postId, $userId) {
-        //Include queries
-        include "../db.php";
+    function currentPost($conn, $postId, $userId) {
         //Writequery and join tables to display current posts
         $sql = "SELECT * FROM posts 
         JOIN users ON posts.author = users.user_id 
@@ -350,13 +343,11 @@
         echo "<hr>";
         echo "</div>";
         //Close connection
-        $conn->close();
+        
     }
 
     //Function to delete post
-    function deletePost($postId) {
-        //Include queries
-        include "../db.php";
+    function deletePost($conn, $postId) {
         //Write sql query to delete table
         $sql = "DELETE FROM posts WHERE post_id = '$postId'";
         //Execute query

@@ -2,10 +2,13 @@
     //Check if the form is submitted and the method is POST
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         //Include queries
-        include "../actions/queries.php";
+        include "../queries/post.php";
+        include "../queries/activity.php";
 
+        //Include db connection
+        include "../db.php";
         //Call createPost function
-        createPost();
+        createPost($conn);
     }
 ?>
 
@@ -31,16 +34,26 @@
     ?>
     <?php
         //Include queries
-        include "../actions/queries/post_queries.php";
-        include "../actions/queries/friend_queries.php";
+        include "../queries/post.php";
+        include "../queries/friend.php";
+        //Include db connection
+        include "../db.php";
     ?>
     <nav> 
+        <!-- Logo -->
         <h2> Greek Myth </h2>
-            <input type="text" placeholder="Search" id="search" class="search">
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <!-- Search Input -->
+                    <input type="text" placeholder="Search" id="searchInput" data-enter-pressed="false" class="search" oninput="search()">
+                    <button class="search-btn">Search</button>
+                <!-- Search Results -->
+                <div id="search-results" class="search-results"></div>
+            </div>
+        <!-- Profile Link -->
         <div class="profile-link">
             <?php 
             $userId = $_SESSION['user_id'];
-            include "../db.php";
             $result = $conn->query("SELECT * FROM users WHERE user_id = '$userId'");
             $row = $result->fetch_assoc(); 
             ?>
@@ -66,7 +79,7 @@
                     <!-- Notify when there is friend request -->
                     <?php
                     //Get friend request count
-                    $count = getFriendRequestCountUser($userId);
+                    $count = getFriendRequestCountUser($conn, $userId);
                     if($count > 0) {
                         echo "<span class='notif'>" . $count . "</span>";
                     }
@@ -135,6 +148,7 @@
 
     <!--Scripts-->
     <script src="../scripts/disableBtns.js"></script>
+    <script src="../scripts/searchSec.js"></script>
 
     <!-- if not logged in redirect to login page -->
     <?php else: header("Location: ../auth/login.php") ?>

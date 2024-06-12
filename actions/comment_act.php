@@ -1,6 +1,8 @@
 <?php
     //Include queries
-    include "queries/comment_queries.php";
+    include "../queries/comment.php";
+    //include db connection
+    include "../db.php";
 
     //Initialize session
     session_start();
@@ -14,6 +16,6 @@
         //Get data from form
         $comment = $_POST['comment'];
         //Call addComment function
-        createComment($userId, $postId, $comment);
+        createComment($conn, $userId, $postId, $comment);
     }
 ?>

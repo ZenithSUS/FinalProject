@@ -14,15 +14,23 @@
     <!-- Start Session -->
     <?php
     session_start();
+    // Include session checker
+    include "../session.php";
     // Check if the session is set
-    if(isset($_SESSION['user_id'])): 
+    if(!isset($_SESSION['user_id']) && !isset($_COOKIE['user_id'])){
+        header("Location: auth/login.php");
+    } else {
+        checkSessionTimeout();
+    }
     ?>
     <?php
         // include queries
-        include "../actions/queries/post_queries.php";
-        include "../actions/queries/profile_queries.php";
-        include "../actions/queries/friend_queries.php";
-        include "../actions/queries/activity_queries.php";
+        include "../queries/post.php";
+        include "../queries/profile.php";
+        include "../queries/friend.php";
+        include "../queries/activity.php";
+        // include db connection
+        include "../db.php";
     ?>
     <nav>
         <!-- Logo -->
@@ -32,7 +40,6 @@
         <!-- Profile Link -->
         <div class="profile-link">
         <?php 
-            include "../db.php";
             //Get user id
             $userId = $_SESSION['user_id'];
             // Execute query
@@ -87,12 +94,12 @@
                             // Get user id from url
                             $userId = $_GET['user_id'];
                             // Display profile or call profile function
-                            profile($userId);
+                            profile($conn, $userId);
                         ?>
                     </div>
                     <div class="profile-box">
                         <!-- Display activities or call activities function -->
-                        <?php activities($userId); ?>
+                        <?php activities($conn, $userId); ?>
                     </div>
                 </div>
             </div>
@@ -125,12 +132,6 @@
         </div>
     </main>
     
-    <!-- Scripts -->
-    <script src="../scripts/addFriendBtn.js"></script>
 
-    <!-- If user is not logged in -->
-    <?php else: header("Location: ../auth/login.php") ?>
-    <!-- End If Statement -->
-    <?php endif; ?>
 </body>
 </html>

@@ -1,8 +1,8 @@
 <?php
     include "../db.php";
     session_start();
-    //Get user id from session
-    if(isset($_POST['submit'])) {
+    //If the form with picture is submitted
+    if(isset($_POST['picSubmit'])) {
         //Get Bio from form
         $bio = $_POST['bio'];
         //Get file information
@@ -54,5 +54,11 @@
             header("Location: ../auth/uploadProfile.php?error=You cannot upload files of this type!");
             exit();
         }
+    }
+
+    //If the form without picture is submitted
+    if(isset($_POST['noPicSubmit'])) {
+        header("Location: ../index.php");
+        exit();
     }
 ?>

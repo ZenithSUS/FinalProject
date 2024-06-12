@@ -14,22 +14,30 @@
     <!-- Start Session -->
     <?php
     session_start();
+    // Include session checker
+    include "../session.php";
     // Check if the session is set
-    if(isset($_SESSION['user_id'])): 
+    if(!isset($_SESSION['user_id']) && !isset($_COOKIE['user_id'])){
+        header("Location: auth/login.php");
+    } else {
+        checkSessionTimeout();
+    }
     ?>
     <?php
         // include queries
-        include "../actions/queries/post_queries.php";
-        include "../actions/queries/friend_queries.php";
+        include "../queries/post.php";
+        include "../queries/friend.php";
+        // include db connection
+        include "../db.php";
     ?>
     <!-- Navigation -->
     <nav>
         <h2> Greek Myth </h2>
             <input type="text" placeholder="Search" id="search" class="search">
         <div class="profile-link">
-        <?php 
+        <?php
+            //Get user id 
             $userId = $_SESSION['user_id'];
-            include "../db.php";
             $result = $conn->query("SELECT * FROM users WHERE user_id = '$userId'");
             $row = $result->fetch_assoc(); 
             ?>
@@ -50,11 +58,11 @@
         <div class="main-content">
             <div class="nav-links"> 
                 <a href="../index.php">Home</a>
-                <a href="friends.php" class="friends">Friends
+                <a href="../friends.php" class="friends">Friends
                     <!-- Notify when there is friend request -->
                     <?php
                     //Get friend request count
-                    $count = getFriendRequestCountUser($userId);
+                    $count = getFriendRequestCountUser($conn, $userId);
                     if($count > 0) {
                         echo "<span class='notif'>" . $count . "</span>";
                     }
@@ -136,9 +144,5 @@
         </div>
     </main>
 
-    <!-- if not logged in redirect to login page -->
-    <?php else: header("Location: auth/login.php") ?>
-    <!-- End If Statement -->
-    <?php endif; ?>
 </body>
 </html>

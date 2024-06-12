@@ -6,6 +6,7 @@
     align-items: center;
 }
 
+/* Styling for Profile Box */
 .posts .profile-box {
     display: flex;
     align-items: center;
@@ -17,62 +18,67 @@
     background-color: var(--light-color);
     width: 100%;
     max-width: 600px;
+
+    /* Styling for Profile Box Children */
+    img {
+        border-radius: 100%;
+        border: 0.2rem solid var(--dark-color);
+        width: 10rem;
+        height: 10rem;
+    }
+
+    .profile-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    /* Styling for Profile Settings */
+    .profile-settings {
+        display: flex;
+        gap: 0.5rem;
+
+        /* Styling for Profile Settings Children */
+        a, button {
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 0.5rem;
+            font-size: 1rem;
+            width: fit-content;
+            border-radius: 0.5rem;
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            cursor: pointer;
+            border: 0.2rem solid var(--dark-color);
+        }
+
+        a:hover, button:hover {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            transition: background-color 0.3s ease-in-out;
+        }
+    }
+
+    /* Styling for Profile Requests */
+    .profile-info .request-container {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        
+    }
+
+    /* Styling for Profile Activity */
+    .profile-activity {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
 }
 
-.posts .profile-box img {
-    border-radius: 100%;
-    border: 0.2rem solid var(--dark-color);
-    width: 10rem;
-    height: 10rem;
-}
-
-.posts .profile-box .profile-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.posts .profile-box .profile-settings {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.posts .profile-box .profile-settings a,
-.posts .profile-box .profile-settings button {
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1rem;
-    padding: 0.5rem;
-    font-size: 1rem;
-    width: fit-content;
-    border-radius: 0.5rem;
-    background-color: var(--dark-color);
-    color: var(--light-color);
-    cursor: pointer;
-    border: 0.2rem solid var(--dark-color);
-}
-
-.posts .profile-box .profile-settings a:hover,
-.posts .profile-box .profile-settings button:hover {
-    background-color: var(--light-color);
-    color: var(--dark-color);
-    transition: background-color 0.3s ease-in-out;
-}
-
-.posts .profile-box .profile-info .request-container {
-    display: flex;
-    gap: 0.5rem;
-    padding: 0.5rem;
-    
-}
-
-.posts .profile-box .profile-activity {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
 
 
+/* Media Queries */
 @media (min-width: 200px) and (max-width: 600px) {
     .posts .profile-box {
        display: flex;

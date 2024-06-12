@@ -1,8 +1,6 @@
 <?php
     //Function to login
-    function login($username, $password) {
-        //Include db connection
-        include "../db.php";
+    function login($conn, $username, $password) {
         //Write query and prepare statement
         $sql = "SELECT * FROM users WHERE username=? OR email=?";
         $stmt = $conn->prepare($sql);
@@ -29,12 +27,17 @@
                 if(password_verify($password, $row['password'])) {
                     $_SESSION['user_id'] = $row['user_id'];
                     $_SESSION['username'] = $row['username'];
+                    $_SESSION['last_activity'] = time();
+                    $_SESSION['exprires'] = 3600;
+
+                    // Set cookies
+                    setcookie("user_id", $row['user_id'], time() + $_SESSION['exprires'] , "/");
                     header("Location: ../index.php");
                 //Else password is incorrect
                 } else {
                     //Close statement
                     $stmt->close();
-                    $conn->close();
+                    
                     header("Location: ../auth/login.php?error=Incorrect username or password");
                 }
                 //Exit if password is incorrect
@@ -44,9 +47,7 @@
     }
 
     //Function to register
-    function register($username, $email, $password) {
-        //Include db connection
-        include "../db.php";
+    function register($conn, $username, $email, $password) {
         //Write query and prepare statement
         $sql = "INSERT INTO users (user_id, username, email, password) VALUES (?, ?, ?, ?)";
         //Prepare statement
@@ -68,8 +69,13 @@
             //Set session variables
             $_SESSION['user_id'] = $user_id;
             $_SESSION['username'] = $username;
+            $_SESSION['last_activity'] = time();
+            $_SESSION['exprires'] = 3600;
+
+            //Set cookies
+            setcookie("user_id", $user_id, time() + $_SESSION['exprires'] , "/");
             //Close statement
-            $conn->close();
+            
             $stmt->close();
             echo "<script>alert('Registered successfully!')</script>";
             echo "<script>window.location.href = '../auth/uploadProfile.php';</script>";

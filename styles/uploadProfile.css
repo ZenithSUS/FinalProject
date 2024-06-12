@@ -1,3 +1,4 @@
+/* Styling for Upload Profile Container */
 .profile-container {
     display: flex;
     justify-content: center;
@@ -5,76 +6,93 @@
     flex-direction: column;
     gap: 2rem;
     height: 100vh;
-}
 
-.profile-container h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--dark-color);
-    text-align: center;
-}
+    
+    /* Styling for Upload Profile Heading */
+    h1 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--dark-color);
+        text-align: center;
+    }
 
-.profile-container form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
-    border-radius: 1rem;
-    background-color: var(--light-color);
-    width: 100%;
-    max-width: 500px;
-}
 
-.profile-container form img {
-    width: 10rem;
-    height: 10rem;
-    border-radius: 100%;
-    border: 0.2rem solid var(--dark-color);
-}
+    /* Styling for Upload Profile Form */
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+        border-radius: 1rem;
+        background-color: var(--light-color);
+        width: 100%;
+        max-width: 500px;
+        height: 100%;
+        max-height: 500px;
 
-.profile-container form .form-group {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    gap: 0.5rem;
-}
+        /* Styling for form children or elements */
+        img {
+            width: 10rem;
+            height: 10rem;
+            border-radius: 100%;
+            border: 0.2rem solid var(--dark-color);
+        }
 
-.profile-container form .form-group .buttons {
-    display: flex;
-    gap: 1rem;
-}
+        label {
+            font-weight: bold;
+        }
+        
+        input {
+            padding: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        textarea {
+            padding: 0.5rem;
+            font-size: 1rem;
+            height: 5rem;
+            resize: none;
+        }
+        
+        button {
+            padding: 0.5rem;
+            font-size: 1rem;
+            border-radius: 0.5rem;
+            border: 0.2rem solid var(--dark-color);
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+        
+        /* Styling for form group */
+        .form-group {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            gap: 0.5rem;
 
-.profile-container form label {
-    font-weight: bold;
-}
+            .uploadBtns {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+            }
 
-.profile-container form input {
-    padding: 0.5rem;
-    font-size: 1rem;
+            /* Styling for form buttons */
+            .buttons {
+                display: flex;
+                gap: 1rem;
+            }
+        }
+    }
+    
 }
-
-.profile-container form textarea {
-    padding: 0.5rem;
-    font-size: 1rem;
-    resize: none;
-}
-
-.profile-container form button {
-    padding: 0.5rem;
-    font-size: 1rem;
-    border-radius: 0.5rem;
-    border: 0.2rem solid var(--dark-color);
-    background-color: var(--dark-color);
-    color: var(--light-color);
-    cursor: pointer;
-}
-
-.profile-container form button:hover {
-    background-color: var(--light-color);
-    color: var(--dark-color);
-    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-}
-

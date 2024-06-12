@@ -24,11 +24,11 @@ performSearch = (query) => {
 
             if (resultsItems.length >= 0 && enterPressed == "true") {
                 var matchedResults = resultsItems[0].getAttribute("data-user-id");
-                window.location.href = "user/profile.php?user_id=" + matchedResults + "";
+                window.location.href = "../user/profile.php?user_id=" + matchedResults + "";
             }
         }
     };
-    xhr.open("GET", "actions/search.php?q=" + query + "", true);
+    xhr.open("GET", "../actions/search.php?q=" + query + "", true);
     xhr.send();
 }
 

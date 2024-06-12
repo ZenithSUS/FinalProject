@@ -1,8 +1,6 @@
 <?php
     //Function to display comments
-    function comments() {
-        //Include queries
-        include "../db.php";
+    function comments($conn) {
         //Get post id from url or using GET method
         $postId = $_GET['post_id'];
         //Write query and join tables to display comments
@@ -40,12 +38,10 @@
             echo "</div>";
         }
         //Close connection
-        $conn->close();
+        
     }
 
-    function createComment($userId, $postId, $content) {
-        //Include database
-        include "../db.php";
+    function createComment($conn, $userId, $postId, $content) {
         if(isset($_POST['commentForm'])) {
             //Check if content is set and not null to create comment
             if(isset($content) && !empty($content) && !is_null($content)) {
@@ -71,10 +67,10 @@
                     $row = $result->fetch_assoc();
 
                     //include queries
-                    include "queries/activity_queries.php";
+                    include "activity.php";
                     //Get title from posts and comment relationship
                     $title= $row['title'];
-                    addActivity($userId, "commennted on a post titled " . $title . "", NULL, $row['comment_id']);
+                    addActivity($conn, $userId, "commennted on a post titled " . $title . "", NULL, $row['comment_id']);
                 }
             }
             //Get post id from url or using GET method

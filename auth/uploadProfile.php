@@ -13,10 +13,15 @@
     <!-- Intiaties a session -->
     <?php
         session_start();
+        // Include session checker
+        include "../session.php";
         // Check if the session is not set
-        if(!isset($_SESSION['user_id'])): header("Location: login.php"); 
+        if(!isset($_SESSION['user_id']) && !isset($_COOKIE['user_id'])){
+            header("Location: ../auth/login.php");
+        } else {
+            checkSessionTimeout();
+        }
     ?>
-    <?php endif; ?>
     <!-- Profile Form Container -->
     <div class="profile-container">
         <!-- Profile Form -->
@@ -36,8 +41,10 @@
             </div>
             <!-- Submit Button -->
             <div class="form-group">
-                <button type="submit" name="submit">Upload</button>
-                <button type="submit" name="submit">Later</button>
+                <div class="uploadBtns">
+                    <button type="submit" name="picSubmit">Upload</button>
+                    <button type="submit" name="noPicSubmit">Later</button>
+                </div>
             </div>
             <!-- Error Message -->
             <?php if(isset($_GET['error'])) { ?>
@@ -48,5 +55,6 @@
 
     <!-- Scripts -->
     <script src="../scripts/displayPic.js"></script>
+
 </body>
 </html>

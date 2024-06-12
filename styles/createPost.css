@@ -1,5 +1,4 @@
-/* Create Post Styling */
-
+/* Styling for Create Post Container */
 .createPost {
     display: flex;
     flex-direction: column;
@@ -8,89 +7,78 @@
     max-width: 1000px;
 }
 
-.createPost .createForm-container {
+
+/* Styling for Create Post Form */
+.createForm-container {
     display: flex;
     flex-direction: column;
     background-color: #eaeaea;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
     border-radius: 1rem;
     padding: 1rem;
+
+    /* Styling for Create Post Form Children or Elements */
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    h2 {
+        margin-bottom: 0.5rem;
+    }
+
+    form label {
+        font-weight: bold;
+    }
+
+    form .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    form input {
+        padding: 0.5rem;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+        border: 0.2rem solid var(--dark-color);
+        width: 100%;
+    }
+
+    form textarea {
+        resize: vertical;
+        margin: 0.5rem 0;
+        padding: 0.5rem;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+        border: 0.2rem solid var(--dark-color);
+        width: 100%;
+    }
+    
+    form .createPost-btn {
+        display: flex;
+        justify-content: end;
+        gap: 1rem;
+        width: 100%;
+    }
+
+    form .createPost-btn button, form .createPost-btn a {
+        text-decoration: none;
+        color: var(--dark-color);
+        padding: 0.5rem;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+        border: 0.2rem solid var(--dark-color);
+        background-color: var(--dark-color);
+        color: var(--light-color);
+        width: fit-content;
+        cursor: pointer;
+    }
+
+    form .createPost-btn button:hover, form .createPost-btn a:hover {
+        background-color: var(--light-color);
+        color: var(--dark-color);
+        transition: background-color 0.3s ease-in-out;
+    }
 }
-
-.createPost .createForm-container form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.createPost .createForm-container h2 {
-    margin-bottom: 0.5rem;
-}
-
-.createPost .createForm-container form label {
-    font-weight: bold;
-}
-
-.createPost .createForm-container form .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.createPost .createForm-container form input {
-    padding: 0.5rem;
-    font-size: 1rem;
-    border-radius: 0.5rem;
-    border: 0.2rem solid var(--dark-color);
-    width: 100%;
-}
-
-.createPost .createForm-container form textarea {
-    resize: vertical;
-    margin: 0.5rem 0;
-    padding: 0.5rem;
-    font-size: 1rem;
-    border-radius: 0.5rem;
-    border: 0.2rem solid var(--dark-color);
-    width: 100%;
-}
-
-.createPost .createForm-container form .createPost-btn {
-    display: flex;
-    justify-content: end;
-    gap: 1rem;
-    width: 100%;
-}
-
-.createPost .createForm-container form .createPost-btn button,
-.createPost .createForm-container form .createPost-btn a {
-    text-decoration: none;
-    color: var(--dark-color);
-    padding: 0.5rem;
-    font-size: 1rem;
-    border-radius: 0.5rem;
-    border: 0.2rem solid var(--dark-color);
-    background-color: var(--dark-color);
-    color: var(--light-color);
-    width: fit-content;
-    cursor: pointer;
-}
-
-.createPost .createForm-container form .createPost-btn button:hover, 
-.createPost .createForm-container form .createPost-btn a:hover {
-    background-color: var(--light-color);
-    color: var(--dark-color);
-    transition: background-color 0.3s ease-in-out;
-}
-
-
-.createForm-container .createForm-container form .createPost-btns a {
-    text-decoration: none;
-    color: var(--dark-color);
-    padding: 0.5rem;
-    font-size: 1rem;
-    border-radius: 0.5rem;
-    border: 0.2rem solid var(--dark-color);
-    width: fit-content;
-}
-
