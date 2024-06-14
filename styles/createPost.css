@@ -1,10 +1,23 @@
 /* Styling for Create Post Container */
+
+.create-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 4rem;
+    padding: 2rem;
+}
+
+/* Styling for Create Post Box */
 .createPost {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    margin-right: 2rem;
     width: 100%;
-    max-width: 1000px;
+    max-width: 750px;
 }
 
 
@@ -80,5 +93,46 @@
         background-color: var(--light-color);
         color: var(--dark-color);
         transition: background-color 0.3s ease-in-out;
+    }
+}
+
+/* Media Queries */
+
+/* Media Queries for Mobile Devices */
+@media (min-width: 0px) and (max-width: 600px) {
+    .createPost {
+        max-width: 1000px;
+        margin-left: 0;
+
+        h2 {
+            text-align: center;
+        }
+
+        form button {
+            justify-content: center;
+        }
+    }
+}
+
+/* Media Queries for Tablets */
+@media (min-width: 601px) and (max-width: 1024px) {
+
+    .createPost {
+        max-width: 750px;
+    }
+}
+
+/* Media Queries for Desktops */
+@media (min-width: 1400px) {
+
+    .create-content {
+        width: 100%;
+        max-width: 750px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .createPost {
+        max-width: 750px;
     }
 }

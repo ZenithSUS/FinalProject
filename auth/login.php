@@ -13,7 +13,8 @@
     <!-- Intiaties a session -->
     <?php session_start();
         // Check if the session is set 
-        if(isset($_SESSION['user_id'])): header("Location: ../index.php"); 
+        if(isset($_SESSION['user_id'])): 
+            header("Location: ../index.php"); 
     ?>
     <?php endif; ?>
     <!-- Login Container -->

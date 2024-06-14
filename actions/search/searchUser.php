@@ -1,6 +1,6 @@
 <?php
     //Include db
-    include "../db.php";
+    include "../../db.php";
 
     //Initialize session
     session_start();
@@ -30,8 +30,14 @@
             $user_id = $rows['user_id'];
             $username = $rows['username'];
             $profile_pic = $rows['profile_pic'];
-            echo "<a class='item' href='user/profile.php?user_id=$user_id' data-user-id='$user_id'> 
-            $username <img src='/img/u/$profile_pic' alt='user' class='user'></a>";
+            if($profile_pic == null) {
+                echo "<a class='item' href='../user/profile.php?user_id=$user_id' data-user-id='$user_id'> 
+                <img src='../img/default.jpg' alt='user'> $username</a>";
+            } else {
+                echo "<a class='item' href='../user/profile.php?user_id=$user_id' data-user-id='$user_id'> 
+                <img src='../img/u/$profile_pic' alt='user'> $username</a>";
+            }
+           
         }
     } else {
         echo "No results found";

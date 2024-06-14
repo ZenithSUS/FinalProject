@@ -1,10 +1,24 @@
+/* Edit Post Styling */
+.edit-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 1000px;
+    height: 100%;
+    min-height: 100vh;
+    margin-right: 2rem;
+}
+
 /* Styling for Edit Post Container */
 .editPost {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     width: 100%;
-    max-width: 1000px;
+    max-width: 750px;
 }
 
 

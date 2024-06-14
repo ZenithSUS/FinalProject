@@ -1,18 +1,3 @@
-<?php
-    //Check if the form is submitted and the method is POST
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
-        //Include queries
-        include "../queries/post.php";
-        include "../queries/activity.php";
-
-        //Include db connection
-        include "../db.php";
-        //Call createPost function
-        createPost($conn);
-    }
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,8 +14,14 @@
     <!-- Start Session -->
     <?php
     session_start();
-    // Check if the session is set
-    if(isset($_SESSION['user_id'])): 
+    // Include session checker
+    include_once "session.php";
+    // Check if the session or cookie is set
+    if(!isset($_SESSION['user_id']) || !isset($_COOKIE['user_id'])){
+        header("Location: auth/login.php");
+    } else {
+        checkSessionTimeout();
+    }
     ?>
     <?php
         //Include queries
@@ -45,10 +36,14 @@
             <!-- Search Bar -->
             <div class="search-bar">
                 <!-- Search Input -->
-                    <input type="text" placeholder="Search" id="searchInput" data-enter-pressed="false" class="search" oninput="search()">
+                 <div class="search-input">
+                    <input type="text" placeholder="Search" id="searchInput" data-enter-pressed="false" class="search" oninput="searchUser()">
                     <button class="search-btn">Search</button>
+                </div>
                 <!-- Search Results -->
-                <div id="search-results" class="search-results"></div>
+                <div class="search-results-container">
+                    <div id="search-results" class="search-results"></div>
+                </div>
             </div>
         <!-- Profile Link -->
         <div class="profile-link">
@@ -71,7 +66,7 @@
 
     <!-- Main Area -->
     <main>
-        <div class="main-content">
+        <div class="create-content">
             <!-- Nav Links -->
             <div class="nav-links"> 
                 <a href="../index.php">Home</a>
@@ -96,7 +91,7 @@
                     <!-- Heading or Title -->
                     <h2 id="postTitle">Create Post</h2>
                     <!-- Create Post Form -->
-                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+                    <form action="../actions/createPost_act.php" method="POST">
                         <!-- Title Field -->
                         <div class="form-group"> 
                             <label for="title">Title</label>
@@ -111,33 +106,35 @@
                         </div>
                         <!-- Submit Button -->
                         <div class="createPost-btn">
-                            <button type="submit" name="createPost" id="postBtn" onclick="disablePostBtn()">Post</button>
+                            <button type="submit" name="createPost" id="postBtn">Post</button>
                             <a href="../index.php" id="backBtn">Go back</a>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <!-- Other Content Area -->
-            <div class="other-content">
-                <!-- Other Content Container -->
-                <div class="others">
-                    <!-- Heading or Title -->
-                    <h2>Greek Heroes Page</h2>
-                    <!-- Heroes Container -->
-                        <div class="heroes">
-                            <!-- Hero Boxes -->
-                            <div class="hero-box">
-                                <img src="../img/hero.png" alt="hero"> <p> Zeus</p>
-                            </div>
-                            <div class="hero-box">
-                                <img src="../img/hero.png" alt="hero"> <p> Poseidon</p>
-                            </div>
-                            <div class="hero-box">
-                                <img src="../img/hero.png" alt="hero"> <p> Heracles</p>
-                            </div>
-                            <div class="hero-box">
-                                <img src="../img/hero.png" alt="hero"> <p> Perseus</p>
+             <!-- Others Content Area -->
+             <div class="other-content">
+                <div class="other-scroll" id="other-scroll">
+                    <!-- Greek Heroes Page Area -->
+                    <div class="others">
+                        <!-- Title -->
+                        <h2>Greek Heroes Page</h2>
+                            <!-- Heroes Container -->
+                            <div class="heroes">
+                                <!-- Hero Boxes -->
+                                <div class="hero-box">
+                                    <img src="../img/hero.png" alt="hero"> <p> Zeus</p>
+                                </div>
+                                <div class="hero-box">
+                                    <img src="../img/hero.png" alt="hero"> <p> Poseidon</p>
+                                </div>
+                                <div class="hero-box">
+                                    <img src="../img/hero.png" alt="hero"> <p> Heracles</p>
+                                </div>
+                                <div class="hero-box">
+                                    <img src="../img/hero.png" alt="hero"> <p> Perseus</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -147,12 +144,6 @@
     </main>
 
     <!--Scripts-->
-    <script src="../scripts/disableBtns.js"></script>
-    <script src="../scripts/searchSec.js"></script>
-
-    <!-- if not logged in redirect to login page -->
-    <?php else: header("Location: ../auth/login.php") ?>
-    <!-- End If Statement -->
-    <?php endif; ?>
+    <script src="../scripts/search.js"></script>
 </body>
 </html>

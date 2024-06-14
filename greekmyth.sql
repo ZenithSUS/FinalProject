@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2024 at 10:34 AM
+-- Generation Time: Jun 13, 2024 at 04:50 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -41,10 +41,9 @@ CREATE TABLE `activities` (
 --
 
 INSERT INTO `activities` (`activity_id`, `post_id`, `comment_id`, `user_id`, `activity`, `timestamp`) VALUES
-(151, '666544a89dab8', NULL, '666324fad693b', 'created a post a with title Hello World', '2024-06-09 05:59:04'),
-(152, '6665465aceb0b', NULL, '6662865c3867d', 'created a post a with title Hello World', '2024-06-09 06:06:19'),
-(153, '66655a92ca94f', NULL, '666324fad693b', 'created a post a with title hjgjgk', '2024-06-09 07:32:34'),
-(154, '66655e9147932', NULL, '66631c3c988a2', 'created a post a with title asdsa', '2024-06-09 07:49:37');
+(165, '6669c9ce3bd0b', NULL, '66690a8bafcdb', 'created a post a with title asd', '2024-06-12 16:16:54'),
+(166, '6669c9ce3bd0b', NULL, '66690a8bafcdb', 'edited a post with title asd', '2024-06-12 16:19:28'),
+(167, NULL, '6669cad191964', '66690a8bafcdb', 'commennted on a post titled asd', '2024-06-12 16:20:33');
 
 -- --------------------------------------------------------
 
@@ -61,6 +60,14 @@ CREATE TABLE `comments` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`comment_id`, `post_id`, `parent_comment`, `author`, `content`, `created_at`) VALUES
+('6669cabfe133f', '6669c9ce3bd0b', NULL, '66690a8bafcdb', 'asdsad', '2024-06-13 00:20:15'),
+('6669cad191964', '6669c9ce3bd0b', NULL, '66690a8bafcdb', 'asdsad', '2024-06-13 00:20:33');
+
 -- --------------------------------------------------------
 
 --
@@ -68,10 +75,21 @@ CREATE TABLE `comments` (
 --
 
 CREATE TABLE `friends` (
+  `id` varchar(36) NOT NULL,
   `user_id` varchar(36) NOT NULL,
   `friend_id` varchar(36) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `friends`
+--
+
+INSERT INTO `friends` (`id`, `user_id`, `friend_id`, `created_at`) VALUES
+('6669cf2a2420d', '66690a8bafcdb', '666919a7f382e', '2024-06-12 16:39:06'),
+('6669cf2a512b9', '666919a7f382e', '66690a8bafcdb', '2024-06-12 16:39:06'),
+('6669df7ee01f5', '6669de93d8815', '66690a8bafcdb', '2024-06-12 17:48:46'),
+('6669df7f04606', '66690a8bafcdb', '6669de93d8815', '2024-06-12 17:48:47');
 
 -- --------------------------------------------------------
 
@@ -80,6 +98,7 @@ CREATE TABLE `friends` (
 --
 
 CREATE TABLE `friend_requests` (
+  `id` varchar(36) NOT NULL,
   `requester_id` varchar(36) NOT NULL,
   `requestee_id` varchar(36) NOT NULL,
   `status` enum('pending','accepted','rejected') DEFAULT 'pending',
@@ -136,10 +155,8 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`post_id`, `title`, `content`, `author`, `likes`, `dislikes`, `created_at`, `updated_at`) VALUES
-('666544a89dab8', 'Hello World', 'Hello World', '666324fad693b', 0, 0, '2024-06-09 13:59:04', '2024-06-09 13:59:04'),
-('6665465aceb0b', 'Hello World', 'Hi', '6662865c3867d', 0, 0, '2024-06-09 14:06:18', '2024-06-09 14:06:18'),
-('66655a92ca94f', 'hjgjgk', 'jtggjjgjg', '666324fad693b', 0, 0, '2024-06-09 15:32:34', '2024-06-09 15:32:34'),
-('66655e9147932', 'asdsa', 'asdsad', '66631c3c988a2', 0, 0, '2024-06-09 15:49:37', '2024-06-09 15:49:37');
+('6669c9ce3bd0b', 'asd', 'asdsa', '66690a8bafcdb', 0, 0, '2024-06-13 00:16:14', '2024-06-13 00:19:28'),
+('6669c9f5eeb08', 'asd', '', '66690a8bafcdb', 0, 0, '2024-06-13 00:16:53', '2024-06-13 00:16:53');
 
 -- --------------------------------------------------------
 
@@ -163,10 +180,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `profile_pic`, `bio`, `token`, `joined_at`) VALUES
-('6662865c3867d', 'ZENZEN', 'merinojc25@gmail.com', '$2y$10$BeL1549p.a44bsqRSh9J1.Kclb/y63t4OQjgx5xmkyAsx7j5ETHf6', NULL, NULL, '', '2024-06-07 12:02:36'),
-('66631c3c988a2', 'Omniman', 'henryalphia@gmail.com', '$2y$10$sXHKGqDpEakX72F4UDSunOSYPRXjrElktFRIeS7Ve9Xi5IxjeYJoy', NULL, NULL, '', '2024-06-07 22:42:04'),
-('666324fad693b', 'GGG', 'ggg@gmail.com', '$2y$10$xTN/4fiNqNlYNieeI11eru5GYyfrl7llJm6RiAcQKRcCAz1VMDw56', '666326ed4fdd49.92745655.jpg', NULL, '', '2024-06-07 23:19:22'),
-('6663eb029af37', 'Breme', 'breme@gmail.com', '$2y$10$bRMua1YU.puqevvk.w2CYuWnqU/IGcKU9/S9ovpMwTyOI5CwaSdYK', '6663eb1473bd73.90689395.jpg', 'I\'M GAEEEEEE', '', '2024-06-08 13:24:18');
+('66690a8bafcdb', 'ZenithSUS', 'merinojc25@gmail.com', '$2y$10$cLz07hLHY0.or2jTY7xbzOzTabwQ1I2XOqkZ24VFGznNsWwRAwAvu', NULL, NULL, '', '2024-06-12 10:40:11'),
+('666919a7f382e', 'DaeWae', 'DoUKnow@gmail.com', '$2y$10$K0YZCSRwuEbdblEJC2jP..ntRQOkHIVkMKdMCan4MphROxjTgPb/O', NULL, NULL, '', '2024-06-12 11:44:40'),
+('6669de93d8815', 'ggg', 'ggg@gmail.com', '$2y$10$tOMVmG.Y5toyB.EITIYyk.ioQkvA6Y5hBTxvnGuk2PEVNUlUWLN7a', '6669df359f6391.82006395.jpg', 'Du u knuw da wae\r\n', '', '2024-06-13 01:44:51');
 
 --
 -- Indexes for dumped tables
@@ -194,14 +210,16 @@ ALTER TABLE `comments`
 -- Indexes for table `friends`
 --
 ALTER TABLE `friends`
-  ADD PRIMARY KEY (`user_id`,`friend_id`),
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `friends_ibfk_3` (`user_id`),
   ADD KEY `friends_ibfk_4` (`friend_id`);
 
 --
 -- Indexes for table `friend_requests`
 --
 ALTER TABLE `friend_requests`
-  ADD PRIMARY KEY (`requester_id`,`requestee_id`),
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `friend_requests_ibfk_1` (`requester_id`),
   ADD KEY `friend_requests_ibfk_2` (`requestee_id`);
 
 --
@@ -224,7 +242,7 @@ ALTER TABLE `likes`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`post_id`),
-  ADD KEY `author` (`author`);
+  ADD KEY `posts_ibfk_1` (`author`);
 
 --
 -- Indexes for table `users`
@@ -240,7 +258,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `activities`
 --
 ALTER TABLE `activities`
-  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
+  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
 
 --
 -- Constraints for dumped tables
@@ -267,9 +285,7 @@ ALTER TABLE `comments`
 --
 ALTER TABLE `friends`
   ADD CONSTRAINT `friends_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `friends_ibfk_2` FOREIGN KEY (`friend_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `friends_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `friend_requests` (`requester_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `friends_ibfk_4` FOREIGN KEY (`friend_id`) REFERENCES `friend_requests` (`requestee_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `friends_ibfk_2` FOREIGN KEY (`friend_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `friend_requests`
@@ -290,7 +306,7 @@ ALTER TABLE `likes`
 -- Constraints for table `posts`
 --
 ALTER TABLE `posts`
-  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`author`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`author`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -14,9 +14,9 @@
     <?php
     session_start();
     // Include session checker
-    include "session.php";
+    include_once "session.php";
     // Check if the session is set
-    if(isset($_SESSION['user_id']) && !isset($_COOKIE['user_id'])){
+    if(!isset($_SESSION['user_id']) || !isset($_COOKIE['user_id'])){
         header("Location: auth/login.php");
     } else {
         checkSessionTimeout();
@@ -36,10 +36,14 @@
         <!-- Search Bar -->
         <div class="search-bar">
             <!-- Search Input -->
+            <div class="search-input">
                 <input type="text" placeholder="Search" id="searchInput" data-enter-pressed="false" class="search" oninput="search()">
                 <button class="search-btn">Search</button>
+            </div>
             <!-- Search Results -->
-            <div id="search-results" class="search-results"></div>
+            <div class="search-results-container">
+                <div id="search-results" class="search-results"></div>
+            </div>
         </div>
         <!-- Profile Link -->
         <div class="profile-link">
@@ -66,7 +70,7 @@
     
     <!-- Main Area -->
     <main>
-        <div class="main-content">
+        <div class="friend-content">
             <!-- Nav Links -->
             <div class="nav-links"> 
                 <a href="index.php">Home</a>
@@ -140,46 +144,45 @@
             <!-- Friends Area -->
             <div class="friends-container">
                 <h2>Friends</h2>
-                <div class="friends-box">
-                    <?php
-                    //Get friends
-                    $result = getFriends($conn, $userId);
-                    if($result->num_rows > 0) {
-                        while($row = $result->fetch_assoc()) {
-                            $profile = $row['profile_pic'];
-                            $username = $row['username'];
-                            //Check if profile pic exists
-                            if(isset($profile) || !is_null($profile)) {
-                                echo "<div class='friend-details'>
-                                        <div class='profile-pic'>
-                                            <a href='user/profile.php?user_id=" . $row['user_id'] . "'><img src='img/u/" . $profile . "' alt='user'></a>
-                                            <p>" . $username . "</p>
-                                        </div>
-                                    </div>";
-                            } else { 
-                                echo "<div class='friend-details'>
-                                        <div class='profile-pic'>
-                                            <a href='user/profile.php?user_id=" . $row['user_id'] . "'><img src='img/default.jpg' alt='user'></a>
-                                            <p>" . $username . "</p>
-                                        </div>
-                                    </div>";
+                <div class="friends-scroll">
+                    <div class="friends-box">
+                        <?php
+                        //Get friends
+                        $result = getFriends($conn, $userId);
+                        if($result->num_rows > 0) {
+                            while($row = $result->fetch_assoc()) {
+                                $profile = $row['profile_pic'];
+                                $username = $row['username'];
+                                //Check if profile pic exists
+                                if(isset($profile) || !is_null($profile)) {
+                                    echo "<div class='friend-details'>
+                                            <div class='profile-pic'>
+                                                <a href='user/profile.php?user_id=" . $row['user_id'] . "'><img src='img/u/" . $profile . "' alt='user'></a>
+                                                <p>" . $username . "</p>
+                                            </div>
+                                        </div>";
+                                } else { 
+                                    echo "<div class='friend-details'>
+                                            <div class='profile-pic'>
+                                                <a href='user/profile.php?user_id=" . $row['user_id'] . "'><img src='img/default.jpg' alt='user'></a>
+                                                <p>" . $username . "</p>
+                                            </div>
+                                        </div>";
+                                }
                             }
+                        } else {
+                            echo "<p>No friends</p>";
                         }
-                    } else {
-                        echo "<p>No friends</p>";
-                    }
                     ?>
+                    </div>
                 </div>
             </div>
+
         </div>
     </main>
 
-    <!-- Footer Area -->
-    <footer>
-        <div class="footer-content">
-            <a href="#top">Back to Top</a>
-        </div>
-    </footer>
+    <!-- Scripts -->
+    <script src="scripts/search.js"></script>
 
 </body>
 </html>

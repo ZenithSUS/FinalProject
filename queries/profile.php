@@ -11,7 +11,7 @@
             $date = date('F d, Y', $date);
             $formattedDate = date('F d, Y', strtotime($date));
             // Display profile
-            echo "<div>";
+            echo "<div class='profile'>";
             //If profile picture exists
             if($user['profile_pic'] == null) {
                 echo "<img src='../img/default.jpg' alt='profile'>";

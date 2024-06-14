@@ -15,9 +15,9 @@
     <?php
     session_start();
     // Include session checker
-    include "../session.php";
+    include_once "session.php";
     // Check if the session is set
-    if(!isset($_SESSION['user_id']) && !isset($_COOKIE['user_id'])){
+    if(!isset($_SESSION['user_id']) || !isset($_COOKIE['user_id'])){
         header("Location: auth/login.php");
     } else {
         checkSessionTimeout();
@@ -36,7 +36,17 @@
         <!-- Logo -->
         <h2> Greek Myth </h2>
             <!-- Search Bar -->
-            <input type="text" placeholder="Search" id="search" class="search">
+            <div class="search-bar">
+                <!-- Search Input -->
+                 <div class="search-input">
+                    <input type="text" placeholder="Search" id="searchInput" data-enter-pressed="false" class="search" oninput="searchUser()">
+                    <button class="search-btn">Search</button>
+                </div>
+                <!-- Search Results -->
+                <div class="search-results-container">
+                    <div id="search-results" class="search-results"></div>
+                </div>
+            </div>
         <!-- Profile Link -->
         <div class="profile-link">
         <?php 
@@ -132,6 +142,7 @@
         </div>
     </main>
     
-
+    <!-- Scripts -->
+    <script src="../scripts/search.js"></script>
 </body>
 </html>

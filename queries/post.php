@@ -210,9 +210,7 @@
 
 
     //Function to create post
-    function createPost($conn){
-        //Initialize session
-        session_start();
+    function createPost($conn, $title, $content, $author) {
         //Check if form is submitted
         if(isset($_POST['createPost'])) {
             
@@ -223,8 +221,6 @@
 
             //Set parameters
             $post_id = uniqid();
-            $title = $_POST['title'];
-            $content = $_POST['content'];
             $output = nl2br($content);
             $author = $_SESSION['user_id'];
 
@@ -246,6 +242,9 @@
             $row = $result->fetch_assoc();
             $post_id = $row['post_id'];
 
+            //Include activity query
+            include "activity.php";
+            
             //Add activity
             addActivity($conn, $author, "created a post a with title " . $title, $post_id, null);
             

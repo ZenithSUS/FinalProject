@@ -10,6 +10,7 @@
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
+    //Check if form is submitted
     if(isset($_POST['submit'])) {
         //Check if fields are empty
         if(empty($username) || empty($email) || empty($password) || empty($confirm_password)) {

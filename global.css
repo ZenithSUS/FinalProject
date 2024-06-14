@@ -49,23 +49,51 @@ nav {
     /* Styling for Search Bar */
     .search-bar {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 0.5rem;
-        
+        flex-direction: column;
+
         /* Styling for Search Bar Children */
+        .search-results-container {
+            position: relative;
+            height: 100%;
+        }
+
         .search-results {
             display: flex;
             flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            position: fixed;
             width: 100%;
-            max-width: 200px;
-            max-height: 300px;
+            max-width: 240px;
+            display: none;
             overflow-y: scroll;
-            margin-top: 0.5rem;
             background-color: #eaeaea;
-            box-shadow: 4px 4px 4px rgba(0, 0, 0, .5);
             padding: 1rem;
-            
+
+            .item {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                width: 100%;
+                text-align: start;
+                text-decoration: none;
+                color: var(--dark-color);
+                font-size: 1rem;
+                padding: 0.25rem;
+                cursor: pointer;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            img {
+                border-radius: 100%;
+                border: 0.2rem solid var(--dark-color);
+                width: 2.5rem;
+                height: 2.5rem;
+            }
         }
 
     }
@@ -176,6 +204,12 @@ footer {
         .profile-link {
             display: none;
         }
+
+        .search-bar {
+            display: none;
+        }
+
     }
     
 }
+

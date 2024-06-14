@@ -13,9 +13,9 @@
     <?php
     session_start();
     // Include session checker
-    include "session.php";
-    // Check if the session is set
-    if(!isset($_SESSION['user_id']) && !isset($_COOKIE['user_id'])){
+    include_once "session.php";
+    // Check if the session or cookie is set
+    if(!isset($_SESSION['user_id']) || !isset($_COOKIE['user_id'])){
         header("Location: auth/login.php");
     } else {
         // Call checkSessionTimeout function
@@ -36,10 +36,14 @@
             <!-- Search Bar -->
             <div class="search-bar">
                 <!-- Search Input -->
+                 <div class="search-input">
                     <input type="text" placeholder="Search" id="searchInput" data-enter-pressed="false" class="search" oninput="search()">
-                    <button class="search-btn">Search</button>
+                    <button class="search-btn" id="search-btn" onclick="search()">Search</button>
+                </div>
                 <!-- Search Results -->
-                <div id="search-results" class="search-results"></div>
+                <div class="search-results-container">
+                    <div id="search-results" class="search-results"></div>
+                </div>
             </div>
         <!-- Profile Link -->
         <div class="profile-link">
@@ -128,39 +132,42 @@
 
             <!-- Others Content Area -->
             <div class="other-content">
-                <div class="sortPosts">
-                    <h2>Sort Posts by</h2>
-                    <!-- Sort Posts Buttons -->
-                    <div class="sort-btn">
-                        <a href="index.php?sort=date">Date</a>
-                        <a href="index.php?sort=likes">Likes</a>
-                        <a href="index.php?sort=random">Random</a>
-                        <a href="index.php?sort=comments">Comments</a>
+                <div class="other-scroll" id="other-scroll">
+                    <div class="sortPosts">
+                        <h2>Sort Posts by</h2>
+                        <!-- Sort Posts Buttons -->
+                        <div class="sort-btn">
+                            <a href="index.php?sort=date">Date</a>
+                            <a href="index.php?sort=likes">Likes</a>
+                            <a href="index.php?sort=random">Random</a>
+                            <a href="index.php?sort=comments">Comments</a>
+                        </div>
                     </div>
-                </div>
-                <!-- Greek Heroes Page Area -->
-                <div class="others">
-                    <!-- Title -->
-                    <h2>Greek Heroes Page</h2>
-                        <!-- Heroes Container -->
-                        <div class="heroes">
-                            <!-- Hero Boxes -->
-                            <div class="hero-box">
-                                <img src="img/hero.png" alt="hero"> <p> Zeus</p>
-                            </div>
-                            <div class="hero-box">
-                                <img src="img/hero.png" alt="hero"> <p> Poseidon</p>
-                            </div>
-                            <div class="hero-box">
-                                <img src="img/hero.png" alt="hero"> <p> Heracles</p>
-                            </div>
-                            <div class="hero-box">
-                                <img src="img/hero.png" alt="hero"> <p> Perseus</p>
+                    <!-- Greek Heroes Page Area -->
+                    <div class="others">
+                        <!-- Title -->
+                        <h2>Greek Heroes Page</h2>
+                            <!-- Heroes Container -->
+                            <div class="heroes">
+                                <!-- Hero Boxes -->
+                                <div class="hero-box">
+                                    <img src="img/hero.png" alt="hero"> <p> Zeus</p>
+                                </div>
+                                <div class="hero-box">
+                                    <img src="img/hero.png" alt="hero"> <p> Poseidon</p>
+                                </div>
+                                <div class="hero-box">
+                                    <img src="img/hero.png" alt="hero"> <p> Heracles</p>
+                                </div>
+                                <div class="hero-box">
+                                    <img src="img/hero.png" alt="hero"> <p> Perseus</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </main>
 

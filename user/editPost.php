@@ -15,9 +15,9 @@
     <?php
     session_start();
     // Include session checker
-    include "../session.php";
+    include_once "session.php";
     // Check if the session is set
-    if(!isset($_SESSION['user_id']) && !isset($_COOKIE['user_id'])){
+    if(!isset($_SESSION['user_id']) || !isset($_COOKIE['user_id'])){
         header("Location: auth/login.php");
     } else {
         checkSessionTimeout();
@@ -32,8 +32,20 @@
     ?>
     <!-- Navigation -->
     <nav>
+        <!-- Logo -->
         <h2> Greek Myth </h2>
-            <input type="text" placeholder="Search" id="search" class="search">
+           <!-- Search Bar -->
+           <div class="search-bar">
+                <!-- Search Input -->
+                 <div class="search-input">
+                    <input type="text" placeholder="Search" id="searchInput" data-enter-pressed="false" class="search" oninput="searchUser()">
+                    <button class="search-btn">Search</button>
+                </div>
+                <!-- Search Results -->
+                <div class="search-results-container">
+                    <div id="search-results" class="search-results"></div>
+                </div>
+            </div>
         <div class="profile-link">
         <?php
             //Get user id 
@@ -52,10 +64,11 @@
             <?php echo $_SESSION['username']; ?></a>
         </div>
     </nav>
-
+                
+    <!-- Main Area -->
     <main>
-        <!-- Main Content -->
-        <div class="main-content">
+        <!-- Edit Content -->
+        <div class="edit-content">
             <div class="nav-links"> 
                 <a href="../index.php">Home</a>
                 <a href="../friends.php" class="friends">Friends
@@ -143,6 +156,9 @@
             </div>
         </div>
     </main>
+
+    <!--Scripts-->
+    <script src="../scripts/search.js"></script>
 
 </body>
 </html>

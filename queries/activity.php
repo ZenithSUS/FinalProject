@@ -8,7 +8,7 @@
         $result = $conn->query($sql);
         //Display activities
         echo "<div class='profile-activity'>";
-        echo "<h3>Activity</h3>";
+        echo "<h3 class='activity-title'>Activity</h3>";
         //Check if activities exist
         if($result !== false && $result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {

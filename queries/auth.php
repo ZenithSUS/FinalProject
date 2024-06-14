@@ -24,14 +24,17 @@
             //Else check if password is correct
             else {
                 $row = $result->fetch_assoc();
-                if(password_verify($password, $row['password'])) {
+                //Check if password is correct
+                if(verifyPassword($password, $row['password'])) {
+                    //Set session variables
                     $_SESSION['user_id'] = $row['user_id'];
                     $_SESSION['username'] = $row['username'];
                     $_SESSION['last_activity'] = time();
-                    $_SESSION['exprires'] = 3600;
+                    $_SESSION['expires'] = 3600;
 
                     // Set cookies
-                    setcookie("user_id", $row['user_id'], time() + $_SESSION['exprires'] , "/");
+                    setcookie("user_id", $row['user_id'], time() + $_SESSION['expires'] , "/");
+                    setcookie("username", $row['username'], time() + $_SESSION['expires'], "/");
                     header("Location: ../index.php");
                 //Else password is incorrect
                 } else {
@@ -61,7 +64,7 @@
             //Generate user id
             $user_id = mysqli_real_escape_string($conn, uniqid());
             //Hash password
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $hashed_password = hashPassword($password);
             //Bind parameters and execute query
             $stmt->bind_param("ssss", $user_id, $username, $email, $hashed_password);
             $stmt->execute();
@@ -70,15 +73,28 @@
             $_SESSION['user_id'] = $user_id;
             $_SESSION['username'] = $username;
             $_SESSION['last_activity'] = time();
-            $_SESSION['exprires'] = 3600;
+            $_SESSION['expires'] = 3600;
 
             //Set cookies
-            setcookie("user_id", $user_id, time() + $_SESSION['exprires'] , "/");
+            setcookie("user_id", $user_id, time() + $_SESSION['expires'] , "/");
+            setcookie("username", $username, time() + $_SESSION['expires'], "/");
             //Close statement
             
             $stmt->close();
             echo "<script>alert('Registered successfully!')</script>";
             echo "<script>window.location.href = '../auth/uploadProfile.php';</script>";
         }
+    }
+
+    //Function to hash password
+    function hashPassword($password) {
+        //Hash password
+        return password_hash($password, PASSWORD_DEFAULT);
+    }
+
+    //Function to verify password
+    function verifyPassword($password, $hashed_password) {
+        //Check if password is correct
+        return password_verify($password, $hashed_password);
     }
 ?>
