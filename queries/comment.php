@@ -28,7 +28,10 @@
                 //Display username and date
                 echo $row['username'] . " " . date('F j, Y, g:i a', strtotime($row['created_at'])) . "</p>";
                 //Display comment
+                echo "<div class='content'>";
                 echo "<p>" . $row['content']. "</p>";
+                echo "<button class='replyBtn'>Reply</button>";
+                echo "</div>";
                 echo "</div>";
             }
         //Display message if no comments

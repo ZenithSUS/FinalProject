@@ -18,7 +18,7 @@
     include_once "session.php";
     // Check if the session is set
     if(!isset($_SESSION['user_id']) || !isset($_COOKIE['user_id'])){
-        header("Location: auth/login.php");
+        header("Location: ../auth/login.php");
     } else {
         checkSessionTimeout();
     }
@@ -88,8 +88,6 @@
             <!-- Edit Post Container -->
             <div class="editPost">
                 <?php
-                    include "../db.php";
-
                     // Get post id
                     $post = $_GET['post_id'];    
                     // Get post data

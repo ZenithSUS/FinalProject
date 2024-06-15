@@ -67,6 +67,25 @@
             <?php echo $_SESSION['username']; ?></a>
         </div>
     </nav>
+
+    <!-- Navbar for Mobile -->
+    <div class="nav-mobile">
+        <div class="nav-mobile-links">
+            <a href="index.php">Home</a>
+            <a href="friends.php" class="friends">Friends
+                <!-- Notify when there is friend request -->
+                <?php
+                //Get friend request count
+                $count = getFriendRequestCount($conn, $userId);
+                if($count > 0) {
+                    echo "<span class='notif'>" . $count . "</span>";
+                }
+            ?>
+            </a>    
+            <a href="heroes.php">Heroes</a>
+            <a href="actions/logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+        </div>
+    </div>
     
     <!-- Main Area -->
     <main>
@@ -106,8 +125,8 @@
                                 if(isset($profile) || !is_null($profile)) {
                                     echo "<div class='request'>
                                             <div class='profile-pic'>
-                                                <img src='img/u/" . $profile . "' alt='user'>
-                                                <p>" . $username . "</p>
+                                                <a href='user/profile.php?user_id=" . $requester_id . "'><img src='img/u/" . $profile . "' alt='user'>
+                                                <p>" . $username . "</p></a>
                                             </div>
                                             <div class='request-box'>
                                                 <h3>" . $username . " has sent you a friend request" . "</h3>
@@ -120,8 +139,8 @@
                                 } else { 
                                     echo "<div class='request'>
                                             <div class='profile-pic'>
-                                                <img src='img/default.jpg' alt='user'>
-                                                <p>" . $username . "</p>
+                                                <a href='user/profile.php?user_id=" . $requester_id . "'><img src='img/default.jpg' alt='user'>
+                                                <p>" . $username . "</p></a>
                                             </div>
                                             <div class='request-box'>
                                                 <h3>" . $username . " has sent you a friend request" . "</h3>

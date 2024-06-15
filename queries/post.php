@@ -151,7 +151,7 @@
                 echo "</div>";
             }
         } else {
-            echo "<div class='post'><p>No posts Found</p></div>";
+            echo "<div class='post'><p>No posts found</p></div>";
         }
     }
 
@@ -202,7 +202,7 @@
                 echo "</div>";
             }
         } else {
-            echo "<div class='post'><p>No posts Found</p></div>";
+            echo "<div class='post'><p>No posts found</p></div>";
         }
         //Close connection
         
@@ -249,7 +249,6 @@
             addActivity($conn, $author, "created a post a with title " . $title, $post_id, null);
             
             //Close statement
-            $stmt->execute();
             $stmt->close();
             header("Location: ../index.php");
         }

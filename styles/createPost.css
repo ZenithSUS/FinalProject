@@ -4,10 +4,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     width: 100%;
-    max-width: 1200px;
-    margin-top: 4rem;
+    max-width: 800px;
     padding: 2rem;
+    margin-right: 1rem;
+    margin-top: 4rem;
 }
 
 /* Styling for Create Post Box */
@@ -29,6 +31,8 @@
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
     border-radius: 1rem;
     padding: 1rem;
+
+
 
     /* Styling for Create Post Form Children or Elements */
     form {
@@ -99,10 +103,21 @@
 /* Media Queries */
 
 /* Media Queries for Mobile Devices */
-@media (min-width: 0px) and (max-width: 600px) {
-    .createPost {
+@media (min-width: 320px) and (max-width: 600px) {
+
+    .create-content {
+        margin-right: 0;
+    }
+
+     .createForm-container { 
+        width: 100%;
         max-width: 1000px;
-        margin-left: 0;
+    }
+
+    .createPost {
+        width: 100%;
+        max-width: 1000px;
+        margin-right: 0;
 
         h2 {
             text-align: center;
@@ -117,6 +132,15 @@
 /* Media Queries for Tablets */
 @media (min-width: 601px) and (max-width: 1024px) {
 
+    .create-content {
+        margin-right: 0;
+    }
+
+    .createForm-container { 
+        width: 100%;
+        max-width: 750px;
+    }
+
     .createPost {
         max-width: 750px;
     }
@@ -128,8 +152,6 @@
     .create-content {
         width: 100%;
         max-width: 750px;
-        margin-left: 0;
-        margin-right: 0;
     }
 
     .createPost {

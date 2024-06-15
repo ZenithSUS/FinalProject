@@ -67,6 +67,25 @@
             <?php echo $_SESSION['username']; ?></a>
         </div>
     </nav>
+
+    <!-- Navbar for Mobile -->
+     <div class="nav-mobile">
+        <div class="nav-mobile-links">
+            <a href="index.php">Home</a>
+            <a href="friends.php" class="friends">Friends
+                <!-- Notify when there is friend request -->
+                <?php
+                //Get friend request count
+                $count = getFriendRequestCount($conn, $userId);
+                if($count > 0) {
+                    echo "<span class='notif'>" . $count . "</span>";
+                }
+            ?>
+            </a>    
+            <a href="heroes.php">Heroes</a>
+            <a href="actions/logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+        </div>
+    </div>
     
     <!-- Main Area -->
     <main>

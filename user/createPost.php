@@ -18,7 +18,7 @@
     include_once "session.php";
     // Check if the session or cookie is set
     if(!isset($_SESSION['user_id']) || !isset($_COOKIE['user_id'])){
-        header("Location: auth/login.php");
+        header("Location: ../auth/login.php");
     } else {
         checkSessionTimeout();
     }
@@ -70,7 +70,7 @@
             <!-- Nav Links -->
             <div class="nav-links"> 
                 <a href="../index.php">Home</a>
-                <a href="friends.php" class="friends">Friends
+                <a href="../friends.php" class="friends">Friends
                     <!-- Notify when there is friend request -->
                     <?php
                     //Get friend request count

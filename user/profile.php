@@ -18,7 +18,7 @@
     include_once "session.php";
     // Check if the session is set
     if(!isset($_SESSION['user_id']) || !isset($_COOKIE['user_id'])){
-        header("Location: auth/login.php");
+        header("Location: ../auth/login.php");
     } else {
         checkSessionTimeout();
     }
@@ -116,29 +116,32 @@
 
             <!-- Others Content Area -->
             <div class="other-content">
-                <!-- Others Container -->
-                <div class="others">
-                    <!-- Heading or Title -->
-                    <h2>Greek Heroes Page</h2>
-                    <!-- Heroes Container -->
-                        <div class="heroes">
-                            <!-- Hero Boxes -->
-                            <div class="hero-box">
-                                <img src="../img/hero.png" alt="hero"> <p> Zeus</p>
-                            </div>
-                            <div class="hero-box">
-                                <img src="../img/hero.png" alt="hero"> <p> Poseidon</p>
-                            </div>
-                            <div class="hero-box">
-                                <img src="../img/hero.png" alt="hero"> <p> Heracles</p>
-                            </div>
-                            <div class="hero-box">
-                                <img src="../img/hero.png" alt="hero"> <p> Perseus</p>
+                <div class="other-scroll" id="other-scroll">
+                    <!-- Greek Heroes Page Area -->
+                    <div class="others">
+                        <!-- Title -->
+                        <h2>Greek Heroes Page</h2>
+                            <!-- Heroes Container -->
+                            <div class="heroes">
+                                <!-- Hero Boxes -->
+                                <div class="hero-box">
+                                    <img src="../img/hero.png" alt="hero"> <p> Zeus</p>
+                                </div>
+                                <div class="hero-box">
+                                    <img src="../img/hero.png" alt="hero"> <p> Poseidon</p>
+                                </div>
+                                <div class="hero-box">
+                                    <img src="../img/hero.png" alt="hero"> <p> Heracles</p>
+                                </div>
+                                <div class="hero-box">
+                                    <img src="../img/hero.png" alt="hero"> <p> Perseus</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </main>
     
