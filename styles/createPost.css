@@ -106,6 +106,7 @@
 @media (min-width: 320px) and (max-width: 600px) {
 
     .create-content {
+        margin-top: 7rem;
         margin-right: 0;
     }
 

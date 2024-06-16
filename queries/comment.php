@@ -47,6 +47,29 @@
                 }
                 echo "</div>";
                 echo "</div>";
+
+                //Get the user vote type
+                $sql2 = "SELECT vote_type FROM likes JOIN users ON likes.liker = users.user_id 
+                WHERE likes.post_id = '" . $row['post_id'] . "' 
+                AND likes.liker = '" . $_SESSION['user_id'] . "'";
+                //Execute query
+                $result2 = $conn->query($sql2);
+                //Get vote type
+                $row2 = $result2->fetch_assoc();
+                //Check if there is a vote
+                if($result2 !== false && $result2->num_rows > 0) {
+                    $voteType = $row2['vote_type'];
+                } else {
+                    $voteType = null;
+                }
+
+                //Display likes and dislikes
+                echo "<form action='../actions/likes/commentLike_act.php?post_id=" . $row['post_id'] . "&comment_id=" . $row['comment_id'] . "&type=" . $voteType . "' method='POST' class='vote'>
+                        <p><button type='submit' name='likeForm'><img src='img/like.png' alt='like'> " . $row['likes'] . " </button></p>
+                        <p><button type='submit' name='dislikeForm'><img src='img/dislike.png' alt='dislike'> " . $row['dislikes'] . " </button></p>
+                    </form>";
+
+                //Display reply box
                 echo "<div class='reply-box hidden'>";
                 echo "<form action='../actions/comment_act.php?post_id=" . $postId . "&comment_id=" . $row['comment_id'] . "' method='POST'>";
                 echo "<textarea name='content' placeholder='Reply to " . $row['username'] . "' class='replyInput'></textarea>";

@@ -14,14 +14,14 @@
         padding: 1rem;
         box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
         border-radius: 1rem;
-        background-image: url("../img/backgrounds/waves.jpg");
+        background-image: url("../img/backgrounds/greekHome.jpg");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
         width: 100%;
         max-width: 500px;
-        color: var(--light-color);
+        color: var(--dark-color);
     }
 
     .regForm {
@@ -31,14 +31,14 @@
         padding: 1rem;
         box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
         border-radius: 1rem;
-        background-image: url("../img/backgrounds/waves.jpg");
+        background-image: url("../img/backgrounds/greekHome.jpg");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
         width: 100%;
         max-width: 400px;
-        color: var(--light-color);
+        color: var(--dark-color);
     }
     
     form h1 {

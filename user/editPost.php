@@ -51,8 +51,11 @@
         <?php
             //Get user id 
             $userId = $_SESSION['user_id'];
-            $result = $conn->query("SELECT * FROM users WHERE user_id = '$userId'");
+            //Execute query
+            $result = $conn->query("SELECT * FROM users WHERE user_id = '$userId'") or die($conn->error);
             $row = $result->fetch_assoc(); 
+            //Get profile pic
+            $profile = $row['profile_pic'];
             ?>
                 <a href="profile.php?user_id=<?php echo $userId ?>">
                    <?php 
@@ -64,7 +67,59 @@
                     }?>
             <?php echo $_SESSION['username']; ?></a>
         </div>
+
+        <!-- Burger Menu Button -->
+        <div class="burger-menu-btn">
+            <button class="burger-menu-icon">Menu</button>
+        </div>
+
+        <!-- Enable Burger Menu on Mobile -->
+        <div class="burger-menu hidden">
+            <div class="profile-link-mobile">
+                <a href="profile.php?user_id=<?php echo $userId ?>">
+                   <?php
+                        //Check if profile pic exists
+                        if(isset($profile) || !is_null($profile)) {
+                            echo "<img src='../img/u/" . $profile . "' alt='user' class='user'>";
+                        } else { 
+                            echo "<img src='../img/default.jpg' alt='user' class='user'>";
+                        }?>
+                <?php echo $_SESSION['username']; ?></a>
+                </a>
+            </div>
+            <!-- Search Bar -->
+            <div class="search-bar-mobile">
+                <!-- Search Input -->
+                 <div class="search-input-mobile">
+                    <input type="text" placeholder="Search" id="searchInput-mobile" data-enter-pressed="false" class="search-mobile" oninput="MobileSearchUser()">
+                    <button class="search-mobile-btn" id="search-btn" onclick="MobileSearchUser()">Search</button>
+                </div>
+                <!-- Search Results -->
+                <div class="search-results-mobile-container">
+                    <div id="search-results-mobile" class="search-results-mobile"></div>
+                </div>
+            </div>
+        </div>
     </nav>
+
+    <!-- Navbar for Mobile -->
+    <div class="nav-mobile">
+        <div class="nav-mobile-links">
+            <a href="../index.php">Home</a>
+            <a href="../friends.php" class="friends">Friends
+                <!-- Notify when there is friend request -->
+                <?php
+                //Get friend request count
+                $count = getFriendRequestCount($conn, $userId);
+                if($count > 0) {
+                    echo "<span class='notif'>" . $count . "</span>";
+                }
+            ?>
+            </a>    
+            <a href="../heroes.php">Heroes</a>
+            <a href="../actions/logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+        </div>
+    </div>
                 
     <!-- Main Area -->
     <main>
@@ -149,6 +204,7 @@
 
     <!--Scripts-->
     <script src="../scripts/search.js"></script>
+    <script src="../scripts/burgerMenu.js"></script>
 
 </body>
 </html>

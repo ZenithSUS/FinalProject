@@ -42,7 +42,7 @@
                 }
 
                 //Display likes and dislikes
-                echo "<form action='actions/like_act.php?post_id=" . $row['post_id'] . "&type=" . $voteType . "' method='POST' class='vote'>
+                echo "<form action='actions/likes/like_act.php?post_id=" . $row['post_id'] . "&type=" . $voteType . "' method='POST' class='vote'>
                         <p><button type='submit' name='likeForm'><img src='img/like.png' alt='like'> " . $row['likes'] . " </button></p>
                         <p><button type='submit' name='dislikeForm'><img src='img/dislike.png' alt='dislike'> " . $row['dislikes'] . " </button></p>
                     </form>";
@@ -95,11 +95,27 @@
             //Display title and content
             echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "&title=" . $row['title'] . "'><h3>" . $row['title'] . "</h3>";
             echo "<p>" . $row['content'] . "</p></a>";
+
+            //Get the user vote type
+            $sql2 = "SELECT vote_type FROM likes JOIN users ON likes.liker = users.user_id 
+            WHERE likes.post_id = '" . $row['post_id'] . "' 
+            AND likes.liker = '" . $_SESSION['user_id'] . "'";
+            //Execute query
+            $result2 = $conn->query($sql2);
+            //Get vote type
+            $row2 = $result2->fetch_assoc();
+            //Check if there is a vote
+            if($result2 !== false && $result2->num_rows > 0) {
+                $voteType = $row2['vote_type'];
+            } else {
+                $voteType = null;
+            }
+
             //Display likes and dislikes
-            echo "<div class='vote'>
-                <p><img src='img/like.png' alt='like'> " . $row['likes'] . "</p>
-                <p><img src='img/dislike.png' alt='dislike'> " . $row['dislikes'] . "</p>
-            </div>";
+            echo "<form action='../actions/likes/like_act.php?post_id=" . $row['post_id'] . "&type=" . $voteType . "' method='POST' class='vote'>
+                    <p><button type='submit' name='likeForm'><img src='img/like.png' alt='like'> " . $row['likes'] . " </button></p>
+                    <p><button type='submit' name='dislikeForm'><img src='img/dislike.png' alt='dislike'> " . $row['dislikes'] . " </button></p>
+                </form>";
 
             //Get number of comments
             $sql2 = "SELECT count(*) AS total_comments FROM comments WHERE post_id = '" . $row['post_id'] . "'";
@@ -144,11 +160,27 @@
                 //Display title and content
                 echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "&title=" . $row['title'] . "'><h3>" . $row['title'] . "</h3>";
                 echo "<p>" . $row['content'] . "</p></a>";
+
+                //Get the user vote type
+                $sql2 = "SELECT vote_type FROM likes JOIN users ON likes.liker = users.user_id 
+                WHERE likes.post_id = '" . $row['post_id'] . "' 
+                AND likes.liker = '" . $_SESSION['user_id'] . "'";
+                //Execute query
+                $result2 = $conn->query($sql2);
+                //Get vote type
+                $row2 = $result2->fetch_assoc();
+                //Check if there is a vote
+                if($result2 !== false && $result2->num_rows > 0) {
+                    $voteType = $row2['vote_type'];
+                } else {
+                    $voteType = null;
+                }
+
                 //Display likes and dislikes
-                echo "<div class='vote'>
-                        <p><img src='img/like.png' alt='like'> " . $row['likes'] . "</p>
-                        <p><img src='img/dislike.png' alt='dislike'> " . $row['dislikes'] . "</p>
-                    </div>";
+                echo "<form action='actions/likes/like_act.php?post_id=" . $row['post_id'] . "&type=" . $voteType . "' method='POST' class='vote'>
+                        <p><button type='submit' name='likeForm'><img src='img/like.png' alt='like'> " . $row['likes'] . " </button></p>
+                        <p><button type='submit' name='dislikeForm'><img src='img/dislike.png' alt='dislike'> " . $row['dislikes'] . " </button></p>
+                    </form>";
 
                 //Get total comments
                 $postId = $row['post_id'];
@@ -204,11 +236,27 @@
                 //Display title and content
                 echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "&title=" . $row['title'] . "'><h3>" . $row['title'] . "</h3>";
                 echo "<p>" . $row['content'] . "</p></a>";
+
+                //Get the user vote type
+                $sql2 = "SELECT vote_type FROM likes JOIN users ON likes.liker = users.user_id 
+                WHERE likes.post_id = '" . $row['post_id'] . "' 
+                AND likes.liker = '" . $_SESSION['user_id'] . "'";
+                //Execute query
+                $result2 = $conn->query($sql2);
+                //Get vote type
+                $row2 = $result2->fetch_assoc();
+                //Check if there is a vote
+                if($result2 !== false && $result2->num_rows > 0) {
+                    $voteType = $row2['vote_type'];
+                } else {
+                    $voteType = null;
+                }
                 //Display likes and dislikes
-                echo "<div class='vote'>
-                        <p><img src='img/like.png' alt='like'> " . $row['likes'] . "</p>
-                        <p><img src='img/dislike.png' alt='dislike'> " . $row['dislikes'] . "</p>
-                    </div>";
+                echo "<form action='actions/likes/like_act.php?post_id=" . $row['post_id'] . "&type=" . $voteType . "' method='POST' class='vote'>
+                        <p><button type='submit' name='likeForm'><img src='img/like.png' alt='like'> " . $row['likes'] . " </button></p>
+                        <p><button type='submit' name='dislikeForm'><img src='img/dislike.png' alt='dislike'> " . $row['dislikes'] . " </button></p>
+                    </form>";
+
                 //Display comments
                 echo "<hr>";
                 echo "<a class='commentLink' href='user/currentPost.php?post_id=" . $row['post_id'] . "'>comments " . $row['total_comments'] . "</a>";
@@ -344,8 +392,11 @@
         $sql2 = "SELECT vote_type FROM likes JOIN users ON likes.liker = users.user_id 
         WHERE likes.post_id = '" . $row['post_id'] . "' 
         AND likes.liker = '" . $_SESSION['user_id'] . "'";
+        //Execute query
         $result2 = $conn->query($sql2);
+        //Get vote type
         $row2 = $result2->fetch_assoc();
+        //Check if there is a vote
         if($result2 !== false && $result2->num_rows > 0) {
             $voteType = $row2['vote_type'];
         } else {
@@ -353,19 +404,19 @@
         }
 
         //Display likes and dislikes
-        echo "<form action='../actions/like_act.php?post_id=" . $row['post_id'] . "&type=" . $voteType . "' method='POST' class='vote'>
+        echo "<form action='../actions/likes/like_act.php?post_id=" . $row['post_id'] . "&type=" . $voteType . "' method='POST' class='vote'>
                 <p><button type='submit' name='likeForm'><img src='img/like.png' alt='like'> " . $row['likes'] . " </button></p>
                 <p><button type='submit' name='dislikeForm'><img src='img/dislike.png' alt='dislike'> " . $row['dislikes'] . " </button></p>
             </form>";
 
-            //Display options to edit or delete post if user is author
-            if($userId == $row['author']){
-                echo "<div class='post-options'>";
-                echo "<a href='deletePost.php?post_id=" . $row['post_id'] . "' class='delete-btn' onclick=\"return confirm('Are you sure you want to delete this post?')\">Delete Post</a>";
-                echo "<a href='editPost.php?post_id=" . $row['post_id'] . "'>Edit Post</a>";
-                echo "</div>";
-            }
         echo "<hr>";
+        //Display options to edit or delete post if user is author
+        if($userId == $row['author']){
+            echo "<div class='post-options'>";
+            echo "<a href='deletePost.php?post_id=" . $row['post_id'] . "' class='delete-btn' onclick=\"return confirm('Are you sure you want to delete this post?')\">Delete Post</a>";
+            echo "<a href='editPost.php?post_id=" . $row['post_id'] . "'>Edit Post</a>";
+            echo "</div>";
+        }
         echo "</div>";
         //Close connection
         

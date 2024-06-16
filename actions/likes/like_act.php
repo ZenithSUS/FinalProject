@@ -1,18 +1,18 @@
 <?php
     //Include db connection
-    include "../db.php";
+    include "../../db.php";
 
     //Initialize session
     session_start();
 
     //Include queries
-    include "../queries/like.php";
+    include "../../queries/like.php";
 
-    //Get post id
+    //Get post id and user id
     $postId = $_GET['post_id'];
     $userId = $_SESSION['user_id'];
 
-    //Get type
+    //Get type from url or using GET method
     $type = $_GET['type'];
 
     //Check of the user pressed like

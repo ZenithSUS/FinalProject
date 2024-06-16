@@ -95,6 +95,10 @@
 
 /* Media Queries for Mobile Devices */
 @media (min-width: 320px) and (max-width: 600px) {
+
+    .posts .profile-container {
+        padding: 0.5rem;
+    }
     .posts .profile-box {
        display: flex;
        flex-direction: column;
@@ -110,9 +114,16 @@
         .profile-info {
             text-align: center;
          }
+
+        .profile-settings {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            a, button {
+                width: 100%;
+            }
+        }
     }
-
-  
-
-    
+ 
 }
