@@ -27,6 +27,7 @@
         //Include queries
         include "../queries/post.php";
         include "../queries/friend.php";
+        include "../queries/greek.php";
         //Include db connection
         include "../db.php";
     ?>
@@ -119,22 +120,13 @@
                     <!-- Greek Heroes Page Area -->
                     <div class="others">
                         <!-- Title -->
-                        <h2>Greek Heroes Page</h2>
+                        <h2>Greek Gods</h2>
                             <!-- Heroes Container -->
                             <div class="heroes">
-                                <!-- Hero Boxes -->
-                                <div class="hero-box">
-                                    <img src="../img/hero.png" alt="hero"> <p> Zeus</p>
-                                </div>
-                                <div class="hero-box">
-                                    <img src="../img/hero.png" alt="hero"> <p> Poseidon</p>
-                                </div>
-                                <div class="hero-box">
-                                    <img src="../img/hero.png" alt="hero"> <p> Heracles</p>
-                                </div>
-                                <div class="hero-box">
-                                    <img src="../img/hero.png" alt="hero"> <p> Perseus</p>
-                                </div>
+                                <?php 
+                                    //Get heroes
+                                    $heroes = getGreeksUser($conn);
+                                    ?>
                             </div>
                         </div>
                     </div>

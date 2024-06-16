@@ -27,11 +27,11 @@
     flex-direction: column;
     gap: 1rem;
     padding: 1rem;
-    border: 0.2rem solid var(--dark-color);
     border-radius: 1rem;
-    background-color: var(--light-color);
+    background-image: url("../img/backgrounds/waves.jpg");
     width: 100%;
     max-width: 400px;
+    color: var(--light-color);
 
     /* Styling for Forgot Password Form Children or Elements */
     label {
@@ -59,6 +59,18 @@
         transition: background-color 0.3s ease-in-out;
         background-color: var(--light-color);
         color: var(--dark-color);
+    }
+
+    .auth-options {
+
+        a {
+            text-decoration: none;
+            color: var(--light-color);
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
 
 }

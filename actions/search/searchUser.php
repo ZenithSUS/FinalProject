@@ -40,7 +40,7 @@
            
         }
     } else {
-        echo "No results found";
+        echo "<p class='item'>No results found</p>";
     }
     //Close connection
     

@@ -28,11 +28,24 @@
                 //Display title and content
                 echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "&title=" . $row['title'] . "'><h3>" . $row['title'] . "</h3>";
                 echo "<p>" . $row['content'] . "</p></a>";
+
+                //Get the user vote type
+                $sql2 = "SELECT vote_type FROM likes JOIN users ON likes.liker = users.user_id 
+                WHERE likes.post_id = '" . $row['post_id'] . "' 
+                AND likes.liker = '" . $_SESSION['user_id'] . "'";
+                $result2 = $conn->query($sql2);
+                $row2 = $result2->fetch_assoc();
+                if($result2 !== false && $result2->num_rows > 0) {
+                    $voteType = $row2['vote_type'];
+                } else {
+                    $voteType = null;
+                }
+
                 //Display likes and dislikes
-                echo "<div class='vote'>
-                        <p><img src='img/like.png' alt='like'> " . $row['likes'] . "</p>
-                        <p><img src='img/dislike.png' alt='dislike'> " . $row['dislikes'] . "</p>
-                    </div>";
+                echo "<form action='actions/like_act.php?post_id=" . $row['post_id'] . "&type=" . $voteType . "' method='POST' class='vote'>
+                        <p><button type='submit' name='likeForm'><img src='img/like.png' alt='like'> " . $row['likes'] . " </button></p>
+                        <p><button type='submit' name='dislikeForm'><img src='img/dislike.png' alt='dislike'> " . $row['dislikes'] . " </button></p>
+                    </form>";
 
                 //Get number of comments
                 $sql2 = "SELECT COALESCE(COUNT(*), 0) AS total_comments FROM comments WHERE post_id = '" . $row['post_id'] . "'";
@@ -41,7 +54,7 @@
 
                 //Display comments
                 echo "<hr>";
-                echo "<a href='user/currentPost.php?post_id=" . $row['post_id'] . "'>comments " . $row2['total_comments'] . "</a>";
+                echo "<a class='commentLink' href='user/currentPost.php?post_id=" . $row['post_id'] . "'>comments " . $row2['total_comments'] . "</a>";
                 echo "</div>";
             }
         //Else display no posts yet
@@ -95,7 +108,7 @@
 
             //Display comments
             echo "<hr>";
-            echo "<a href='user/currentPost.php?post_id=" . $row['post_id'] . "'>comments " . $row2['total_comments'] . "</a>";
+            echo "<a class='commentLink' href='user/currentPost.php?post_id=" . $row['post_id'] . "'>comments " . $row2['total_comments'] . "</a>";
             echo "</div>";
         }
     }
@@ -147,7 +160,7 @@
                 $row2 = $result2->fetch_assoc();    
                 //Display comments
                 echo "<hr>";
-                echo "<a href='user/currentPost.php?post_id=" . $row['post_id'] . "'>comments " . $row2['total_comments'] . "</a>";
+                echo "<a class='commentLink' href='user/currentPost.php?post_id=" . $row['post_id'] . "'>comments " . $row2['total_comments'] . "</a>";
                 echo "</div>";
             }
         } else {
@@ -198,7 +211,7 @@
                     </div>";
                 //Display comments
                 echo "<hr>";
-                echo "<a href='user/currentPost.php?post_id=" . $row['post_id'] . "'>comments " . $row['total_comments'] . "</a>";
+                echo "<a class='commentLink' href='user/currentPost.php?post_id=" . $row['post_id'] . "'>comments " . $row['total_comments'] . "</a>";
                 echo "</div>";
             }
         } else {
@@ -326,12 +339,26 @@
         //Display post title and content
         echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "'><h3>" . $row['title'] . "</h3></a>";
         echo "<p>" . $row['content'] . "</p>";
+
+        //Get the user vote type
+        $sql2 = "SELECT vote_type FROM likes JOIN users ON likes.liker = users.user_id 
+        WHERE likes.post_id = '" . $row['post_id'] . "' 
+        AND likes.liker = '" . $_SESSION['user_id'] . "'";
+        $result2 = $conn->query($sql2);
+        $row2 = $result2->fetch_assoc();
+        if($result2 !== false && $result2->num_rows > 0) {
+            $voteType = $row2['vote_type'];
+        } else {
+            $voteType = null;
+        }
+
         //Display likes and dislikes
-        echo "<div class='vote'>
-                    <img src='img/like.png' alt='like'><p> " . $row['likes'] . "</p>
-                    <img src='img/dislike.png' alt='dislike'><p> " . $row['dislikes'] . "</p>
-            </div>";
-            //Display options to edit or delete post
+        echo "<form action='../actions/like_act.php?post_id=" . $row['post_id'] . "&type=" . $voteType . "' method='POST' class='vote'>
+                <p><button type='submit' name='likeForm'><img src='img/like.png' alt='like'> " . $row['likes'] . " </button></p>
+                <p><button type='submit' name='dislikeForm'><img src='img/dislike.png' alt='dislike'> " . $row['dislikes'] . " </button></p>
+            </form>";
+
+            //Display options to edit or delete post if user is author
             if($userId == $row['author']){
                 echo "<div class='post-options'>";
                 echo "<a href='deletePost.php?post_id=" . $row['post_id'] . "' class='delete-btn' onclick=\"return confirm('Are you sure you want to delete this post?')\">Delete Post</a>";

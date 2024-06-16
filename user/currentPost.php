@@ -17,6 +17,16 @@
     </title>
 </head>
 <body>
+    <?php
+    //Check if the post is set
+    if(isset($_GET['post_id'])){ 
+        //Get data from url using GET method
+        $postId = $_GET['post_id'];
+    } else {
+        header("Location: ../index.php");
+    }
+        
+    ?>
     <!-- Start Session -->
     <?php
     session_start();
@@ -34,6 +44,7 @@
         include "../queries/post.php";
         include "../queries/friend.php";
         include "../queries/comment.php";
+        include "../queries/greek.php";
         //Include db connection
         include "../db.php";
     ?>
@@ -111,8 +122,7 @@
         <div class="posts current-posts">
             <!-- Display Current Post -->
             <?php
-                 //Get post id and user id from url or using GET method
-                 $postId = $_GET['post_id'];
+                 //Get user id from session
                  $userId = $_SESSION['user_id'];
  
                  //Call currentPost function
@@ -137,39 +147,40 @@
                 comments($conn);
             ?>
                 
-            
         </div>
 
         <!-- Others Content Area -->
-            <div class="other-content">
-                <!-- Others Container -->
-                <div class="others">
-                    <!-- Heading or Title -->
-                    <h2>Greek Heroes Page</h2>
-                    <!-- Heroes Container -->
-                        <div class="heroes">
-                            <!-- Hero Boxes -->
-                            <div class="hero-box">
-                                <img src="../img/hero.png" alt="hero"> <p> Zeus</p>
-                            </div>
-                            <div class="hero-box">
-                                <img src="../img/hero.png" alt="hero"> <p> Poseidon</p>
-                            </div>
-                            <div class="hero-box">
-                                <img src="../img/hero.png" alt="hero"> <p> Heracles</p>
-                            </div>
-                            <div class="hero-box">
-                                <img src="../img/hero.png" alt="hero"> <p> Perseus</p>
+        <div class="other-content">
+                <div class="other-scroll" id="other-scroll">
+                    <!-- Greek Heroes Page Area -->
+                    <div class="others">
+                        <!-- Title -->
+                        <h2>Greek Gods</h2>
+                            <!-- Heroes Container -->
+                            <div class="heroes">
+                                <?php 
+                                    //Get heroes
+                                    $heroes = getGreeksUser($conn);
+                                    ?>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            
         </div>
     </main>
 
+    <!-- Footer Area -->
+    <footer>
+        <div class="footer-content">
+            <a href="#top">Back to Top</a>
+        </div>
+    </footer>
+
     <!-- Scripts -->
     <script src="../scripts/disableBtns.js"></script>
+    <script src="../scripts/showReply.js"></script>
     <script src="../scripts/search.js"></script>
 
 </body>

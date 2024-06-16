@@ -9,12 +9,13 @@
     <!-- Title -->
     <title>Register</title>
 </head>
-<body>
+<body 
+ style="background-image: url(../img/backgrounds/abandon.jpg); background-size: cover; background-position: center; background-repeat: no-repeat">
     <?php 
         // Initialize session
         session_start();
         // Check if the session is set  
-        if(isset($_SESSION['user_id']) || isset($_COOKIE['user_id'])): 
+        if(isset($_SESSION['user_id'])): 
             header("Location: index.php"); 
     ?>
     <?php endif; ?>
@@ -53,7 +54,7 @@
             <!-- Submit Button -->
             <button type="submit" name="submit">Register</button>
             <!-- Auth Options -->
-            <p>Already have an account? <a href="login.php">Login</a></p>
+            <p class="auth-register">Already have an account? <a href="login.php">Login</a></p>
         </form>
     </div>
 

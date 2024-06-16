@@ -9,7 +9,7 @@
     max-width: 750px;
     min-height: 100vh;
     margin-top: 5.75rem;
-    margin-right: 2rem;
+    margin-right: 3rem;
 }
 
 .current-posts {
@@ -42,7 +42,20 @@
     }
 }
 
+/* Media Queries for Mobile */
+@media screen and (max-width: 600px) {
+    .current-content {
+        max-width: 600px;
+        margin-right: 0;
+    }
+}
 
-
+/* Media Queries for Tablets */
+@media screen and (min-width: 601px) and (max-width: 1280px) {
+    .current-content {
+        max-width: 600px;
+        margin-right: 0;
+    }
+}
 
 

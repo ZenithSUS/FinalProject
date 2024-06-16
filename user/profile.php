@@ -29,6 +29,7 @@
         include "../queries/profile.php";
         include "../queries/friend.php";
         include "../queries/activity.php";
+        include "../queries/greek.php";
         // include db connection
         include "../db.php";
     ?>
@@ -69,6 +70,25 @@
             <?php echo $_SESSION['username']; ?></a>
         </div>
     </nav>
+
+    <!-- Navbar for Mobile -->
+    <div class="nav-mobile">
+        <div class="nav-mobile-links">
+            <a href="index.php">Home</a>
+            <a href="friends.php" class="friends">Friends
+                <!-- Notify when there is friend request -->
+                <?php
+                //Get friend request count
+                $count = getFriendRequestCount($conn, $userId);
+                if($count > 0) {
+                    echo "<span class='notif'>" . $count . "</span>";
+                }
+            ?>
+            </a>    
+            <a href="heroes.php">Heroes</a>
+            <a href="actions/logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+        </div>
+    </div>
     
     <!-- Profile Page -->
     <main>
@@ -120,22 +140,13 @@
                     <!-- Greek Heroes Page Area -->
                     <div class="others">
                         <!-- Title -->
-                        <h2>Greek Heroes Page</h2>
+                        <h2>Greek Gods</h2>
                             <!-- Heroes Container -->
                             <div class="heroes">
-                                <!-- Hero Boxes -->
-                                <div class="hero-box">
-                                    <img src="../img/hero.png" alt="hero"> <p> Zeus</p>
-                                </div>
-                                <div class="hero-box">
-                                    <img src="../img/hero.png" alt="hero"> <p> Poseidon</p>
-                                </div>
-                                <div class="hero-box">
-                                    <img src="../img/hero.png" alt="hero"> <p> Heracles</p>
-                                </div>
-                                <div class="hero-box">
-                                    <img src="../img/hero.png" alt="hero"> <p> Perseus</p>
-                                </div>
+                            <?php 
+                                //Get heroes
+                                $heroes = getGreeksUser($conn);
+                            ?>
                             </div>
                         </div>
                     </div>

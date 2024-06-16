@@ -64,7 +64,12 @@
                    } else { 
                         echo "<img src='img/default.jpg' alt='user' class='user'>";
                     }?>
-            <?php echo $_SESSION['username']; ?></a>
+            <?php 
+                //Check if user is set
+                if(isset($_SESSION['username'])) {
+                    echo $_SESSION['username'];
+                }
+            ?></a>
         </div>
     </nav>
 

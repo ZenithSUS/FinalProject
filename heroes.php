@@ -63,7 +63,13 @@
                    } else { 
                         echo "<img src='img/default.jpg' alt='user' class='user'>";
                     }?>
-            <?php echo $_SESSION['username']; ?></a>
+            
+            <?php 
+                //Check if username is set
+                if(isset($_SESSION['username'])) {
+                    echo $_SESSION['username'];
+                } 
+            ?></a>
         </div>
     </nav>
 
@@ -107,78 +113,18 @@
             </div>
 
             <!-- Posts -->
-            <div class="posts">
-                <div class="createPost-box">
-                    <a href="user/profile.php?user_id=<?php echo $userId ?>">
-                        <?php 
-                        //Check if profile pic exists
-                        if(isset($profile) || !is_null($profile)) {
-                            echo "<img src='img/u/" . $row['profile_pic'] . "' alt='user'>";
-                        } else { 
-                            echo "<img src='img/default.jpg' alt='user'>";
-                        }?>
-                    </a>
-                    <a class="createPost" href="user/createPost.php?user_id=<?php echo $userId ?>">Create Post</a>
-                </div>
-                <?php
-                    //Display posts based on sorting
-                    if(isset($_GET['sort'])){
-                        $sort = $_GET['sort'];
-                        if($sort == 'date') {
-                            postsByDate($conn);
-                        } 
-                        else if($sort == 'likes') {
-                            postsByLikes($conn);
-                        }
-                        else if($sort == 'random') {
-                            posts($conn);
-                        }
-                        else if($sort == 'comments') {
-                            postsByComments($conn);
-                        }
-                    } else { 
-                        posts($conn); 
-                    }
-                ?>
+            <div class="greeks">
+               
             </div>
 
             <!-- Others Content Area -->
             <div class="other-content">
                 <div class="other-scroll" id="other-scroll">
-                    <div class="sortPosts">
-                        <h2>Sort Posts by</h2>
-                        <!-- Sort Posts Buttons -->
-                        <div class="sort-btn">
-                            <a href="index.php?sort=date">Date</a>
-                            <a href="index.php?sort=likes">Likes</a>
-                            <a href="index.php?sort=random">Random</a>
-                            <a href="index.php?sort=comments">Comments</a>
-                        </div>
-                    </div>
-                    <!-- Greek Heroes Page Area -->
-                    <div class="others">
-                        <!-- Title -->
-                        <h2>Greek Heroes Page</h2>
-                            <!-- Heroes Container -->
-                            <div class="heroes">
-                                <!-- Hero Boxes -->
-                                <div class="hero-box">
-                                    <img src="img/hero.png" alt="hero"> <p> Zeus</p>
-                                </div>
-                                <div class="hero-box">
-                                    <img src="img/hero.png" alt="hero"> <p> Poseidon</p>
-                                </div>
-                                <div class="hero-box">
-                                    <img src="img/hero.png" alt="hero"> <p> Heracles</p>
-                                </div>
-                                <div class="hero-box">
-                                    <img src="img/hero.png" alt="hero"> <p> Perseus</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
+
+
         </div>
     </main>
 

@@ -6,16 +6,21 @@
     padding: 0;
 }
 
+/* Variables of Color */
 :root {
-    --primary-color: rgb(90, 90, 216);
-    --secondary-color: gold;
+    --primary-color: #DAA520;
+    --secondary-color: #191970;
     --dark-color: #141414;  
-    --light-color: white;
+    --light-color: #FFFBEF;
 }
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: var(--primary-color);
+    background-image: url(img/backgrounds/greekHome.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     color: var(--dark-color);
 }
 
@@ -30,10 +35,11 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     padding: 1rem;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 1);
     z-index: 999;
+    color: var(--light-color);
 
     /* Styling for Navigation Children */
     .profile-link a {
@@ -42,7 +48,7 @@ nav {
         gap: 0.5rem;
         font-size: 1.2rem;
         text-decoration: none;
-        color: var(--dark-color);
+        color: var(--light-color);
         font-weight: bold;
     }
     
@@ -70,6 +76,7 @@ nav {
             overflow-y: scroll;
             background-color: #eaeaea;
             padding: 1rem;
+            color: var(--dark-color);
 
             .item {
                 display: flex;
@@ -78,13 +85,17 @@ nav {
                 width: 100%;
                 text-align: start;
                 text-decoration: none;
-                color: var(--dark-color);
                 font-size: 1rem;
                 padding: 0.25rem;
                 cursor: pointer;
+                color: var(--dark-color);
+                border-radius: 0.5rem;
+
 
                 &:hover {
-                    text-decoration: underline;
+                    background-color: var(--dark-color);
+                    color: var(--light-color);
+                    transition: background-color 0.3s ease-in-out;
                 }
             }
 
@@ -94,6 +105,7 @@ nav {
                 width: 2.5rem;
                 height: 2.5rem;
             }
+            
         }
 
     }
@@ -196,6 +208,21 @@ footer {
 
 
 /* Media Queries */
+
+/* Media Queries for Smaller Mobile Devices */
+@media (max-width: 320px) {
+    .nav-links {
+        display: none;
+    }
+
+    .search-bar {
+        display: none;
+    }
+
+}
+
+
+/* Media Queries for Mobile Devices */
 @media (min-width: 320px) and (max-width: 600px) {
     nav {
         flex-direction: column;
@@ -211,4 +238,11 @@ footer {
     }
     
 }
+
+/* Media Queries for Tablets */
+@media (min-width: 601px) and (max-width: 1280px) {
+    nav {
+        flex-direction: row;
+    }
+}   
 

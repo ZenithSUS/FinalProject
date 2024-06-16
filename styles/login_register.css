@@ -14,9 +14,14 @@
         padding: 1rem;
         box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
         border-radius: 1rem;
-        background-color: var(--light-color);
+        background-image: url("../img/backgrounds/waves.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
         width: 100%;
         max-width: 500px;
+        color: var(--light-color);
     }
 
     .regForm {
@@ -26,9 +31,14 @@
         padding: 1rem;
         box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
         border-radius: 1rem;
-        background-color: var(--light-color);
+        background-image: url("../img/backgrounds/waves.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
         width: 100%;
         max-width: 400px;
+        color: var(--light-color);
     }
     
     form h1 {
@@ -71,24 +81,41 @@
     .auth-options {
         display: flex;
         justify-content: space-between;
+
+        a {
+            text-decoration: none;
+            color: var(--light-color-color);
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .auth-register {
+        
+        a {
+            text-decoration: none;
+            color: var(--light-color);
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        
     }
 }
 
-/** media queries **/
-@media (max-width: 768px) {
+/* Media Query for Tablets */
+@media (min-width: 601px) and (max-width: 1280px) {
     .container form {
        width: 80%;
        max-width: 300px;
     }
 }
 
-@media (max-width: 600px) {
-    .container form {
-       width: 90%;
-    }
-}
-
-@media (min-width: 320px) and (max-width: 480px) {
+/* Media Query for Mobile Devices */
+@media (min-width: 320px) and (max-width: 600px) {
 
     .container .loginForm {
         width: 80%;
@@ -117,5 +144,6 @@
     .auth-options {
         flex-direction: column;
         gap: 0.4rem;
+        font-size: 0.8rem;
     }
 }
