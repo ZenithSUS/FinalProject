@@ -17,8 +17,8 @@
         $fileActualExt = strtolower(end($fileExt));
         //Allowed extensions
         $allowed = array('jpg', 'jpeg', 'png');
-        //Check if file is allowed
-        if(in_array($fileActualExt, $allowed) == true) {
+        //Check if file is allowed and if there is no error
+        if(in_array($fileActualExt, $allowed) == true && $fileError == UPLOAD_ERR_OK) {
             if($fileError === 0) {
                 //Check file size is under 1mb
                 if($fileSize < 1000000) {
