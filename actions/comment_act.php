@@ -7,7 +7,8 @@
     //Initialize session
     session_start();
 
-    if(isset($_SESSION['user_id'])) {
+
+    if(isset($_SESSION['user_id']) && isset($_GET['post_id']) && !empty($_SESSION['user_id']) && !empty($_GET['post_id'])) {
         //Checks if the commentform is submitted
         if(isset($_POST['commentForm'])) {
             //Get data from url using GET method

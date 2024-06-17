@@ -6,9 +6,13 @@
     //Initialize session
     session_start();
 
+    //Check if the get methods are set
+    if(!isset($_GET['user_id']) || !isset($_GET['status'])) {
+        header("Location: ../../index.php");
+    }
+
     //Check if user is logged in
     if(isset($_SESSION['user_id'])) {
-        
         //Checks if the friendform is submitted
         if(isset($_POST['friendForm'])) {
             //Get data from url using GET method

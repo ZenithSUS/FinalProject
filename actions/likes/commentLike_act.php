@@ -18,7 +18,12 @@
 
     //Check if the user is logged in
     if(!isset($_SESSION['user_id'])) {
-        header("Location: ../auth/login.php");
+        header("Location: ../../auth/login.php");
+    }
+
+    //Check if the get methods are set
+    if(!isset($commentId) || !isset($postId) || !isset($userId) || !isset($type)) {
+        header("Location: ../../index.php");
     }
     
     //Check of the user pressed like
