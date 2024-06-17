@@ -385,7 +385,7 @@
         echo "Posted by " .$row['username'] . " on " . date('F j, Y, g:i a', strtotime($created_at)) . "</p>";
         
         //Display post title and content
-        echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "'><h3>" . $row['title'] . "</h3></a>";
+        echo "<a class='title' href='currentPost.php?post_id=" . $row['post_id'] . "'><h3>" . $row['title'] . "</h3></a>";
         echo "<p>" . $row['content'] . "</p>";
 
         //Get the user vote type
