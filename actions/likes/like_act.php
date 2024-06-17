@@ -15,6 +15,11 @@
     //Get type from url or using GET method
     $type = $_GET['type'];
 
+    //Check if the user is logged in
+    if(!isset($_SESSION['user_id'])) {
+        header("Location: ../auth/login.php");
+    }
+    
     //Check of the user pressed like
     if(isset($_POST['likeForm'])) {
         //Call addLike function

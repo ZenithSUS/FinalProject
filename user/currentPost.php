@@ -12,14 +12,20 @@
     <title>
         <?php 
         //Check if title is set
-        if(isset($_GET['title'])) : echo $_GET['title'] ?> 
-        <?php else : echo 'Post' ?> <?php endif; 'Post' ?>
+        if(isset($_GET['title']) && !empty($_GET['title'])){
+            echo $_GET['title'];
+        } else {
+            echo 'Post';
+        }
+        ?>
+
+
     </title>
 </head>
 <body>
     <?php
     //Check if the post is set
-    if(isset($_GET['post_id'])){ 
+    if(isset($_GET['post_id']) && !empty($_GET['post_id'])) {
         //Get data from url using GET method
         $postId = $_GET['post_id'];
     } else {

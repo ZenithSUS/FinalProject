@@ -11,6 +11,14 @@
     <title>Profile</title>
 </head>
 <body>
+    <!-- Check if the user id is set -->
+    <?php
+    if(isset($_GET['user_id']) && !empty($_GET['user_id'])) {
+        $userId = $_GET['user_id'];
+    } else {
+        header("Location: ../index.php");
+    }
+    ?>
     <!-- Start Session -->
     <?php
     session_start();

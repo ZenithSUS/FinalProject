@@ -11,6 +11,14 @@
     <title>Edit Post</title>
 </head>
 <body>
+    <!-- Check if the post id is set -->
+    <?php 
+        if(isset($_GET['post_id']) && !empty($_GET['post_id'])) {
+            $postId = $_GET['post_id'];
+        } else { 
+            header("Location: ../index.php"); 
+        }
+    ?>
     <!-- Start Session -->
     <?php
     session_start();
@@ -23,6 +31,8 @@
         checkSessionTimeout();
     }
     ?>
+
+    
     <?php
         // include queries
         include "../queries/post.php";
@@ -143,11 +153,9 @@
 
             <!-- Edit Post Container -->
             <div class="editPost">
-                <?php
-                    // Get post id
-                    $post = $_GET['post_id'];    
+                <?php  
                     // Get post data
-                    $sql = "SELECT * FROM posts WHERE post_id = '$post'";
+                    $sql = "SELECT * FROM posts WHERE post_id = '$postId'";
                     $result = $conn->query($sql) or die($conn->error);
                     $post = $result->fetch_assoc();
 
