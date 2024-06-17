@@ -422,6 +422,16 @@
         z-index: 998;
         background-color: var(--primary-color);
 
+        a {
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            
+            &:hover {
+                background-color: var(--light-color);
+                color: var(--dark-color);
+                transition: background-color 0.3s ease-in-out;
+            }
+        }
 
     }
     .other-content, .nav-links, nav .profile-link{
