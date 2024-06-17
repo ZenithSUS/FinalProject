@@ -93,6 +93,36 @@
 
 /* Media Queries */
 
+/* Media Queries for Smaller Screens */
+@media (max-width: 320px) {
+
+    .posts .profile-box {
+        gap: 1rem;
+        flex-direction: column;
+
+        img {
+            width: calc(3rem * 1.5);
+            height: calc(3rem * 1.5);
+        }
+
+        .profile-info {
+            text-align: center;
+         }
+
+        .profile-settings {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            a, button {
+                width: 100%;
+                max-width: calc(100% - 1rem);
+            }
+        }
+    }
+    
+}
+
 /* Media Queries for Mobile Devices */
 @media (min-width: 320px) and (max-width: 600px) {
 

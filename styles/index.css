@@ -378,7 +378,7 @@
     .nav-mobile {
         display: block;
         width: 100%;
-        max-width: 320px;
+        max-width: 320px;;
         height: 100%;
         max-height: 50px;
         position: fixed;
@@ -390,6 +390,16 @@
         gap: 2rem;
         z-index: 998;
         background-color: var(--primary-color);
+
+        a {
+            border-radius: 0.5rem;
+            padding: calc(0.2rem * 0.75);
+            
+            &:hover {
+                background-color: var(--light-color);
+                color: var(--dark-color);
+            }
+        }
     }
 
 

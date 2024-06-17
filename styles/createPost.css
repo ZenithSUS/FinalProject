@@ -102,6 +102,29 @@
 
 /* Media Queries */
 
+/* Media Queries for Smaller Mobile Devices */
+@media (max-width: 320px) {
+    .create-content {
+        margin-top: 7rem;
+        margin-right: 0rem;
+    }
+
+    .createForm-container { 
+        width: 100%;
+        max-width: 320px;
+        padding: 1rem;
+
+        h2 {
+            text-align: center;
+        }
+    }
+
+    .createPost {
+        max-width: 320px;
+        margin-right: 0;
+    }
+}
+
 /* Media Queries for Mobile Devices */
 @media (min-width: 320px) and (max-width: 600px) {
 
@@ -152,7 +175,7 @@
 @media (min-width: 1025px) and (max-width: 1400px) {
     .create-content {
         margin-right: 0;
-        margin-top: 5rem;
+        margin-top: calc(5rem + 1rem);
     }
 }
 
