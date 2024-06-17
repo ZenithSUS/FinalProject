@@ -148,9 +148,10 @@
             <!-- Posts / Friend Requests Area -->
             <div class="friend-requests">
                 <!-- Friend Requests -->
-                <h2>Friend Requests</h2>
+                <h2>Friend Requests <?php if($count > 0) echo $count; ?></h2>
                 <div class="friend-requests-box">
-                    <div class="request-box">
+                    <button class="request-view-btn">View Requests</button>
+                    <div class="request-box hidden">
                         <?php
                         //Get friend requests
                         $result = getFriendRequests($conn, $userId);
@@ -198,6 +199,43 @@
                 </div>
             </div>
 
+            <!-- Friends in Mobile Mode -->
+            <div class="friends-mobile">
+                <h2>Friends</h2>
+                <button class="friends-view-btn">View Friends</button>
+                <div class="friends-mobile-box hidden">
+                    <?php
+                    //Get friends
+                    $result = getFriends($conn, $userId);
+                    if($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            $profile = $row['profile_pic'];
+                            $username = $row['username'];
+                            //Check if profile pic exists
+                            if(isset($profile) || !is_null($profile)) {
+                                echo "<div class='friend-details'>
+                                        <div class='profile-pic'>
+                                            <a href='user/profile.php?user_id=" . $row['user_id'] . "'><img src='img/u/" . $profile . "' alt='user'></a>
+                                            <p>" . $username . "</p>
+                                        </div>
+                                    </div>";
+                            } else { 
+                                echo "<div class='friend-details'>
+                                        <div class='profile-pic'>
+                                            <a href='user/profile.php?user_id=" . $row['user_id'] . "'><img src='img/default.jpg' alt='user'></a>
+                                            <p>" . $username . "</p>
+                                        </div>
+                                    </div>";
+                            }
+                        }
+                    } else {
+                        echo "<p>No friends</p>";
+                    }
+                    ?>
+                </div>
+            </div>
+
+
             <!-- Friends Area -->
             <div class="friends-container">
                 <h2>Friends</h2>
@@ -241,6 +279,7 @@
     <!-- Scripts -->
     <script src="scripts/search.js"></script>
     <script src="scripts/burgerMenu.js"></script>
+    <script src="scripts/showFriend.js"></script>
 
 </body>
 </html>

@@ -190,10 +190,10 @@ document.getElementById("searchInput-mobile").addEventListener("keydown", functi
 const MobileSearchUser = () => {
     var input = document.getElementById('searchInput-mobile').value
     // Perform search
-    performSearchUser(input)
+    performMobileSearchUser(input)
 }
 
-performSearchUser = (query) => {
+performMobileSearchUser = (query) => {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {

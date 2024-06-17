@@ -492,6 +492,11 @@
 }
 
 
+/* Media Query for Large Screens */
+@media (min-width: 1281px) and (max-width: 1400px) {
+    
+}
+
 
 /* Media Query for Desktops */
 @media (min-width: 1400px) {

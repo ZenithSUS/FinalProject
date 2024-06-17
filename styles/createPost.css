@@ -135,6 +135,7 @@
 
     .create-content {
         margin-right: 0;
+        margin-top: 7rem;
     }
 
     .createForm-container { 
@@ -144,6 +145,14 @@
 
     .createPost {
         max-width: 750px;
+    }
+}
+
+/* Media Queries Large Screens */
+@media (min-width: 1025px) and (max-width: 1400px) {
+    .create-content {
+        margin-right: 0;
+        margin-top: 5rem;
     }
 }
 
