@@ -42,6 +42,18 @@
     }
 }
 
+/* Media Queries */
+
+/* Media Queries for Smaller Devices */
+@media (max-width: 320px) {
+    .current-content {
+        margin-top: 8.25rem;
+        max-width: 600px;
+        margin-right: 0;
+        padding: 1rem;
+    }
+}
+
 /* Media Queries for Mobile */
 @media (min-width: 320px) and (max-width: 600px) {
     .current-content {

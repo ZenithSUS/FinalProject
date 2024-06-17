@@ -9,7 +9,8 @@
     max-width: 1000px;
     height: 100%;
     min-height: 100vh;
-    margin-right: 2rem;
+    margin-right: 2.5rem;
+    margin-top: 5.75rem;
 }
 
 /* Styling for Edit Post Container */
@@ -103,6 +104,15 @@
 
 /* Media Queries */
 
+/* Media Queries for Smaller Mobile Devices */
+@media (max-width: 320px) {
+    .edit-content {
+        margin-top: 7rem;
+        margin-right: 0;
+        padding: 1.5rem;
+    }
+}
+
 /* Media Queries for Mobile Devices */
 @media (min-width: 320px) and (max-width: 600px) {
     .edit-content {
@@ -116,5 +126,15 @@
 @media (min-width: 601px) and (max-width: 1280px) {
     .edit-content {
         margin-right: 0;
+        padding: 1.5rem;
+        margin-top: 7rem;
+    }
+}
+
+/* Media Queries for Laptops and Desktops */
+@media (min-width: 1281px) and (max-width: 1400px) {
+    .edit-content {
+        margin-top: calc(3rem + 1.5rem);
+        padding: 1.5rem;
     }
 }

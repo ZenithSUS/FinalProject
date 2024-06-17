@@ -18,8 +18,8 @@
         //Allowed extensions
         $allowed = array('jpg', 'jpeg', 'png');
         //Check if file is allowed and if there is no error
-        if(in_array($fileActualExt, $allowed) == true && $fileError == UPLOAD_ERR_OK) {
-            if($fileError === 0) {
+        if(in_array($fileActualExt, $allowed) == true) {
+            if($fileError === UPLOAD_ERR_OK && $fileSize > 0) {
                 //Check file size is under 1mb
                 if($fileSize < 1000000) {
                     //Generate unique file name
