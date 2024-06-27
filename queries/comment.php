@@ -65,8 +65,8 @@
 
                 //Display likes and dislikes
                 echo "<form action='../actions/likes/commentLike_act.php?post_id=" . $row['post_id'] . "&comment_id=" . $row['comment_id'] . "&type=" . $voteType . "' method='POST' class='vote'>
-                        <p><button type='submit' name='likeForm'><img src='img/like.png' alt='like'> " . $row['likes'] . " </button></p>
-                        <p><button type='submit' name='dislikeForm'><img src='img/dislike.png' alt='dislike'> " . $row['dislikes'] . " </button></p>
+                        <p><button type='submit' name='likeForm'><img class='vote-emoji' src='../img/misc/like.png' alt='like'> " . $row['likes'] . " </button></p>
+                        <p><button type='submit' name='dislikeForm'><img class='vote-emoji' src='../img/misc/dislike.png' alt='dislike'> " . $row['dislikes'] . " </button></p>
                     </form>";
 
                 //Display reply box

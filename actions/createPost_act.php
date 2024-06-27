@@ -15,8 +15,9 @@
         if(isset($_POST['createPost'])) { 
             $title = $_POST['title'];
             $content = $_POST['content'];
+            $greek = $_POST['greek'];
             $userId = $_SESSION['user_id'];
-            createPost($conn, $title, $content, $userId);
+            createPost($conn, $title, $content, $userId, $greek);
         }
 
     } else {

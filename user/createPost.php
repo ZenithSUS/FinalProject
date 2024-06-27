@@ -33,7 +33,7 @@
     ?>
     <nav> 
         <!-- Logo -->
-        <h2> Greek Myth </h2>
+        <a class="logo" href="../index.php"><img src="../img/misc/logo.png" alt="logo"></a>
             <!-- Search Bar -->
             <div class="search-bar">
                 <!-- Search Input -->
@@ -153,6 +153,14 @@
                             <!-- Error Message -->
                             <?php if(isset($_GET['error'])) { echo "<p class='error'>" . $_GET['error'] . "</p>"; } ?>
                         </div>
+                        <!-- Group Page Field -->
+                        <div class="form-group">
+                            <label for="groupPage">Select Group Page</label>
+                                <?php
+                                    //Get group pages
+                                    $groupPages = getUserGroupPages($conn);
+                                ?>
+                        </div>
                         <!-- Content Field -->
                         <div class="form-group">
                             <label for="content">Content</label>
@@ -173,7 +181,7 @@
                     <!-- Greek Heroes Page Area -->
                     <div class="others">
                         <!-- Title -->
-                        <h2>Greek Gods</h2>
+                        <h2>Greek Pages</h2>
                             <!-- Heroes Container -->
                             <div class="heroes">
                                 <?php 

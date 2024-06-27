@@ -43,7 +43,7 @@
     ?>
     <nav>
         <!-- Logo -->
-        <h2> Greek Myth </h2>
+        <a class="logo" href="../index.php"><img src="../img/misc/logo.png" alt="logo"></a>
             <!-- Search Bar -->
             <div class="search-bar">
                 <!-- Search Input -->
@@ -158,7 +158,7 @@
                 <a href="../actions/logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
             </div>
 
-            <!-- Post Area -->
+            <!-- Profile Area -->
             <div class="posts">
                 <!-- Profile Container -->
                 <div class="profile-container">
@@ -177,13 +177,20 @@
                 </div>
             </div>
 
+            <!-- User All Posts Area -->
+            <div class="posts">
+                <div class="userPosts-title">User Posts</div>
+                <?php Userposts($conn, $userId); ?>
+            </div>
+
+
             <!-- Others Content Area -->
             <div class="other-content">
                 <div class="other-scroll" id="other-scroll">
                     <!-- Greek Heroes Page Area -->
                     <div class="others">
                         <!-- Title -->
-                        <h2>Greek Gods</h2>
+                        <h2>Greek Pages</h2>
                             <!-- Heroes Container -->
                             <div class="heroes">
                             <?php 

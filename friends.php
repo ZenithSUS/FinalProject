@@ -32,7 +32,7 @@
     <!-- Header Area -->
     <nav>
         <!-- Logo -->
-        <h2> Greek Myth </h2>
+        <a class="logo" href="index.php"><img src="img/misc/logo.png" alt="logo"></a>
         <!-- Search Bar -->
         <div class="search-bar">
             <!-- Search Input -->

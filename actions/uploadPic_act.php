@@ -41,17 +41,17 @@
                     exit();
                 //If file size is over 1mb
                 } else {
-                    header("Location: ../auth/uploadProfile.php?error=File is too big!");
+                    header("Location: ../auth/uploadProfile.php?profileError=File is too big!");
                     exit();
                 }
             //If there is an error
             } else {
-                header("Location: ../auth/uploadProfile.php?error=There was an error uploading your file!");
+                header("Location: ../auth/uploadProfile.php?profileError=There was an error uploading your file!");
                 exit();
             }
         //If file is not allowed   
         } else {
-            header("Location: ../auth/uploadProfile.php?error=You cannot upload files of this type!");
+            header("Location: ../auth/uploadProfile.php?profileError=You cannot upload files of this type!");
             exit();
         }
     }
@@ -60,5 +60,15 @@
     if(isset($_POST['noPicSubmit'])) {
         header("Location: ../index.php");
         exit();
+    }
+
+    //If no form is submitted
+    if(!isset($_POST['picSubmit']) && !isset($_POST['noPicSubmit'])) {
+        if(!isset($_SESSION['user_id'])) {
+            header("Location: ../auth/login.php");
+        } else {
+            header("Location: ../auth/uploadProfile.php");
+            exit();
+        }
     }
 ?>

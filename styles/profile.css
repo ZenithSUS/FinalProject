@@ -90,6 +90,129 @@
 }
 
 
+.edit-profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 750px;
+    padding: 0.5rem;
+
+
+    /* Styling for Edit Profile Children */
+    .edit-profile-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+
+        padding: 1rem;
+        box-shadow: 4px 4px 4px rgba(0, 0, 0, .5);
+        border-radius: 0.5rem;
+        background-color: var(--light-color);
+
+        h2 {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+        }
+
+        form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            width: 100%;
+            max-width: 500px;
+            gap: 1rem;
+
+            .profile-pic {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                gap: 1rem;
+
+                img {
+                    width: 10rem;
+                    height: 10rem;
+                    border-radius: 100%;
+                    border: 0.2rem solid var(--dark-color);
+                }
+
+                input {
+                    cursor: pointer;
+                }
+            }
+
+            .form-group {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                max-width: 750px;
+
+                label {
+                    font-weight: bold;
+                    margin-bottom: 0.2rem;
+                }
+
+                input {
+                    font-size: 1rem;
+                    padding: 0.5rem;
+                    border-radius: 0.5rem;
+                    border: 0.2rem solid var(--dark-color);
+                }
+
+                textarea {
+                    font-size: 1rem;
+                    padding: 0.5rem;
+                    border-radius: 0.5rem;
+                    border: 0.2rem solid var(--dark-color);
+                    resize: vertical;
+                }
+
+                .error {
+                    margin-top: 0.5rem;
+                }
+
+            }
+
+            .form-group-btns {
+                display: flex;
+                gap: 1rem;
+
+                a {
+                    text-decoration: none;
+                    color: var(--light-color);
+                }
+
+                button, a {
+                    padding: 0.5rem;
+                    font-size: 1rem;
+                }
+
+                .profile-btn {
+                    padding: 0.5rem;
+                    border-radius: 0.5rem;
+                    border: 0.2rem solid var(--dark-color);
+                    color: var(--light-color);
+                    background-color: var(--dark-color);
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: var(--light-color);
+                        color: var(--dark-color);
+                        transition: background-color 0.3s ease-in-out;
+                    }
+                }
+            }
+        }
+
+    }
+}
+
 
 /* Media Queries */
 

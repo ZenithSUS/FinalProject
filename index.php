@@ -16,7 +16,12 @@
     include_once "session.php";
     // Check if the session or cookie is set
     if(!isset($_SESSION['user_id']) || !isset($_COOKIE['user_id'])){
+        // Unset sessions
+        session_unset();
+        //Destroy session
+        session_destroy();
         header("Location: auth/login.php");
+        exit();
     } else {
         // Call checkSessionTimeout function
         checkSessionTimeout();
@@ -33,7 +38,7 @@
     <!-- Header Area -->
     <nav>
         <!-- Logo -->
-        <h2> Greek Myth </h2>
+        <a class="logo" href="index.php"><img src="img/misc/logo.png" alt="logo"></a>
             <!-- Search Bar -->
             <div class="search-bar">
                 <!-- Search Input -->
@@ -147,6 +152,17 @@
                 <a href="actions/logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
             </div>
 
+            <!-- Sort Posts Mobile -->
+            <div class="sort-posts-mobile">
+                <h2>Sort Posts By</h2>
+                <div class="sort-posts-mobile-links">
+                    <a href="index.php?sort=date">Date</a>
+                    <a href="index.php?sort=likes">Likes</a>
+                    <a href="index.php?sort=random">Random</a>
+                    <a href="index.php?sort=comments">Comments</a>
+                </div>
+            </div>
+
             <!-- Posts -->
             <div class="posts">
                 <div class="createPost-box">
@@ -204,12 +220,12 @@
                     <!-- Greek Heroes Page Area -->
                     <div class="others">
                         <!-- Title -->
-                        <h2>Greek Gods</h2>
+                        <h2>Greek Pages</h2>
                             <!-- Heroes Container -->
                             <div class="heroes">
                                 <?php 
                                     //Get heroes
-                                    $heroes = getGreeks($conn);
+                                    $heroes = getGreeks($conn, $userId);
                                     ?>
                             </div>
                         </div>

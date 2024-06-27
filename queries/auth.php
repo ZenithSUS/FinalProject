@@ -52,7 +52,7 @@
     //Function to register
     function register($conn, $username, $email, $password) {
         //Write query and prepare statement
-        $sql = "INSERT INTO users (user_id, username, email, password) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO users (user_id, username, email, password) VALUES (UUID(), ?, ?, ?)";
         //Prepare statement
         $stmt = $conn->prepare($sql);
         //Check if query is prepared
@@ -61,13 +61,21 @@
             header("Location: ../auth/register.php?error=sqlerror");
             exit();
         } else {
-            //Generate user id
-            $user_id = mysqli_real_escape_string($conn, uniqid());
+            
             //Hash password
             $hashed_password = hashPassword($password);
             //Bind parameters and execute query
-            $stmt->bind_param("ssss", $user_id, $username, $email, $hashed_password);
+            $stmt->bind_param("sss", $username, $email, $hashed_password);
             $stmt->execute();
+
+            //After Registering the account get the user id
+            $sql = "SELECT * FROM users WHERE username = '$username'";
+            $result = $conn->query($sql);
+            $row = $result->fetch_assoc();
+            $user_id = $row['user_id'];
+
+            //Call insertDefaultPages function
+            insertDefaultPages($conn, $user_id);
 
             //Set session variables
             $_SESSION['user_id'] = $user_id;
@@ -78,11 +86,28 @@
             //Set cookies
             setcookie("user_id", $user_id, time() + $_SESSION['expires'] , "/");
             setcookie("username", $username, time() + $_SESSION['expires'], "/");
+
             //Close statement
-            
             $stmt->close();
             echo "<script>alert('Registered successfully!')</script>";
             echo "<script>window.location.href = '../auth/uploadProfile.php';</script>";
+        }
+    }
+
+    //Function to insert default group pages
+    function insertDefaultPages($conn, $user_id) {
+        //Write query
+        $sql = "SELECT * FROM greeks WHERE creator = 'Default'";
+        $result = $conn->query($sql);
+
+        if($result !== false && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $sql = "INSERT INTO user_groups (id, user_id, greek_id) VALUES (UUID(), ?, ?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("ss", $user_id, $row['greek_id']);
+                $stmt->execute();
+                $stmt->close();
+            }
         }
     }
 

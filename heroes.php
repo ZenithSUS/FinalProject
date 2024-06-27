@@ -6,6 +6,8 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="global.css">
     <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/heroes.css">
+    <!-- Title -->
     <title>Heroes</title>
 </head>
 <body>
@@ -25,13 +27,14 @@
         // include queries
         include "queries/post.php";
         include "queries/friend.php";
+        include "queries/greek.php";
         // include db connection
         include "db.php";
     ?>
     <!-- Header Area -->
     <nav>
         <!-- Logo -->
-        <h2> Greek Myth </h2>
+        <a class="logo" href="index.php"><img src="img/misc/logo.png" alt="logo"></a>
         <!-- Search Bar -->
         <div class="search-bar">
             <!-- Search Input -->
@@ -147,13 +150,33 @@
 
             <!-- Posts -->
             <div class="greeks">
-               
+                <div class="greeks-title">
+                    <h1>Greeks Discussion</h1>
+                </div>
+                <?php
+                    if(isset($_GET['greek_id'])) {
+                        getSpecificGreekInfo($conn, $_GET['greek_id']);
+                    } else {
+                        getGreeksInfos($conn);
+                    }
+                ?>
             </div>
 
             <!-- Others Content Area -->
             <div class="other-content">
                 <div class="other-scroll" id="other-scroll">
-                    
+                <div class="others">
+                        <!-- Title -->
+                        <h2>Greek Pages</h2>
+                            <!-- Heroes Container -->
+                            <div class="heroes">
+                                <?php 
+                                    //Get heroes
+                                    $heroes = getGreeks($conn, $userId);
+                                    ?>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

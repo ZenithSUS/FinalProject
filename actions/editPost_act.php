@@ -15,6 +15,8 @@
             $postId = $_GET['post_id'];
             //Call editPost function
             editPost($conn, $postId);
+        } else {
+            header("Location: ../index.php");
         }
     } else {
         header("Location: ../auth/login.php");

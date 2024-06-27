@@ -44,7 +44,7 @@
     <!-- Navigation -->
     <nav>
         <!-- Logo -->
-        <h2> Greek Myth </h2>
+        <a class="logo" href="../index.php"><img src="../img/misc/logo.png" alt="logo"></a>
            <!-- Search Bar -->
            <div class="search-bar">
                 <!-- Search Input -->
@@ -196,7 +196,7 @@
                 <!-- Others Container -->
                 <div class="others">
                     <!-- Heading or Title -->
-                    <h2>Greek Gods</h2>
+                    <h2>Greek Pages</h2>
                         <!-- Heroes Container -->
                         <div class="heroes">
                             <?php 

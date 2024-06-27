@@ -6,32 +6,18 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../global.css">
     <link rel="stylesheet" href="../styles/index.css">
-    <link rel="stylesheet" href="../styles/currentPost.css">
-    <link rel="stylesheet" href="../styles/comment.css">
+    <link rel="stylesheet" href="../styles/profile.css">
     <!-- Title -->
-    <title>
-        <?php 
-        //Check if title is set
-        if(isset($_GET['title']) && !empty($_GET['title'])){
-            echo $_GET['title'];
-        } else {
-            echo 'Post';
-        }
-        ?>
-
-
-    </title>
+    <title>Change Password</title>
 </head>
 <body>
+    <!-- Check if the user id is set -->
     <?php
-    //Check if the post is set
-    if(isset($_GET['post_id']) && !empty($_GET['post_id'])) {
-        //Get data from url using GET method
-        $postId = $_GET['post_id'];
+    if(isset($_GET['user_id']) && !empty($_GET['user_id'])) {
+        $userId = $_GET['user_id'];
     } else {
         header("Location: ../index.php");
     }
-        
     ?>
     <!-- Start Session -->
     <?php
@@ -46,16 +32,14 @@
     }
     ?>
     <?php
-        //Include queries
-        include "../queries/post.php";
-        include "../queries/friend.php";
-        include "../queries/comment.php";
+        // include queries
+        include "../queries/profile.php";
         include "../queries/greek.php";
-        //Include db connection
+        include "../queries/friend.php";
+        // include db connection
         include "../db.php";
     ?>
-    <!-- Header Area -->
-        <nav>
+    <nav>
         <!-- Logo -->
         <a class="logo" href="../index.php"><img src="../img/misc/logo.png" alt="logo"></a>
             <!-- Search Bar -->
@@ -73,11 +57,11 @@
         <!-- Profile Link -->
         <div class="profile-link">
         <?php 
-            //Get user id in session
+            //Get user id
             $userId = $_SESSION['user_id'];
             // Execute query
             $result = $conn->query("SELECT * FROM users WHERE user_id = '$userId'") or die($conn->error);
-            //Get profile pic from database by using user id and associative array
+            // Get Rows
             $row = $result->fetch_assoc(); 
             //Get profile pic
             $profile = $row['profile_pic'];
@@ -102,7 +86,7 @@
         <!-- Enable Burger Menu on Mobile -->
         <div class="burger-menu hidden">
             <div class="profile-link-mobile">
-                <a href="../user/profile.php?user_id=<?php echo $userId ?>">
+                <a href="profile.php?user_id=<?php echo $userId ?>">
                    <?php
                         //Check if profile pic exists
                         if(isset($profile) || !is_null($profile)) {
@@ -147,9 +131,9 @@
         </div>
     </div>
     
-    <!-- Main Area -->
+    <!-- Profile Page -->
     <main>
-        <div class="current-content">
+        <div class="main-content">
             <!-- Nav Links -->
             <div class="nav-links"> 
                 <a href="../index.php">Home</a>
@@ -159,58 +143,66 @@
                     //Get friend request count
                     $sql = "SELECT * FROM friend_requests WHERE requestee_id = ? AND status = 'pending'";
                     $stmt = $conn->prepare($sql);
-                    //Bind parameter to statement
                     $stmt->bind_param("s", $userId);
-                    //Execute statement
                     $stmt->execute();
-                    //Get result from statement using get_result
                     $result = $stmt->get_result();
-                    //Get number of rows
-                    $count = $stmt->num_rows;
+                    $count = $result->num_rows;
                     if($count > 0) {
                         echo "<span class='notif'>" . $count . "</span>";
                     }
-                    //Close statement
-                    $stmt->close();
                     ?>
                 </a>
                 <a href="../heroes.php">Heroes</a>
                 <a href="../actions/logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
             </div>
 
-        <!-- Current Post Area -->
-        <div class="posts current-posts">
-            <!-- Display Current Post -->
-            <?php
-                 //Get user id from session
-                 $userId = $_SESSION['user_id'];
- 
-                 //Call currentPost function
-                 currentPost($conn, $postId, $userId);
-            ?>
-
-            <!-- Comment Form Container -->
-            <div class='comment-form'>
-                <!-- Heading or Title -->
-                <h2 id='commentTitle'>What are your thoughts</h2>
-                <!-- Comment Form -->
-                <form action='../actions/comment_act.php?post_id=<?php echo $postId ?>' method='post'>
-                <!-- Comment Field -->
-                <textarea name='comment' id='comment' cols='30' rows='10'></textarea>
-                <!-- Submit Button -->
-                <button type='submit' name='commentForm' id='commentBtn' onclick="disableCommentBtn()">Comment</button>
-                </form>
+            <!-- Profile Area -->
+            <div class="edit-profile">
+                <!-- Profile Container -->
+                <div class="edit-profile-box">
+                    <!-- Profile Box -->
+                    <?php 
+                     //Fetch users information
+                     $result = $conn->query("SELECT * FROM users WHERE user_id = '$userId'") or die($conn->error);
+                     //Get Rows
+                     $row = $result->fetch_assoc(); 
+                     //Get profile pic
+                     $profile = $row['profile_pic'];
+                     ?>
+                    <form action="../actions/updateAcc_act.php" method="POST">
+                        <h2>Change Password</h2>
+                            <!-- Old Password -->
+                            <div class="form-group">
+                                <label for="old_password">Old Password</label>
+                                <input type="password" name="old_password" id="old_password">
+                                <span class="error"><?php if(isset($_GET['old_pass_error'])) echo $_GET['old_pass_error']; ?></span>
+                            </div>
+                            <!-- New Password -->
+                            <div class="form-group">
+                                <label for="new_password">New Password</label>
+                                <input type="password" name="new_password" id="new_password">
+                                <span class="error"><?php if(isset($_GET['new_pass_error'])) echo $_GET['new_pass_error']; ?></span>
+                            </div>
+                            <!-- Confirm New Password -->
+                            <div class="form-group">
+                                <label for="confirm_password">Confirm New Password</label>
+                                <input type="password" name="confirm_password" id="confirm_password">
+                                <span class="error"><?php if(isset($_GET['confirm_new_pass_error'])) echo $_GET['confirm_new_pass_error']; ?></span>
+                            </div>
+                            <!-- Submit -->
+                            <div class="form-group-btns">
+                                <button class="profile-btn" type="submit" name="editPass" onclick="return confirm('Are you sure you want to update your password?')">Change Password</button>
+                                <a class="profile-btn" href="profile.php?user_id=<?php echo $userId; ?>" class="cancel">Cancel</a>
+                            </div>
+                            <!-- Error Message -->
+                            <span class="error"><?php if(isset($_GET['error'])) echo $_GET['error']; ?></span>
+                    </form>
+                </div>
             </div>
 
-            <?php
-                //Call comments function  
-                comments($conn);
-            ?>
-                
-        </div>
 
-        <!-- Others Content Area -->
-        <div class="other-content">
+            <!-- Others Content Area -->
+            <div class="other-content">
                 <div class="other-scroll" id="other-scroll">
                     <!-- Greek Heroes Page Area -->
                     <div class="others">
@@ -218,31 +210,23 @@
                         <h2>Greek Pages</h2>
                             <!-- Heroes Container -->
                             <div class="heroes">
-                                <?php 
-                                    //Get heroes
-                                    $heroes = getGreeksUser($conn);
-                                    ?>
+                            <?php 
+                                //Get heroes
+                                $heroes = getGreeksUser($conn);
+                            ?>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </main>
-
-    <!-- Footer Area -->
-    <footer>
-        <div class="footer-content">
-            <a href="#top">Back to Top</a>
-        </div>
-    </footer>
-
+    
     <!-- Scripts -->
-    <script src="../scripts/disableBtns.js"></script>
-    <script src="../scripts/showReply.js"></script>
     <script src="../scripts/search.js"></script>
     <script src="../scripts/burgerMenu.js"></script>
+    <script src="../scripts/displayPic.js"></script>
 
 </body>
 </html>
