@@ -484,7 +484,7 @@
                 $created_date = $row['created_at'];
                 //Posts Containers
                 echo "<div class='post'>";
-                echo "<p class='author'><a href='user/profile.php?user_id=" . $row['author'] . "'>";
+                echo "<p class='author'><a href='profile.php?user_id=" . $row['author'] . "'>";
                 //Check if profile picture exists
                 if ($row['profile_pic'] != NULL) {
                     echo "<img src='../img/u/" . $row['profile_pic'] . "' alt='user' class='profilePic'>";
@@ -500,7 +500,7 @@
                 }
                 echo "</p>";
                 //Display title and content
-                echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "&title=" . $row['title'] . "'><h3>" . $row['title'] . "</h3>";
+                echo "<a class='title' href='currentPost.php?post_id=" . $row['post_id'] . "&title=" . $row['title'] . "'><h3>" . $row['title'] . "</h3>";
                 echo "<p>" . $row['content'] . "</p></a>";
 
                 //Get the user vote type

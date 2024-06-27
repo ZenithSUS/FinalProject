@@ -38,7 +38,7 @@
     <!-- Header Area -->
     <nav>
         <!-- Logo -->
-        <a class="logo" href="index.php"><img src="img/misc/logo.png" alt="logo"></a>
+        <a class="logo" href="index.php"><img src="img/misc/logo_transparent.png" alt="logo"></a>
             <!-- Search Bar -->
             <div class="search-bar">
                 <!-- Search Input -->

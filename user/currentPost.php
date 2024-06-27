@@ -220,7 +220,7 @@
                             <div class="heroes">
                                 <?php 
                                     //Get heroes
-                                    $heroes = getGreeksUser($conn);
+                                    $heroes = getGreeksUser($conn, $userId);
                                     ?>
                             </div>
                         </div>

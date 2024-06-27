@@ -6,19 +6,11 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../global.css">
     <link rel="stylesheet" href="../styles/index.css">
-    <link rel="stylesheet" href="../styles/editPost.css">
+    <link rel="stylesheet" href="../styles/createPage.css">
     <!-- Title -->
-    <title>Edit Post</title>
+    <title>Create Page</title>
 </head>
 <body>
-    <!-- Check if the post id is set -->
-    <?php 
-        if(isset($_GET['post_id']) && !empty($_GET['post_id'])) {
-            $postId = $_GET['post_id'];
-        } else { 
-            header("Location: ../index.php"); 
-        }
-    ?>
     <!-- Start Session -->
     <?php
     session_start();
@@ -31,22 +23,18 @@
         checkSessionTimeout();
     }
     ?>
-
-    
     <?php
         // include queries
-        include "../queries/post.php";
         include "../queries/friend.php";
         include "../queries/greek.php";
         // include db connection
         include "../db.php";
     ?>
-    <!-- Navigation -->
     <nav>
         <!-- Logo -->
         <a class="logo" href="../index.php"><img src="../img/misc/logo_transparent.png" alt="logo"></a>
-           <!-- Search Bar -->
-           <div class="search-bar">
+            <!-- Search Bar -->
+            <div class="search-bar">
                 <!-- Search Input -->
                  <div class="search-input">
                     <input type="text" placeholder="Search" id="searchInput" data-enter-pressed="false" class="search" oninput="searchUser()">
@@ -57,12 +45,14 @@
                     <div id="search-results" class="search-results"></div>
                 </div>
             </div>
+        <!-- Profile Link -->
         <div class="profile-link">
-        <?php
-            //Get user id 
+        <?php 
+            //Get user id
             $userId = $_SESSION['user_id'];
-            //Execute query
+            // Execute query
             $result = $conn->query("SELECT * FROM users WHERE user_id = '$userId'") or die($conn->error);
+            // Get Rows
             $row = $result->fetch_assoc(); 
             //Get profile pic
             $profile = $row['profile_pic'];
@@ -72,6 +62,7 @@
                     //Check if profile pic exists
                     if(isset($row['profile_pic'])) {
                        echo "<img src='../img/u/" . $row['profile_pic'] . "' alt='user' class='user'>";
+                    // Display default image if no profile pic
                    } else { 
                     echo "<img src='../img/default.jpg' alt='user' class='user'>";
                     }?>
@@ -130,18 +121,23 @@
             <a href="../actions/logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
         </div>
     </div>
-                
-    <!-- Main Area -->
+    
+    <!-- Profile Page -->
     <main>
-        <!-- Edit Content -->
-        <div class="edit-content">
+        <div class="main-content">
+            <!-- Nav Links -->
             <div class="nav-links"> 
                 <a href="../index.php">Home</a>
                 <a href="../friends.php" class="friends">Friends
                     <!-- Notify when there is friend request -->
                     <?php
                     //Get friend request count
-                    $count = getFriendRequestCountUser($conn, $userId);
+                    $sql = "SELECT * FROM friend_requests WHERE requestee_id = ? AND status = 'pending'";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("s", $userId);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $count = $result->num_rows;
                     if($count > 0) {
                         echo "<span class='notif'>" . $count . "</span>";
                     }
@@ -151,68 +147,65 @@
                 <a href="../actions/logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
             </div>
 
-            <!-- Edit Post Container -->
-            <div class="editPost">
-                <?php  
-                    // Get post data
-                    $sql = "SELECT * FROM posts WHERE post_id = '$postId'";
-                    $result = $conn->query($sql) or die($conn->error);
-                    $post = $result->fetch_assoc();
-
-                    // Get cleaned text
-                    $originalText = $post['content'];
-                    $cleanedText = strip_tags($originalText);
-
-                ?>
-                <!-- Edit Post Form -->
-                <div class="editForm-container">
-                    <!-- Heading or Title -->
-                    <h2>Edit Post</h2>
-                    <!-- Edit Post Form -->
-                    <form action="../actions/editPost_act.php?post_id=<?php echo $post['post_id']; ?>" method="POST">
-                        <!-- Title Field -->
-                        <div class="form-group">
-                            <label for="title">Title</label>
-                            <input type="text" name="title" placeholder="Title" value="<?php echo $post['title']; ?>">
-                        </div>
-                        <!-- Error Message -->
-                        <?php if(isset($_GET['error'])) { echo "<p class='error'>" . $_GET['error'] . "</p>"; } ?>
-                        <!-- Content Field -->
-                        <div class="form-group">
-                            <label for="content">Content</label>
-                            <textarea name="content" id="" cols="30" rows="10" placeholder="Write something..."><?php echo htmlspecialchars($cleanedText); ?></textarea>
-                        </div>
-                        <!-- Edit Post Button -->
-                        <div class="editPost-btn">
-                            <button type="submit" name="editPost">Edit</button>
-                            <a href="../index.php">Go back</a>
-                        </div>
-                    </form>
-                </div>
+            <!-- Page Area -->
+            <div class="page">
+                <form action="../actions/createPage_act.php" method="POST" class="page-form" enctype="multipart/form-data">
+                    <h2>Create Page</h2>
+                    <!-- Page Title -->
+                    <div class="form-group">
+                        <label for="title">Page Title</label>
+                        <input type="text" name="title" placeholder="Page Title">
+                        <span class="error"><?php if(isset($_GET['titleError'])) echo $_GET['titleError']; ?></span>
+                    </div>
+                    <!-- Page Description -->
+                    <div class="form-group">
+                        <label for="description">Page Description</label>
+                        <textarea name="description" rows="7" cols="50" placeholder="Page Description"></textarea>
+                        <span class="error"><?php if(isset($_GET['descriptionError'])) echo $_GET['descriptionError']; ?></span>
+                    </div>
+                    <!-- Page Image -->
+                    <div class="form-image-group">
+                        <label for="image">Page Image</label>
+                        <img src="../img/hero.png" alt="default" id="profilePic">
+                        <input type="file" name="greek_image" accept="image/*" id="file_input">
+                        <span class="error"><?php if(isset($_GET['imageError'])) echo $_GET['imageError']; ?></span>
+                    </div>
+                    <!-- Create Page Button -->
+                    <div class="createPage-btns">
+                        <button type="submit" name="createPage">Create Page</button>
+                        <button type="reset">Reset</button>
+                        <a href="../index.php">Cancel</a>
+                    </div>
+                </form>
             </div>
 
-            <!-- Other Content Area -->
+
+            <!-- Others Content Area -->
             <div class="other-content">
-                <!-- Others Container -->
-                <div class="others">
-                    <!-- Heading or Title -->
-                    <h2>Greek Pages</h2>
-                        <!-- Heroes Container -->
-                        <div class="heroes">
+                <div class="other-scroll" id="other-scroll">
+                    <!-- Greek Heroes Page Area -->
+                    <div class="others">
+                        <!-- Title -->
+                        <h2>Greek Pages</h2>
+                            <!-- Heroes Container -->
+                            <div class="heroes">
                             <?php 
                                 //Get heroes
                                 $heroes = getGreeksUser($conn, $userId);
                             ?>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </main>
-
-    <!--Scripts-->
+    
+    <!-- Scripts -->
     <script src="../scripts/search.js"></script>
     <script src="../scripts/burgerMenu.js"></script>
+    <script src="../scripts/displayPic.js"></script>
 
 </body>
 </html>

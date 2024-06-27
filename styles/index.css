@@ -3,6 +3,7 @@
 
 /* Styling for Navigation Links */
 .nav-links {
+    opacity: 0.8;
     position: fixed;
     top: 0;
     left: 0;
@@ -26,6 +27,7 @@
         width: 100%;
         padding: 1rem;
         border-radius: 0.5rem;
+        font-size: 1.5rem;
     }
 
     a:hover {
@@ -441,6 +443,9 @@
             text-decoration: none;
             color: var(--dark-color);
             width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
 
             &:hover {
                 text-decoration: underline;

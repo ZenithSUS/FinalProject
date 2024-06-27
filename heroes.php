@@ -34,7 +34,7 @@
     <!-- Header Area -->
     <nav>
         <!-- Logo -->
-        <a class="logo" href="index.php"><img src="img/misc/logo.png" alt="logo"></a>
+        <a class="logo" href="index.php"><img src="img/misc/logo_transparent.png" alt="logo"></a>
         <!-- Search Bar -->
         <div class="search-bar">
             <!-- Search Input -->
@@ -157,7 +157,7 @@
                     if(isset($_GET['greek_id'])) {
                         getSpecificGreekInfo($conn, $_GET['greek_id']);
                     } else {
-                        getGreeksInfos($conn);
+                        getGreeksInfos($conn, $userId);
                     }
                 ?>
             </div>
@@ -165,7 +165,12 @@
             <!-- Others Content Area -->
             <div class="other-content">
                 <div class="other-scroll" id="other-scroll">
-                <div class="others">
+                    <div class="createGreekPage">
+                        <h2>Create Page</h2>
+                        <a href="user/createPage.php">Create</a>
+                    </div>        
+            
+                    <div class="others">
                         <!-- Title -->
                         <h2>Greek Pages</h2>
                             <!-- Heroes Container -->

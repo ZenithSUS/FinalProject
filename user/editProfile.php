@@ -41,7 +41,7 @@
     ?>
     <nav>
         <!-- Logo -->
-        <a class="logo" href="../index.php"><img src="../img/misc/logo.png" alt="logo"></a>
+        <a class="logo" href="../index.php"><img src="../img/misc/logo_transparent.png" alt="logo"></a>
             <!-- Search Bar -->
             <div class="search-bar">
                 <!-- Search Input -->
@@ -226,7 +226,7 @@
                             <div class="heroes">
                             <?php 
                                 //Get heroes
-                                $heroes = getGreeksUser($conn);
+                                $heroes = getGreeksUser($conn, $userId);
                             ?>
                             </div>
                         </div>
