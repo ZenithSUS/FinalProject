@@ -14,6 +14,6 @@
         $greekId = $_GET['greek_id'];
         joinPage($conn, $userId, $greekId);
     } else {
-        header("Location: ../auth/login.php");
+        header("Location: ../../auth/login.php");
     }
 ?>

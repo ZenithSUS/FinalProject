@@ -152,6 +152,10 @@
 
             <!-- Posts -->
             <div class="greeks">
+                <div class="createGreek-mobile">
+                    <h2>Create Page</h2>
+                    <a href="user/createPage.php">Create</a>
+                </div>
                 <div class="greeks-title">
                     <h1>Greeks Discussion <?php echo !isset($_GET['greek_id']) ? "Joined" : "Page";?></h1>
                 </div>
