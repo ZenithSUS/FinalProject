@@ -102,7 +102,7 @@
                 //Display username and date
                 echo "Posted by <a class='username' href='user/profile.php?user_id=" . $row['author'] . "'>" . $row['username'] . "</a> " . " on " . date('F j, Y, g:i a', strtotime($created_date)); 
                 if($row['greek_group'] != NULL) {
-                    echo " in " . "<a class='greek' href='heroes.php?greek_id=" . $row['greek_group'] . "'>" . $row['greek'] . "</a>";
+                    echo " in " . "<a class='greek' href='heroes.php?greek_id=" . $row['greek_group'] . "'><strong>" . $row['greek'] . "</strong></a>";
                 }
                 echo "</p>";
                 //Display title and content
@@ -178,7 +178,7 @@
                 echo "Posted by <a class='username' href='user/profile.php?user_id=" . $row['author'] . "'>" .  $row['username'] . "</a> on " . date('F j, Y, g:i a', strtotime($created_date));
                 //Check if greek group exists
                 if ($row['greek_group'] != NULL) {
-                    echo " in " . "<a class='greek' href='heroes.php?greek_id=" . $row['greek_group'] . "'>" . $row['greek'] . "</a>"  ;
+                    echo " in " . "<a class='greek' href='heroes.php?greek_id=" . $row['greek_group'] . "'><strong>" . $row['greek'] . "</strong></a>"  ;
                 }
                 echo "</p>";
                 //Display title and content
@@ -260,7 +260,7 @@
                 echo "Posted by<a class='username' href='user/profile.php?user_id=" . $row['author'] . "'>" . $row['username'] . "</a>". "on " . date('F j, Y, g:i a', strtotime($created_date)); 
                 //Display greek group if it exists
                 if ($row['greek_group'] != NULL) {
-                    echo " in" . "<a class='greek' href='heroes.php?greek_id=" . $row['greek_group'] . "'>" . $row['greek'] . "</a>";
+                    echo " in" . "<a class='greek' href='heroes.php?greek_id=" . $row['greek_group'] . "'><strong>" . $row['greek'] . "</strong></a>";
                 }
                 echo "</p>";
                 //Display title and content

@@ -53,22 +53,14 @@ document.getElementById("searchInput").addEventListener("keydown", function(even
     if (event.key === "Enter") {
         var input = document.getElementById('searchInput').value;
 
-        // Set the custom attribute enter-pressed to true
-        document.getElementById("search-results").setAttribute("data-enter-pressed", "true");
-        performSearch(input);
+        //If the input is not empty
+        if(input != "" && input != null) {
+            // Set the custom attribute enter-pressed to true if the enter key was pressed and there are results
+            document.getElementById("search-results").setAttribute("data-enter-pressed", "true");
+            performSearch(input);
+        }
     }
 })
-
-
-
-
-
-// Add search function to Perform search in the user folders
-const searchUser = () => {
-    var input = document.getElementById('searchInput').value
-    // Perform search
-    performSearchUser(input)
-}
 
 // Array of search results
 // Create a arrow function to perform the search

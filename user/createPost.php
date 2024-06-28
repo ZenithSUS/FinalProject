@@ -18,6 +18,10 @@
     include_once "session.php";
     // Check if the session or cookie is set
     if(!isset($_SESSION['user_id']) || !isset($_COOKIE['user_id'])){
+        // Unset sessions
+        session_unset();
+        //Destroy session
+        session_destroy();
         header("Location: ../auth/login.php");
     } else {
         checkSessionTimeout();
@@ -39,7 +43,6 @@
                 <!-- Search Input -->
                  <div class="search-input">
                     <input type="text" placeholder="Search Users" id="searchInput" data-enter-pressed="false" class="search" oninput="searchUser()">
-                    <button class="search-btn">Search</button>
                 </div>
                 <!-- Search Results -->
                 <div class="search-results-container">
@@ -89,7 +92,6 @@
                 <!-- Search Input -->
                  <div class="search-input-mobile">
                     <input type="text" placeholder="Search User" id="searchInput-mobile" data-enter-pressed="false" class="search-mobile" oninput="MobileSearchUser()">
-                    <button class="search-mobile-btn" id="search-btn" onclick="MobileSearchUser()">Search</button>
                 </div>
                 <!-- Search Results -->
                 <div class="search-results-mobile-container">

@@ -18,7 +18,7 @@
     ?>
     <?php endif; ?>
     <!-- Login Container -->
-    <div class="container">
+    <div class="logContainer">
         <!-- Login Form -->
         <form action="../actions/login_act.php" method="post" class="loginForm">
         <!-- Heading or Title -->

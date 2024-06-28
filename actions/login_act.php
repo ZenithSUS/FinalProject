@@ -5,7 +5,7 @@
     session_start();
 
     //Get data from form by POST method
-    $username = $_POST['username'];
+    $username = $_POST['useracc'];
     $password = $_POST['password'];
 
     //Get the captcha information

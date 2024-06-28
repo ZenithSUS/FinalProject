@@ -34,7 +34,7 @@
                     }
                     //Display token if the user is the same as the logged in user
                     if($userId == $_SESSION['user_id']) {
-                        echo "<h4>" . "Token: " . $user['token'] . "</h4>";
+                        echo "<h4 class='token'>" . "Token:" . "<p id='token'>" .  $user['token'] . "</p>" . "<button class='copy-btn' id='copy-btn'>Copy</button></h4>";
                     }
                     //Display profile settings if user is the same as the logged in user
                     if($userId == $_SESSION['user_id']) {
@@ -56,7 +56,7 @@
                         // Display options to add or remove friend
                         if($result !== false && $result->num_rows > 0) {
                             echo "<div class='profile-settings'>
-                                    <form action='../actions/Friend_act.php?user_id=" . $friendId . "' method='POST'>
+                                    <form action='../actions/friend_act.php?user_id=" . $friendId . "' method='POST'>
                                         <button class='removeFriend-btn' id='removeFriend-btn' name='removeFriendForm' onclick=\"return confirm('Are you sure you want to remove this friend?')\">
                                             <p class='removeFriend-text'>Remove Friend</p></button>
                                     </form>
@@ -68,14 +68,14 @@
                                 //Accept friend request button
                                 echo "<div class='request-container'>
                                         <div class='profile-settings'>
-                                            <form action='../actions/Friend_act.php?user_id=" . $friendId . "' method='POST'>
+                                            <form action='../actions/friend_act.php?user_id=" . $friendId . "' method='POST'>
                                                 <button class='acceptRequest-btn' id='acceptRequest-btn' name='acceptFriendForm'>
                                                     <p class='acceptRequest-text'>Accept Request</p></button>
                                             </form>
                                         </div>";
                                 //Decline friend request button
                                 echo "<div class='profile-settings'>
-                                        <form action='../actions/Friend_act.php?user_id=" . $friendId . "' method='POST'>
+                                        <form action='../actions/friend_act.php?user_id=" . $friendId . "' method='POST'>
                                             <button class='declineRequest-btn' id='cancelRequest-btn' name='declineFriendForm'> 
                                                 <p class='declineRequest-text'>Decline Request</p>
                                             </button>
@@ -94,7 +94,7 @@
                                     $friendBtnText = "Add Friend";
                                 }
                                     echo "<div class='profile-settings'>
-                                        <form action='../actions/Friend_act.php?user_id=" . $_GET['user_id'] . "&status=" . $friendRequestStatus . "' method='POST'>
+                                        <form action='../actions/friend_act.php?user_id=" . $_GET['user_id'] . "&status=" . $friendRequestStatus . "' method='POST'>
                                             <button class='addFriend-btn'' id='addFriend-btn' name='friendForm'>
                                                 <p class='addFriend-text' name='status'> " . $friendBtnText . "</p>
                                             </button>

@@ -17,12 +17,12 @@
         // Initialize session
         session_start();
         // Check if the session is set  
-        if(isset($_SESSION['user_id'])): 
-            header("Location: index.php"); 
+        if(isset($_SESSION['user_id']) ): 
+            header("Location: ../index.php"); 
     ?>
     <?php endif; ?>
     <!-- Register Container -->
-    <div class="container">
+    <div class="regContainer">
         <!-- Register Form -->
         <form action="../actions/register_act.php" method="post" class="regForm">
             <!-- Heading or Title -->

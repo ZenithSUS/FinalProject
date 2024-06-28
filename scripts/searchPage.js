@@ -59,7 +59,15 @@ document.getElementById("searchInput").addEventListener("keydown", function(even
     }
 })
 
+// Create and call function to search button
+const searchBtn = document.getElementById("search-btn");
 
+// Add click event listener to the search button
+searchBtn.addEventListener("click", () => {
+    // Set the custom attribute enter-pressed to true
+    document.getElementById("search-results").setAttribute("data-enter-pressed", "true");
+    search();
+});
 
 // Add search function to Perform search in the user folders
 const searchUser = () => {
@@ -120,6 +128,9 @@ document.getElementById("searchInput").addEventListener("keydown", function(even
         performSearchUser(input);
     }
 })
+
+
+
 
 
 
