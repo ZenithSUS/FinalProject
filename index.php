@@ -43,7 +43,7 @@
             <div class="search-bar">
                 <!-- Search Input -->
                  <div class="search-input">
-                    <input type="text" placeholder="Search" id="searchInput" data-enter-pressed="false" class="search" oninput="search()">
+                    <input type="text" placeholder="Search Users" id="searchInput" data-enter-pressed="false" class="search" oninput="search()">
                     <button class="search-btn" id="search-btn" onclick="search()">Search</button>
                 </div>
                 <!-- Search Results -->
@@ -101,7 +101,7 @@
             <div class="search-bar-mobile">
                 <!-- Search Input -->
                  <div class="search-input-mobile">
-                    <input type="text" placeholder="Search" id="searchInput-mobile" data-enter-pressed="false" class="search-mobile" oninput="MobileSearch()">
+                    <input type="text" placeholder="Search Users" id="searchInput-mobile" data-enter-pressed="false" class="search-mobile" oninput="MobileSearch()">
                     <button class="search-mobile-btn" id="search-btn" onclick="MobileSearch()">Search</button>
                 </div>
                 <!-- Search Results -->

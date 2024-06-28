@@ -3,14 +3,14 @@
     session_start();
 
     //Include database connection
-    include '../db.php';
+    include '../../db.php';
 
     //Include queries
-    include '../queries/greek.php';
+    include '../../queries/greek.php';
 
     //Check if the user is logged in
     if(!isset($_SESSION['user_id']) || !isset($_COOKIE['user_id'])){
-        header("Location: ../auth/login.php");
+        header("Location: ../../auth/login.php");
     }
 
     //Get user id
@@ -29,6 +29,6 @@
 
     //If the create page form is not submitted
     else {
-        header("Location: ../index.php");
+        header("Location: ../../index.php");
     }
 ?>

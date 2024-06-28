@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 27, 2024 at 12:51 PM
+-- Generation Time: Jun 28, 2024 at 11:19 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -41,9 +41,8 @@ CREATE TABLE `activities` (
 --
 
 INSERT INTO `activities` (`activity_id`, `post_id`, `comment_id`, `user_id`, `activity`, `timestamp`) VALUES
-(225, '68a49a76-346d-11ef-81fd-7c05075eb45f', NULL, '886d6166-346c-11ef-81fd-7c05075eb45f', 'created a post a with title Zeus', '2024-06-27 10:09:58'),
-(226, 'a2b2818f-346e-11ef-81fd-7c05075eb45f', NULL, '1afc789b-346e-11ef-81fd-7c05075eb45f', 'created a post a with title AFGGDFGDSAD', '2024-06-27 10:18:45'),
-(227, 'a2b2818f-346e-11ef-81fd-7c05075eb45f', NULL, '1afc789b-346e-11ef-81fd-7c05075eb45f', 'edited a post with title Yeahhh', '2024-06-27 10:19:03');
+(243, '40dac99c-352d-11ef-8228-7c05075eb45f', NULL, '21de9475-3526-11ef-8228-7c05075eb45f', 'created a post a with title Hi', '2024-06-28 09:03:20'),
+(244, NULL, '667e7deccc18f', '21de9475-3526-11ef-8228-7c05075eb45f', 'commennted on a post titled Hi', '2024-06-28 09:10:04');
 
 -- --------------------------------------------------------
 
@@ -62,6 +61,13 @@ CREATE TABLE `comments` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`comment_id`, `post_id`, `parent_comment`, `author`, `content`, `likes`, `dislikes`, `created_at`) VALUES
+('667e7deccc18f', '40dac99c-352d-11ef-8228-7c05075eb45f', NULL, '21de9475-3526-11ef-8228-7c05075eb45f', 'DSA', 0, 0, '2024-06-28 17:10:04');
+
 -- --------------------------------------------------------
 
 --
@@ -74,6 +80,14 @@ CREATE TABLE `friends` (
   `friend_id` varchar(36) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `friends`
+--
+
+INSERT INTO `friends` (`id`, `user_id`, `friend_id`, `created_at`) VALUES
+('6d76c3be-352f-11ef-8228-7c05075eb45f', '28b41183-352c-11ef-8228-7c05075eb45f', '21de9475-3526-11ef-8228-7c05075eb45f', '2024-06-28 09:18:53'),
+('6d84427b-352f-11ef-8228-7c05075eb45f', '21de9475-3526-11ef-8228-7c05075eb45f', '28b41183-352c-11ef-8228-7c05075eb45f', '2024-06-28 09:18:53');
 
 -- --------------------------------------------------------
 
@@ -98,7 +112,6 @@ CREATE TABLE `friend_requests` (
 CREATE TABLE `greeks` (
   `greek_id` varchar(36) NOT NULL,
   `name` varchar(36) NOT NULL,
-  `gender` varchar(36) DEFAULT NULL,
   `description` text DEFAULT NULL,
   `image_url` varchar(225) DEFAULT NULL,
   `creator` varchar(36) DEFAULT ''
@@ -108,19 +121,19 @@ CREATE TABLE `greeks` (
 -- Dumping data for table `greeks`
 --
 
-INSERT INTO `greeks` (`greek_id`, `name`, `gender`, `description`, `image_url`, `creator`) VALUES
-('0db1bfad-2ba8-11ef-a131-7c05075eb45f', 'Hermes', 'Male', 'Hermes, the quick-witted Greek god of trade, thieves, travelers, sports, athletes, and border crossings, is often portrayed as a young, athletic man wearing a winged hat and sandals. He is known for his cunning and mischievous nature, as well as his role as the messenger of the gods. Hermes is also associated with fertility, luck, and wealth, and is often depicted carrying a caduceus, a winged staff entwined with two serpents.', 'HERMES.webp', 'Default'),
-('1c87d062-2ba3-11ef-a131-7c05075eb45f', 'Hades', 'Male', 'Hades, in ancient Greek religion, is the god of the underworld. He was a son of the Titans Cronus and Rhea and the brother of Zeus, Poseidon, and Hera. Hades ruled alongside his queen, Persephone, over the dead, although he was not typically a judge or responsible for torturing the guilty—tasks assigned to the Furies', 'HADES.webp', 'Default'),
-('2adbfbd3-2ba2-11ef-a131-7c05075eb45f', 'Apollo', 'Male', 'Apollo, one of the Twelve Olympians in Greek mythology, is the son of Zeus and Leto, and the twin brother of Artemis. He embodies a multitude of roles: the god of healing, medicine, archery, music, dance, poetry, prophecy, knowledge, light, and the sun. Apollo is also the leader of the Muses', 'APOLLO.webp', 'Default'),
-('2b013a64-2ba0-11ef-a131-7c05075eb45f', 'Aphrodite', 'Female', 'Aphrodite, the ancient Greek goddess of sexual love and beauty, is closely associated with Venus in Roman mythology. According to Hesiod’s Theogony, she emerged from the white foam created by the severed genitals of Uranus (Heaven) after his son Cronus threw them into the sea. Aphrodite was widely worshipped as a goddess of the sea, seafaring, love, and fertility. While her public cult was generally solemn, she occasionally presided over marriage. Notably, she had mortal lovers, including the Trojan shepherd Anchises (with whom she became the mother of Aeneas) and the youth Adonis.', 'APHRODITE.webp', 'Default'),
-('44c24fcc-2ba4-11ef-a131-7c05075eb45f', 'Artemis', 'Female', 'Artemis, in ancient Greek religion and mythology, is the goddess of the hunt, the wilderness, wild animals, nature, vegetation, childbirth, care of children, and chastity. She was often said to roam the forests and mountains, attended by her entourage of nymphs. Artemis is the daughter of Zeus and Leto, and the twin sister of Apollo. She was very protective of her and her priestesses innocence.', 'ARTEMIS.webp', 'Default'),
-('5e965592-2ba6-11ef-a131-7c05075eb45f', 'Poseiddon', 'Male', 'Poseidon, in Greek mythology, is the god of the sea, earthquakes, and horses. He is one of the Twelve Olympians, the major deities of the Greek pantheon. Often depicted with a trident, Poseidon is known for his tempestuous nature, capable of both fury and benevolence. He is considered a protector of seafarers and a creator of storms and floods. In Roman mythology, he is identified with Neptune.', 'POSEIDON.webp', 'Default'),
-('8d2d3e82-2ba4-11ef-a131-7c05075eb45f', 'Athena', 'Female', 'Athena, in Greek religion, is the city protectress, goddess of war, handicraft, and practical reason. The Romans identified her with Minerva. Unlike Ares, the god of war who represents mere bloodlust, Athena embodies the intellectual and civilized side of war, emphasizing justice and skill. She was also associated paradoxically with peace and handicrafts, particularly spinning and weaving. Majestic and stern, Athena surpassed all others in her domains.', 'ATHENA.webp', 'Default'),
-('8e3c6da0-2ba3-11ef-a131-7c05075eb45f', 'Ares', 'Male', 'Ares, the Greek god of war, is one of the Twelve Olympians. He is often depicted as a fierce and bloodthirsty warrior. Ares is the son of Zeus and Hera, and his siblings include Athena, Apollo, and Hermes. In Greek mythology, he is associated with violence, conflict, and the brutality of war', 'ARES.Webp', 'Default'),
-('b9da2016-2ba7-11ef-a131-7c05075eb45f', 'Demeter', 'Female', 'Demeter, the revered Greek goddess of agriculture, grain, and fertility, holds a prominent position in Greek mythology and the hearts of ancient people. As the giver of life and sustenance, her influence extended far beyond the fields, touching upon the very cycles of life, death, and rebirth. Demeter is often depicted as a mature woman, her presence radiating warmth and abundance. She is adorned with symbols of her dominion, such as sheaves of wheat, a cornucopia overflowing with fruits and grains, or a torch symbolizing enlightenment and knowledge.\r\n\r\nDemeter\'s significance is deeply intertwined with the Eleusinian Mysteries, secretive rituals centered around the myth of her daughter Persephone\'s abduction by Hades, the god of the underworld. This tragic event plunged Demeter into grief, causing the earth to wither and die. However, upon Persephone\'s eventual return, the world bloomed anew, signifying the renewal of life and the cyclical nature of the seasons. The Eleusinian Mysteries offered initiates a glimpse into these profound concepts, promising a blessed afterlife and fostering a sense of connection to the divine.', 'DEMETER.webp', 'Default'),
-('b9da2cb2-2ba7-11ef-a131-7c05075eb45f', 'Dionysius', 'Male', 'Dionysus, the enigmatic and captivating Greek god of wine, revelry, theater, and religious ecstasy, holds a unique place in the pantheon of Greek deities. Often depicted as a youthful and exuberant figure, adorned with ivy wreaths and holding a thyrsus (a pinecone-tipped staff), Dionysus embodies the spirit of uninhibited joy, transformation, and the blurring of boundaries between the human and divine.\r\n\r\nHis origins are shrouded in mystery, with various myths attributing his birthplace to different regions. Some tales claim he is a foreign god who arrived in Greece from the East, bringing with him the knowledge of viticulture and the intoxicating power of wine. Others describe him as the son of Zeus and the mortal Semele, who perished due to Hera\'s jealousy. Regardless of his origin, Dionysus quickly became a beloved figure, celebrated for his ability to liberate people from their inhibitions and connect them to the primal forces of nature.', 'DIONYSIUS.webp', 'Default'),
-('cec09d13-2b9d-11ef-a131-7c05075eb45f', 'Zeus', 'Male', 'Zeus, the sky and thunder god in ancient Greek mythology, rules as the king of the gods on Mount Olympus. As the chief Greek deity, he is considered the protector and father of all gods and humans. Zeus is often depicted as an older man with a beard, and his symbols include the lightning bolt and the eagle. He was notorious for his numerous divine and heroic offspring, including Apollo, Artemis, Hermes, and Heracles. His traditional weapon is the thunderbolt, and he is equated with the Roman god Jupiter.', 'ZEUS.webp', 'Default'),
-('eb824654-2ba6-11ef-a131-7c05075eb45f', 'Hera', 'Female', 'Hera, the queen of Olympus in Greek mythology, is the goddess of marriage, women, family, and childbirth. She is the wife and sister of Zeus, the king of the gods. While revered for her role as a protector of women, Hera is also known for her jealous and vengeful nature, often directed towards Zeus\'s lovers and their offspring. Her stories are filled with drama, passion, and divine retribution, making her a compelling figure in ancient Greek lore.', 'HERA.webp', 'Default');
+INSERT INTO `greeks` (`greek_id`, `name`, `description`, `image_url`, `creator`) VALUES
+('0db1bfad-2ba8-11ef-a131-7c05075eb45f', 'Hermes', 'Hermes, the quick-witted Greek god of trade, thieves, travelers, sports, athletes, and border crossings, is often portrayed as a young, athletic man wearing a winged hat and sandals. He is known for his cunning and mischievous nature, as well as his role as the messenger of the gods. Hermes is also associated with fertility, luck, and wealth, and is often depicted carrying a caduceus, a winged staff entwined with two serpents.', 'HERMES.webp', 'Default'),
+('1c87d062-2ba3-11ef-a131-7c05075eb45f', 'Hades', 'Hades, in ancient Greek religion, is the god of the underworld. He was a son of the Titans Cronus and Rhea and the brother of Zeus, Poseidon, and Hera. Hades ruled alongside his queen, Persephone, over the dead, although he was not typically a judge or responsible for torturing the guilty—tasks assigned to the Furies', 'HADES.webp', 'Default'),
+('2adbfbd3-2ba2-11ef-a131-7c05075eb45f', 'Apollo', 'Apollo, one of the Twelve Olympians in Greek mythology, is the son of Zeus and Leto, and the twin brother of Artemis. He embodies a multitude of roles: the god of healing, medicine, archery, music, dance, poetry, prophecy, knowledge, light, and the sun. Apollo is also the leader of the Muses', 'APOLLO.webp', 'Default'),
+('2b013a64-2ba0-11ef-a131-7c05075eb45f', 'Aphrodite', 'Aphrodite, the ancient Greek goddess of sexual love and beauty, is closely associated with Venus in Roman mythology. According to Hesiod’s Theogony, she emerged from the white foam created by the severed genitals of Uranus (Heaven) after his son Cronus threw them into the sea. Aphrodite was widely worshipped as a goddess of the sea, seafaring, love, and fertility. While her public cult was generally solemn, she occasionally presided over marriage. Notably, she had mortal lovers, including the Trojan shepherd Anchises (with whom she became the mother of Aeneas) and the youth Adonis.', 'APHRODITE.webp', 'Default'),
+('44c24fcc-2ba4-11ef-a131-7c05075eb45f', 'Artemis', 'Artemis, in ancient Greek religion and mythology, is the goddess of the hunt, the wilderness, wild animals, nature, vegetation, childbirth, care of children, and chastity. She was often said to roam the forests and mountains, attended by her entourage of nymphs. Artemis is the daughter of Zeus and Leto, and the twin sister of Apollo. She was very protective of her and her priestesses innocence.', 'ARTEMIS.webp', 'Default'),
+('5e965592-2ba6-11ef-a131-7c05075eb45f', 'Poseidon', 'Poseidon, in Greek mythology, is the god of the sea, earthquakes, and horses. He is one of the Twelve Olympians, the major deities of the Greek pantheon. Often depicted with a trident, Poseidon is known for his tempestuous nature, capable of both fury and benevolence. He is considered a protector of seafarers and a creator of storms and floods. In Roman mythology, he is identified with Neptune.', 'POSEIDON.webp', 'Default'),
+('8d2d3e82-2ba4-11ef-a131-7c05075eb45f', 'Athena', 'Athena, in Greek religion, is the city protectress, goddess of war, handicraft, and practical reason. The Romans identified her with Minerva. Unlike Ares, the god of war who represents mere bloodlust, Athena embodies the intellectual and civilized side of war, emphasizing justice and skill. She was also associated paradoxically with peace and handicrafts, particularly spinning and weaving. Majestic and stern, Athena surpassed all others in her domains.', 'ATHENA.webp', 'Default'),
+('8e3c6da0-2ba3-11ef-a131-7c05075eb45f', 'Ares', 'Ares, the Greek god of war, is one of the Twelve Olympians. He is often depicted as a fierce and bloodthirsty warrior. Ares is the son of Zeus and Hera, and his siblings include Athena, Apollo, and Hermes. In Greek mythology, he is associated with violence, conflict, and the brutality of war', 'ARES.Webp', 'Default'),
+('b9da2016-2ba7-11ef-a131-7c05075eb45f', 'Demeter', 'Demeter, the revered Greek goddess of agriculture, grain, and fertility, holds a prominent position in Greek mythology and the hearts of ancient people. As the giver of life and sustenance, her influence extended far beyond the fields, touching upon the very cycles of life, death, and rebirth. Demeter is often depicted as a mature woman, her presence radiating warmth and abundance. She is adorned with symbols of her dominion, such as sheaves of wheat, a cornucopia overflowing with fruits and grains, or a torch symbolizing enlightenment and knowledge.\r\n\r\nDemeter\'s significance is deeply intertwined with the Eleusinian Mysteries, secretive rituals centered around the myth of her daughter Persephone\'s abduction by Hades, the god of the underworld. This tragic event plunged Demeter into grief, causing the earth to wither and die. However, upon Persephone\'s eventual return, the world bloomed anew, signifying the renewal of life and the cyclical nature of the seasons. The Eleusinian Mysteries offered initiates a glimpse into these profound concepts, promising a blessed afterlife and fostering a sense of connection to the divine.', 'DEMETER.webp', 'Default'),
+('b9da2cb2-2ba7-11ef-a131-7c05075eb45f', 'Dionysius', 'Dionysus, the enigmatic and captivating Greek god of wine, revelry, theater, and religious ecstasy, holds a unique place in the pantheon of Greek deities. Often depicted as a youthful and exuberant figure, adorned with ivy wreaths and holding a thyrsus (a pinecone-tipped staff), Dionysus embodies the spirit of uninhibited joy, transformation, and the blurring of boundaries between the human and divine.\r\n\r\nHis origins are shrouded in mystery, with various myths attributing his birthplace to different regions. Some tales claim he is a foreign god who arrived in Greece from the East, bringing with him the knowledge of viticulture and the intoxicating power of wine. Others describe him as the son of Zeus and the mortal Semele, who perished due to Hera\'s jealousy. Regardless of his origin, Dionysus quickly became a beloved figure, celebrated for his ability to liberate people from their inhibitions and connect them to the primal forces of nature.', 'DIONYSIUS.webp', 'Default'),
+('cec09d13-2b9d-11ef-a131-7c05075eb45f', 'Zeus', 'Zeus, the sky and thunder god in ancient Greek mythology, rules as the king of the gods on Mount Olympus. As the chief Greek deity, he is considered the protector and father of all gods and humans. Zeus is often depicted as an older man with a beard, and his symbols include the lightning bolt and the eagle. He was notorious for his numerous divine and heroic offspring, including Apollo, Artemis, Hermes, and Heracles. His traditional weapon is the thunderbolt, and he is equated with the Roman god Jupiter.', 'ZEUS.webp', 'Default'),
+('eb824654-2ba6-11ef-a131-7c05075eb45f', 'Hera', 'Hera, the queen of Olympus in Greek mythology, is the goddess of marriage, women, family, and childbirth. She is the wife and sister of Zeus, the king of the gods. While revered for her role as a protector of women, Hera is also known for her jealous and vengeful nature, often directed towards Zeus\'s lovers and their offspring. Her stories are filled with drama, passion, and divine retribution, making her a compelling figure in ancient Greek lore.', 'HERA.webp', 'Default');
 
 -- --------------------------------------------------------
 
@@ -136,13 +149,6 @@ CREATE TABLE `likes` (
   `timestamp` datetime NOT NULL DEFAULT current_timestamp(),
   `vote_type` varchar(36) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `likes`
---
-
-INSERT INTO `likes` (`like_id`, `liker`, `post_id`, `comment_id`, `timestamp`, `vote_type`) VALUES
-('667d3c86f0d2f', '1afc789b-346e-11ef-81fd-7c05075eb45f', 'a2b2818f-346e-11ef-81fd-7c05075eb45f', NULL, '2024-06-27 18:18:46', 'like');
 
 -- --------------------------------------------------------
 
@@ -167,8 +173,7 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`post_id`, `title`, `content`, `author`, `likes`, `dislikes`, `greek_group`, `created_at`, `updated_at`) VALUES
-('68a49a76-346d-11ef-81fd-7c05075eb45f', 'Zeus', 'ZEUSS IS STRONKKK', '886d6166-346c-11ef-81fd-7c05075eb45f', 0, 0, 'cec09d13-2b9d-11ef-a131-7c05075eb45f', '2024-06-27 18:09:58', '2024-06-27 18:09:58'),
-('a2b2818f-346e-11ef-81fd-7c05075eb45f', 'Yeahhh', 'asdasd', '1afc789b-346e-11ef-81fd-7c05075eb45f', 1, 0, '2b013a64-2ba0-11ef-a131-7c05075eb45f', '2024-06-27 18:18:45', '2024-06-27 18:19:03');
+('40dac99c-352d-11ef-8228-7c05075eb45f', 'Hi', 'Hi', '21de9475-3526-11ef-8228-7c05075eb45f', 0, 0, '0db1bfad-2ba8-11ef-a131-7c05075eb45f', '2024-06-28 17:03:20', '2024-06-28 17:03:20');
 
 -- --------------------------------------------------------
 
@@ -192,8 +197,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `profile_pic`, `bio`, `token`, `joined_at`) VALUES
-('1afc789b-346e-11ef-81fd-7c05075eb45f', 'ZenithSUS', 'merinojc25@gmail.com', '$2y$10$vNasE..nIhu61mNlV0EPyuPXuwfw2DOYIsnF..a7aKrK1Q4rIKZ9.', '667d3c72f0fea9.48677341.jpg', 'Hello Hello Hallo', '', '2024-06-27 18:14:57'),
-('886d6166-346c-11ef-81fd-7c05075eb45f', 'GoldenSight', 'jeranmerino147@gmail.com', '$2y$10$maVJBnyXXHhK../KNr3cwe1eIx/6BG4bqDgRGPWoFq8NinXk8wGmW', '667d3ada02afd3.75254643.jpg', 'WAYYYYY', '', '2024-06-27 18:03:42');
+('21de9475-3526-11ef-8228-7c05075eb45f', 'GoldenSight', 'merinojc25@gmail.com', '$2y$10$eunfvzXhwdL5t75oD/zDqORsrZdmdyqZckVXDtO9sg8Vjr0I9d.EG', '667e706abc6412.96445453.jpg', 'Hi', '6486c0d0dd46d84dc7b255f9838d4e71', '2024-06-28 16:12:21'),
+('28b41183-352c-11ef-8228-7c05075eb45f', 'Hendrick', 'hen@gmail.com', '$2y$10$aUiCLzBWzsgsmqmm3QXTm.WaxcOfWNUSqq0k6s5wtdyEazGOh324G', '667e7b02cf3a35.70659534.jpg', NULL, '9c9f5555934f167f23135ac92a0920c5', '2024-06-28 16:55:30'),
+('511e6602-3526-11ef-8228-7c05075eb45f', 'ZenithSUS', 'jeranmerino147@gmail.com', '$2y$10$6umraqi2K9N9f8wABVa1kuKNy.b8RiMO3hTj8hJc4Rx11OakxkRYS', NULL, NULL, 'feb82c43d2d2560c7a6814042c784ee9', '2024-06-28 16:13:40');
 
 -- --------------------------------------------------------
 
@@ -213,30 +219,42 @@ CREATE TABLE `user_groups` (
 --
 
 INSERT INTO `user_groups` (`id`, `user_id`, `greek_id`, `date_joined`) VALUES
-('1b1eec38-346e-11ef-81fd-7c05075eb45f', '1afc789b-346e-11ef-81fd-7c05075eb45f', '0db1bfad-2ba8-11ef-a131-7c05075eb45f', '2024-06-27 18:14:57'),
-('1b3555f8-346e-11ef-81fd-7c05075eb45f', '1afc789b-346e-11ef-81fd-7c05075eb45f', '1c87d062-2ba3-11ef-a131-7c05075eb45f', '2024-06-27 18:14:57'),
-('1b43b0a5-346e-11ef-81fd-7c05075eb45f', '1afc789b-346e-11ef-81fd-7c05075eb45f', '2adbfbd3-2ba2-11ef-a131-7c05075eb45f', '2024-06-27 18:14:58'),
-('1b8c93d7-346e-11ef-81fd-7c05075eb45f', '1afc789b-346e-11ef-81fd-7c05075eb45f', '2b013a64-2ba0-11ef-a131-7c05075eb45f', '2024-06-27 18:14:58'),
-('1ba10898-346e-11ef-81fd-7c05075eb45f', '1afc789b-346e-11ef-81fd-7c05075eb45f', '44c24fcc-2ba4-11ef-a131-7c05075eb45f', '2024-06-27 18:14:58'),
-('1ba7b8d7-346e-11ef-81fd-7c05075eb45f', '1afc789b-346e-11ef-81fd-7c05075eb45f', '5e965592-2ba6-11ef-a131-7c05075eb45f', '2024-06-27 18:14:58'),
-('1bacf2a2-346e-11ef-81fd-7c05075eb45f', '1afc789b-346e-11ef-81fd-7c05075eb45f', '8d2d3e82-2ba4-11ef-a131-7c05075eb45f', '2024-06-27 18:14:58'),
-('1bb3b1cf-346e-11ef-81fd-7c05075eb45f', '1afc789b-346e-11ef-81fd-7c05075eb45f', '8e3c6da0-2ba3-11ef-a131-7c05075eb45f', '2024-06-27 18:14:58'),
-('1bb8d27b-346e-11ef-81fd-7c05075eb45f', '1afc789b-346e-11ef-81fd-7c05075eb45f', 'b9da2016-2ba7-11ef-a131-7c05075eb45f', '2024-06-27 18:14:58'),
-('1bbf82e3-346e-11ef-81fd-7c05075eb45f', '1afc789b-346e-11ef-81fd-7c05075eb45f', 'b9da2cb2-2ba7-11ef-a131-7c05075eb45f', '2024-06-27 18:14:58'),
-('1bc80de6-346e-11ef-81fd-7c05075eb45f', '1afc789b-346e-11ef-81fd-7c05075eb45f', 'cec09d13-2b9d-11ef-a131-7c05075eb45f', '2024-06-27 18:14:58'),
-('1bcec4b1-346e-11ef-81fd-7c05075eb45f', '1afc789b-346e-11ef-81fd-7c05075eb45f', 'eb824654-2ba6-11ef-a131-7c05075eb45f', '2024-06-27 18:14:58'),
-('88806401-346c-11ef-81fd-7c05075eb45f', '886d6166-346c-11ef-81fd-7c05075eb45f', '0db1bfad-2ba8-11ef-a131-7c05075eb45f', '2024-06-27 18:03:42'),
-('888e77f7-346c-11ef-81fd-7c05075eb45f', '886d6166-346c-11ef-81fd-7c05075eb45f', '1c87d062-2ba3-11ef-a131-7c05075eb45f', '2024-06-27 18:03:42'),
-('889b81eb-346c-11ef-81fd-7c05075eb45f', '886d6166-346c-11ef-81fd-7c05075eb45f', '2adbfbd3-2ba2-11ef-a131-7c05075eb45f', '2024-06-27 18:03:42'),
-('88c03441-346c-11ef-81fd-7c05075eb45f', '886d6166-346c-11ef-81fd-7c05075eb45f', '2b013a64-2ba0-11ef-a131-7c05075eb45f', '2024-06-27 18:03:42'),
-('88cd38ab-346c-11ef-81fd-7c05075eb45f', '886d6166-346c-11ef-81fd-7c05075eb45f', '44c24fcc-2ba4-11ef-a131-7c05075eb45f', '2024-06-27 18:03:42'),
-('88daf016-346c-11ef-81fd-7c05075eb45f', '886d6166-346c-11ef-81fd-7c05075eb45f', '5e965592-2ba6-11ef-a131-7c05075eb45f', '2024-06-27 18:03:42'),
-('89294650-346c-11ef-81fd-7c05075eb45f', '886d6166-346c-11ef-81fd-7c05075eb45f', '8d2d3e82-2ba4-11ef-a131-7c05075eb45f', '2024-06-27 18:03:43'),
-('8931c410-346c-11ef-81fd-7c05075eb45f', '886d6166-346c-11ef-81fd-7c05075eb45f', '8e3c6da0-2ba3-11ef-a131-7c05075eb45f', '2024-06-27 18:03:43'),
-('89421ef0-346c-11ef-81fd-7c05075eb45f', '886d6166-346c-11ef-81fd-7c05075eb45f', 'b9da2016-2ba7-11ef-a131-7c05075eb45f', '2024-06-27 18:03:43'),
-('894ac6b4-346c-11ef-81fd-7c05075eb45f', '886d6166-346c-11ef-81fd-7c05075eb45f', 'b9da2cb2-2ba7-11ef-a131-7c05075eb45f', '2024-06-27 18:03:43'),
-('895873d1-346c-11ef-81fd-7c05075eb45f', '886d6166-346c-11ef-81fd-7c05075eb45f', 'cec09d13-2b9d-11ef-a131-7c05075eb45f', '2024-06-27 18:03:43'),
-('8960e324-346c-11ef-81fd-7c05075eb45f', '886d6166-346c-11ef-81fd-7c05075eb45f', 'eb824654-2ba6-11ef-a131-7c05075eb45f', '2024-06-27 18:03:43');
+('21eb6e76-3526-11ef-8228-7c05075eb45f', '21de9475-3526-11ef-8228-7c05075eb45f', '0db1bfad-2ba8-11ef-a131-7c05075eb45f', '2024-06-28 16:12:21'),
+('21fac27a-3526-11ef-8228-7c05075eb45f', '21de9475-3526-11ef-8228-7c05075eb45f', '1c87d062-2ba3-11ef-a131-7c05075eb45f', '2024-06-28 16:12:21'),
+('222da498-3526-11ef-8228-7c05075eb45f', '21de9475-3526-11ef-8228-7c05075eb45f', '2adbfbd3-2ba2-11ef-a131-7c05075eb45f', '2024-06-28 16:12:22'),
+('2243afcf-3526-11ef-8228-7c05075eb45f', '21de9475-3526-11ef-8228-7c05075eb45f', '2b013a64-2ba0-11ef-a131-7c05075eb45f', '2024-06-28 16:12:22'),
+('224dd141-3526-11ef-8228-7c05075eb45f', '21de9475-3526-11ef-8228-7c05075eb45f', '44c24fcc-2ba4-11ef-a131-7c05075eb45f', '2024-06-28 16:12:22'),
+('22581776-3526-11ef-8228-7c05075eb45f', '21de9475-3526-11ef-8228-7c05075eb45f', '5e965592-2ba6-11ef-a131-7c05075eb45f', '2024-06-28 16:12:22'),
+('22622c63-3526-11ef-8228-7c05075eb45f', '21de9475-3526-11ef-8228-7c05075eb45f', '8d2d3e82-2ba4-11ef-a131-7c05075eb45f', '2024-06-28 16:12:22'),
+('226e10b6-3526-11ef-8228-7c05075eb45f', '21de9475-3526-11ef-8228-7c05075eb45f', '8e3c6da0-2ba3-11ef-a131-7c05075eb45f', '2024-06-28 16:12:22'),
+('2276720c-3526-11ef-8228-7c05075eb45f', '21de9475-3526-11ef-8228-7c05075eb45f', 'b9da2016-2ba7-11ef-a131-7c05075eb45f', '2024-06-28 16:12:22'),
+('227f28b9-3526-11ef-8228-7c05075eb45f', '21de9475-3526-11ef-8228-7c05075eb45f', 'b9da2cb2-2ba7-11ef-a131-7c05075eb45f', '2024-06-28 16:12:22'),
+('22897839-3526-11ef-8228-7c05075eb45f', '21de9475-3526-11ef-8228-7c05075eb45f', 'cec09d13-2b9d-11ef-a131-7c05075eb45f', '2024-06-28 16:12:22'),
+('22934548-3526-11ef-8228-7c05075eb45f', '21de9475-3526-11ef-8228-7c05075eb45f', 'eb824654-2ba6-11ef-a131-7c05075eb45f', '2024-06-28 16:12:22'),
+('28d24446-352c-11ef-8228-7c05075eb45f', '28b41183-352c-11ef-8228-7c05075eb45f', '0db1bfad-2ba8-11ef-a131-7c05075eb45f', '2024-06-28 16:55:30'),
+('28de72e8-352c-11ef-8228-7c05075eb45f', '28b41183-352c-11ef-8228-7c05075eb45f', '1c87d062-2ba3-11ef-a131-7c05075eb45f', '2024-06-28 16:55:30'),
+('28e860a5-352c-11ef-8228-7c05075eb45f', '28b41183-352c-11ef-8228-7c05075eb45f', '2adbfbd3-2ba2-11ef-a131-7c05075eb45f', '2024-06-28 16:55:30'),
+('28fad811-352c-11ef-8228-7c05075eb45f', '28b41183-352c-11ef-8228-7c05075eb45f', '2b013a64-2ba0-11ef-a131-7c05075eb45f', '2024-06-28 16:55:30'),
+('290870a7-352c-11ef-8228-7c05075eb45f', '28b41183-352c-11ef-8228-7c05075eb45f', '44c24fcc-2ba4-11ef-a131-7c05075eb45f', '2024-06-28 16:55:30'),
+('2943b8af-352c-11ef-8228-7c05075eb45f', '28b41183-352c-11ef-8228-7c05075eb45f', '5e965592-2ba6-11ef-a131-7c05075eb45f', '2024-06-28 16:55:30'),
+('294c969e-352c-11ef-8228-7c05075eb45f', '28b41183-352c-11ef-8228-7c05075eb45f', '8d2d3e82-2ba4-11ef-a131-7c05075eb45f', '2024-06-28 16:55:31'),
+('2958c5d8-352c-11ef-8228-7c05075eb45f', '28b41183-352c-11ef-8228-7c05075eb45f', '8e3c6da0-2ba3-11ef-a131-7c05075eb45f', '2024-06-28 16:55:31'),
+('29626b1b-352c-11ef-8228-7c05075eb45f', '28b41183-352c-11ef-8228-7c05075eb45f', 'b9da2016-2ba7-11ef-a131-7c05075eb45f', '2024-06-28 16:55:31'),
+('296ac620-352c-11ef-8228-7c05075eb45f', '28b41183-352c-11ef-8228-7c05075eb45f', 'b9da2cb2-2ba7-11ef-a131-7c05075eb45f', '2024-06-28 16:55:31'),
+('29734dbe-352c-11ef-8228-7c05075eb45f', '28b41183-352c-11ef-8228-7c05075eb45f', 'cec09d13-2b9d-11ef-a131-7c05075eb45f', '2024-06-28 16:55:31'),
+('297baa37-352c-11ef-8228-7c05075eb45f', '28b41183-352c-11ef-8228-7c05075eb45f', 'eb824654-2ba6-11ef-a131-7c05075eb45f', '2024-06-28 16:55:31'),
+('51336106-3526-11ef-8228-7c05075eb45f', '511e6602-3526-11ef-8228-7c05075eb45f', '0db1bfad-2ba8-11ef-a131-7c05075eb45f', '2024-06-28 16:13:40'),
+('513bab22-3526-11ef-8228-7c05075eb45f', '511e6602-3526-11ef-8228-7c05075eb45f', '1c87d062-2ba3-11ef-a131-7c05075eb45f', '2024-06-28 16:13:41'),
+('5142a26e-3526-11ef-8228-7c05075eb45f', '511e6602-3526-11ef-8228-7c05075eb45f', '2adbfbd3-2ba2-11ef-a131-7c05075eb45f', '2024-06-28 16:13:41'),
+('5182dc1b-3526-11ef-8228-7c05075eb45f', '511e6602-3526-11ef-8228-7c05075eb45f', '2b013a64-2ba0-11ef-a131-7c05075eb45f', '2024-06-28 16:13:41'),
+('51974093-3526-11ef-8228-7c05075eb45f', '511e6602-3526-11ef-8228-7c05075eb45f', '44c24fcc-2ba4-11ef-a131-7c05075eb45f', '2024-06-28 16:13:41'),
+('51a2fe00-3526-11ef-8228-7c05075eb45f', '511e6602-3526-11ef-8228-7c05075eb45f', '5e965592-2ba6-11ef-a131-7c05075eb45f', '2024-06-28 16:13:41'),
+('51aee702-3526-11ef-8228-7c05075eb45f', '511e6602-3526-11ef-8228-7c05075eb45f', '8d2d3e82-2ba4-11ef-a131-7c05075eb45f', '2024-06-28 16:13:41'),
+('51bad36b-3526-11ef-8228-7c05075eb45f', '511e6602-3526-11ef-8228-7c05075eb45f', '8e3c6da0-2ba3-11ef-a131-7c05075eb45f', '2024-06-28 16:13:41'),
+('51bfe4db-3526-11ef-8228-7c05075eb45f', '511e6602-3526-11ef-8228-7c05075eb45f', 'b9da2016-2ba7-11ef-a131-7c05075eb45f', '2024-06-28 16:13:41'),
+('51c51da9-3526-11ef-8228-7c05075eb45f', '511e6602-3526-11ef-8228-7c05075eb45f', 'b9da2cb2-2ba7-11ef-a131-7c05075eb45f', '2024-06-28 16:13:41'),
+('51cd82c0-3526-11ef-8228-7c05075eb45f', '511e6602-3526-11ef-8228-7c05075eb45f', 'cec09d13-2b9d-11ef-a131-7c05075eb45f', '2024-06-28 16:13:41'),
+('51db5a73-3526-11ef-8228-7c05075eb45f', '511e6602-3526-11ef-8228-7c05075eb45f', 'eb824654-2ba6-11ef-a131-7c05075eb45f', '2024-06-28 16:13:42');
 
 --
 -- Indexes for dumped tables
@@ -321,7 +339,7 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT for table `activities`
 --
 ALTER TABLE `activities`
-  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=228;
+  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=245;
 
 --
 -- Constraints for dumped tables

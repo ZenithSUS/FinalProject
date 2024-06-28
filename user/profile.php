@@ -48,7 +48,7 @@
             <div class="search-bar">
                 <!-- Search Input -->
                  <div class="search-input">
-                    <input type="text" placeholder="Search" id="searchInput" data-enter-pressed="false" class="search" oninput="searchUser()">
+                    <input type="text" placeholder="Search Users" id="searchInput" data-enter-pressed="false" class="search" oninput="searchUser()">
                     <button class="search-btn">Search</button>
                 </div>
                 <!-- Search Results -->

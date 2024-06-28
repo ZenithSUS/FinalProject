@@ -12,7 +12,7 @@
         flex-direction: column;
         gap: 1rem;
         padding: 1rem;
-        box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+        box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5), -4px -4px 4px rgba(0, 0, 0, 0.5);
         border-radius: 1rem;
         background-image: url("../img/backgrounds/greekHome.jpg");
         background-repeat: no-repeat;
@@ -54,6 +54,13 @@
         flex-direction: column;
         gap: 0.5rem;
     }
+
+    .form-group-captcha {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+    }
     
     form input {
         padding: 0.5rem;
@@ -81,10 +88,11 @@
     .auth-options {
         display: flex;
         justify-content: space-between;
+        font-weight: 800;
 
         a {
             text-decoration: none;
-            color: var(--light-color-color);
+            color: var(--light-color);
 
             &:hover {
                 text-decoration: underline;
@@ -93,6 +101,7 @@
     }
 
     .auth-register {
+        font-weight: 800;
         
         a {
             text-decoration: none;

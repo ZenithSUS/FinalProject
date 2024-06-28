@@ -39,7 +39,7 @@
         <div class="search-bar">
             <!-- Search Input -->
             <div class="search-input">
-                <input type="text" placeholder="Search" id="searchInput" data-enter-pressed="false" class="search" oninput="search()">
+                <input type="text" placeholder="Search Pages" id="searchInput" data-enter-pressed="false" class="search" oninput="search()">
                 <button class="search-btn">Search</button>
             </div>
             <!-- Search Results -->
@@ -98,7 +98,7 @@
             <div class="search-bar-mobile">
                 <!-- Search Input -->
                  <div class="search-input-mobile">
-                    <input type="text" placeholder="Search" id="searchInput-mobile" data-enter-pressed="false" class="search-mobile" oninput="MobileSearch()">
+                    <input type="text" placeholder="Search Pages" id="searchInput-mobile" data-enter-pressed="false" class="search-mobile" oninput="MobileSearch()">
                     <button class="search-mobile-btn" id="search-btn" onclick="MobileSearch()">Search</button>
                 </div>
                 <!-- Search Results -->
@@ -151,7 +151,7 @@
             <!-- Posts -->
             <div class="greeks">
                 <div class="greeks-title">
-                    <h1>Greeks Discussion</h1>
+                    <h1>Greeks Discussion <?php echo !isset($_GET['greek_id']) ? "Joined" : "Page";?></h1>
                 </div>
                 <?php
                     if(isset($_GET['greek_id'])) {
@@ -177,7 +177,7 @@
                             <div class="heroes">
                                 <?php 
                                     //Get heroes
-                                    $heroes = getGreeks($conn, $userId);
+                                    $heroes = getAllGreeks($conn, $userId);
                                     ?>
                             </div>
                         </div>
@@ -190,7 +190,7 @@
     </main>
 
     <!-- Script -->
-    <script src="scripts/search.js"></script>
+    <script src="scripts/searchPage.js"></script>
     <script src="scripts/burgerMenu.js"></script>
 
 </body>

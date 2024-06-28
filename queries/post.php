@@ -15,6 +15,7 @@
                 //Posts Containers
                 echo "<div class='post'>";
                 echo "<p class='author'><a href='user/profile.php?user_id=" . $row['author'] . "'>";
+
                 //Check if profile picture exists
                 if ($row['profile_pic'] != NULL) {
                     echo "<img src='img/u/" . $row['profile_pic'] . "' alt='user' class='profilePic'>";
@@ -23,12 +24,13 @@
                     echo "<img src='img/default.jpg' alt='user' class='profilePic'>";
                 }
                 echo "</a>";
+               
                 //Display username and date
                 echo "Posted by <a class='username' href='user/profile.php?user_id=" . $row['author'] . "'>" . $row['username'] . "</a> on " . date('F j, Y, g:i a', strtotime($created_date));
-                //Display Greek Group if it exists
                 if($row['greek_group'] != NULL) {
-                    echo " in " . "<a class='greek' href='heroes.php?greek_id=" . $row['greek_group'] . "'>" .$row['name'] . "</a>";
-                }
+                    echo " in " . "<a class='greek' href='heroes.php?greek_id=" . $row['greek_group'] . "'><strong>" .$row['greek'] . "</strong></a>";
+                } 
+                
                 echo "</p>";
                 //Display title and content
                 echo "<a class='title' href='user/currentPost.php?post_id=" . $row['post_id'] . "&title=" . $row['title'] . "'><h3>" . $row['title'] . "</h3>";
@@ -98,7 +100,7 @@
                 }
                     echo "</a>";
                 //Display username and date
-                echo "Posted by " . $row['username'] . " on " . date('F j, Y, g:i a', strtotime($created_date)); 
+                echo "Posted by <a class='username' href='user/profile.php?user_id=" . $row['author'] . "'>" . $row['username'] . "</a> " . " on " . date('F j, Y, g:i a', strtotime($created_date)); 
                 if($row['greek_group'] != NULL) {
                     echo " in " . "<a class='greek' href='heroes.php?greek_id=" . $row['greek_group'] . "'>" . $row['greek'] . "</a>";
                 }
@@ -418,7 +420,7 @@
         echo "Posted by <a class='username' href='profile.php?user_id=" . $row['author'] . "'>" .$row['username'] . "</a> on " . date('F j, Y, g:i a', strtotime($created_at)); 
         //Check if greek group exists
         if($row['greek'] != NULL) {
-            echo " in " . "<a class='greek' href='../heroes.php?greek_id=" . $row['greek_group'] . "'>" . $row['greek'] . "</a>";
+            echo " in " . "<a class='greek' href='../heroes.php?greek_id=" . $row['greek_group'] . "'><strong>" . $row['greek'] . "</strong></a>";
         }
         echo "</p>";
         

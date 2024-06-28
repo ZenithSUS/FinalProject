@@ -6,9 +6,9 @@
     //Initialize session
     session_start();
 
-    //Check if the get methods are set
-    if(!isset($_GET['user_id']) || !isset($_GET['status'])) {
-        header("Location: ../../index.php");
+    //Check if the get methods and the session are set
+    if(!isset($_SESSION['user_id']) || !isset($_GET['status'])) {
+        header("Location: ../index.php");
     }
 
     //Check if user is logged in

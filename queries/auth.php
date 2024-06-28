@@ -52,7 +52,7 @@
     //Function to register
     function register($conn, $username, $email, $password) {
         //Write query and prepare statement
-        $sql = "INSERT INTO users (user_id, username, email, password) VALUES (UUID(), ?, ?, ?)";
+        $sql = "INSERT INTO users (user_id, username, email, password, token) VALUES (UUID(), ?, ?, ?, ?)";
         //Prepare statement
         $stmt = $conn->prepare($sql);
         //Check if query is prepared
@@ -64,8 +64,9 @@
             
             //Hash password
             $hashed_password = hashPassword($password);
+            $token = bin2hex(random_bytes(16));
             //Bind parameters and execute query
-            $stmt->bind_param("sss", $username, $email, $hashed_password);
+            $stmt->bind_param("ssss", $username, $email, $hashed_password, $token);
             $stmt->execute();
 
             //After Registering the account get the user id
@@ -121,5 +122,58 @@
     function verifyPassword($password, $hashed_password) {
         //Check if password is correct
         return password_verify($password, $hashed_password);
+    }
+
+    //Function to check either the email or username exists when recovering password
+    function checkEmailOrUsername($conn, $emailOrUsername) {
+        //Write query
+        $sql = "SELECT * FROM users WHERE email = '$emailOrUsername' OR username = '$emailOrUsername'";
+        $result = $conn->query($sql);
+        if($result->num_rows > 0) {
+            header("Location: ../auth/recoverAcc.php");
+        } else {
+            header("Location: ../auth/forgot.php?error=No user exists in the database");
+            exit();
+        }
+    }
+
+    //Function to reset password
+    function resetPassword($conn, $token, $newPassword, $confirmNewPassword) {
+        //Check if any of the fields are empty
+        if(empty($newPassword) || empty($confirmNewPassword)) {
+            header("Location: ../auth/recoverAcc.php?error=Please fill in all fields!");
+            exit();
+        }
+
+        //Check the token
+        $sql = "SELECT * FROM users WHERE token = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $token);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if($result->num_rows == 0) {
+            header("Location: ../auth/recoverAcc.php?tokenError=Invalid token");
+            exit();
+        }
+
+        if($newPassword == $confirmNewPassword) {
+            //Write query
+            $sql = "UPDATE users SET password = ? WHERE token = ?";
+            //Prepare statement
+            $stmt = $conn->prepare($sql);
+            //Hash password
+            $hashed_password = hashPassword($newPassword);
+            //Bind parameters
+            $stmt->bind_param("ss", $hashed_password, $token);
+            //Execute statement
+            $stmt->execute();
+            //Close statement
+            $stmt->close();
+            echo "<script>alert('Password updated successfully!')
+            window.location.href = '../auth/login.php';</script>";
+        } else {
+            header("Location: ../auth/recoverAcc.php?cpasswordError=Passwords do not match");
+            exit();
+        }
     }
 ?>

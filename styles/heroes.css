@@ -7,6 +7,7 @@
     max-width: 750px;
     height: 100%;
     min-height: 100vh;
+    padding-bottom: 1rem;
 
     .greeks-title {
         text-align: center;
@@ -78,6 +79,7 @@
             .myth-text {
                 width: 100%;
                 overflow: hidden;
+                text-align: center;
                 display: -webkit-box;
                 -webkit-line-clamp: 4;
                 -webkit-box-orient: vertical;

@@ -101,11 +101,10 @@
 
     //Function to add friend
     function addFriend($conn, $userId, $friendId) {
-        $sql = "INSERT INTO friend_requests (id, requester_id, requestee_id) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO friend_requests (id, requester_id, requestee_id) VALUES (UUID(), ?, ?)";
         //Prepare and Bind
         $stmt = $conn->prepare($sql);
-        $id = uniqid();
-        $stmt->bind_param("sss", $id, $userId, $friendId);
+        $stmt->bind_param("ss", $userId, $friendId);
         //Execute Query
         $stmt->execute();
 
@@ -209,20 +208,18 @@
         $stmt->execute();
 
         //Insert Friend
-        $sql = "INSERT INTO friends (id, user_id, friend_id) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO friends (id, user_id, friend_id) VALUES (UUID(), ?, ?)";
         //Prepare and Bind
         $stmt = $conn->prepare($sql);
-        $id = uniqid();
-        $stmt->bind_param("sss", $id, $friendId, $userId);
+        $stmt->bind_param("ss", $friendId, $userId);
         //Execute Query
         $stmt->execute();
 
         //Insert Friend to the other user
-        $sql = "INSERT INTO friends (id, user_id, friend_id) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO friends (id, user_id, friend_id) VALUES (UUID(), ?, ?)";
         //Prepare and Bind
         $stmt = $conn->prepare($sql);
-        $id = uniqid();
-        $stmt->bind_param("sss", $id, $userId, $friendId);
+        $stmt->bind_param("ss", $userId, $friendId);
         //Execute Query
         $stmt->execute();
 

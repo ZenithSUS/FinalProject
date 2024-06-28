@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="../styles/login_register.css">
     <!-- Title -->
     <title>Register</title>
+    <!-- Google Captcha -->
+   
 </head>
 <body 
  style="background-image: url(../img/backgrounds/abandon.jpg); background-size: cover; background-position: center; background-repeat: no-repeat">
@@ -47,6 +49,13 @@
                 <label for="password">Confirm password</label>
                 <input type="password" name="confirm_password" id="confirm_password" value="<?php if(isset($_GET['confirm_password'])) echo $_GET['confirm_password']; ?>">
             </div>
+            <!-- Captcha -->
+            <div class="form-group-captcha">
+                <!-- Google Captcha -->
+                <label for="captcha">Verify you are not a robot</label>
+                <div class="g-recaptcha" data-sitekey="6LdTPAMqAAAAAAwSa-hXYXlAqoVsM9hK9SoFMEfF"></div>
+                <span class="error"><?php if(isset($_GET['captchaError'])) echo $_GET['captchaError']; ?></span>
+            </div>
             <!-- Error Message -->
             <?php if(isset($_GET['error'])) { ?>
                 <p class="error"><?php echo $_GET['error']; ?></p>
@@ -60,5 +69,6 @@
 
     <!-- Scripts -->
     <script src="../scripts/registerVaidation.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 </body>
 </html>

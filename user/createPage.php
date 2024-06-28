@@ -37,7 +37,7 @@
             <div class="search-bar">
                 <!-- Search Input -->
                  <div class="search-input">
-                    <input type="text" placeholder="Search" id="searchInput" data-enter-pressed="false" class="search" oninput="searchUser()">
+                    <input type="text" placeholder="Search Pages" id="searchInput" data-enter-pressed="false" class="search" oninput="searchUser()">
                     <button class="search-btn">Search</button>
                 </div>
                 <!-- Search Results -->
@@ -92,7 +92,7 @@
             <div class="search-bar-mobile">
                 <!-- Search Input -->
                  <div class="search-input-mobile">
-                    <input type="text" placeholder="Search" id="searchInput-mobile" data-enter-pressed="false" class="search-mobile" oninput="MobileSearchUser()">
+                    <input type="text" placeholder="Search Pages" id="searchInput-mobile" data-enter-pressed="false" class="search-mobile" oninput="MobileSearchUser()">
                     <button class="search-mobile-btn" id="search-btn" onclick="MobileSearchUser()">Search</button>
                 </div>
                 <!-- Search Results -->
@@ -149,12 +149,12 @@
 
             <!-- Page Area -->
             <div class="page">
-                <form action="../actions/createPage_act.php" method="POST" class="page-form" enctype="multipart/form-data">
+                <form action="../actions/page/createPage_act.php" method="POST" class="page-form" enctype="multipart/form-data">
                     <h2>Create Page</h2>
                     <!-- Page Title -->
                     <div class="form-group">
                         <label for="title">Page Title</label>
-                        <input type="text" name="title" placeholder="Page Title">
+                        <input type="text" name="title" placeholder="Page Title" value="<?php if(isset($_GET['title'])) echo $_GET['title']; ?>">
                         <span class="error"><?php if(isset($_GET['titleError'])) echo $_GET['titleError']; ?></span>
                     </div>
                     <!-- Page Description -->
@@ -203,7 +203,7 @@
     </main>
     
     <!-- Scripts -->
-    <script src="../scripts/search.js"></script>
+    <script src="../scripts/searchPage.js"></script>
     <script src="../scripts/burgerMenu.js"></script>
     <script src="../scripts/displayPic.js"></script>
 

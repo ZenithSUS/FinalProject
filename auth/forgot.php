@@ -12,17 +12,17 @@
     <!-- Forgot Password Container -->
     <div class="container">
         <!-- Forgot Password Form -->
-        <form action="../actions/forgot_act.php" method="post" class="forgotForm">
+        <form action="../actions/recover_act.php" method="post" class="forgotForm">
             <!-- Heading or Title -->
             <h1>Account Recovery</h1>
             <!-- Email Field -->
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" placeholder="Enter email">
+                <label for="acc">Email or Username</label>
+                <input type="text" name="acc" id="acc" placeholder="Enter email or username">
             </div>
             <!-- Submit Button -->
             <div class="form-group">
-                <button type="submit" name="submit">Recover</button>
+                <button type="submit" name="recoverForm">Recover</button>
             </div>
             <!-- Error Message -->
             <?php if(isset($_GET['error'])) { ?>
@@ -34,5 +34,6 @@
             </div>
         </form>
     </div>
+
 </body>
 </html>

@@ -10,6 +10,16 @@
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
+    //Get the captcha information
+    $secret = "6LdTPAMqAAAAAHO4REJfwlXjhCT9C-aKWgnQYMCR";
+    $response = $_POST['g-recaptcha-response'];
+    $remote_ip = $_SERVER['REMOTE_ADDR'];
+    $url = "https://www.google.com/recaptcha/api/siteverify";
+
+    //Verify captcha
+    $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secret}&response={$response}&remoteip={$remote_ip}");
+    $response_data = json_decode($verify);
+
     //Check if form is submitted
     if(isset($_POST['submit'])) {
         //Check if fields are empty
@@ -41,6 +51,11 @@
         //Check if passwords are equal
         else if($password !== $confirm_password) {
             header("Location: ../auth/register.php?passError=Password did not match&username=".$username."&email=".$email);
+            exit();
+        }
+        //Check if captcha is responded
+        if(!$response_data->success) {
+            header("Location: ../auth/register.php?captchaError=Please verify that you are not a robot&username=".$username."&email=".$email);
             exit();
         }
         else {

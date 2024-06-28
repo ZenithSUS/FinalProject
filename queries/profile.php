@@ -27,10 +27,14 @@
                     <h4>" ."Email: ". $user['email'] . "</h4>
                     <h4>" . "Joined " . $formattedDate . "</h4>";
                     //Checks if user set a Bio
-                    if(is_null($user['bio'])) {
+                    if(is_null($user['bio']) || $user['bio'] == "") {
                         echo "<h4>No bio</h4>";
                     } else {
                         echo "<h4>" . "Bio: " . $user['bio'] . "</h4>";
+                    }
+                    //Display token if the user is the same as the logged in user
+                    if($userId == $_SESSION['user_id']) {
+                        echo "<h4>" . "Token: " . $user['token'] . "</h4>";
                     }
                     //Display profile settings if user is the same as the logged in user
                     if($userId == $_SESSION['user_id']) {
@@ -109,12 +113,21 @@
         //Prepare statement
         $stmt = $conn->prepare($sql);
 
+        //If the BIO field is empty
+        if(empty($bio) || $bio == null) {
+            $bio = null;
+        }
         //Fetch the previous profile information
         $sql2 = "SELECT * FROM users WHERE user_id = ?";
+        //Prepare statement
         $stmt2 = $conn->prepare($sql2);
+        //Bind parameters
         $stmt2->bind_param("s", $userId);
+        //Execute statement
         $stmt2->execute();
+        //Get result
         $result2 = $stmt2->get_result();
+        //Get user
         $user = $result2->fetch_assoc();
 
         //File upload settings
@@ -172,6 +185,9 @@
             $result3 = $stmt3->get_result();
             $user = $result3->fetch_assoc();
             $profilePic = $user['profile_pic'];
+            //Close statement
+            $stmt3->close();
+            
             //Bind parameters on the information
             $stmt->bind_param("sssss", $username, $email, $profilePic, $bio, $userId);
         }
@@ -219,6 +235,7 @@
             header("Location: ../user/editProfile.php?user_id=" . $userId . "&user_error=Username already exists!");
             exit();
         }
+
         //Close statement in username checking
         $stmt5->close();
 

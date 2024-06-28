@@ -1,37 +1,36 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../global.css">
-    <link rel="stylesheet" href="../styles/login_register.css">
+    <link rel="stylesheet" href="../styles/forgot.css">
     <!-- Title -->
-    <title>Login</title>
+    <title>Account Recovery</title>
 </head>
 <body>
-    <!-- Intiaties a session -->
-    <?php session_start();
-        // Check if the session is set 
-        if(isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])): 
-            header("Location: ../index.php"); 
-    ?>
-    <?php endif; ?>
-    <!-- Login Container -->
+    <!-- Forgot Password Container -->
     <div class="container">
-        <!-- Login Form -->
-        <form action="../actions/login_act.php" method="post" class="loginForm">
-        <!-- Heading or Title -->
-        <h1>Login</h1>
-            <!-- Username or Email Field -->
+        <!-- Forgot Password Form -->
+        <form action="../actions/recover_act.php" method="post" class="forgotForm">
+            <!-- Heading or Title -->
+            <h1>Recover Account</h1>
+            <!-- Token Field -->
             <div class="form-group">
-                <label for="useracc">Username or Email</label>
-                <input type="text" name="useracc" id="useracc" placeholder="Enter username or email">
+                <label for="token">Token No.</label>
+                <input type="text" name="token" id="token" placeholder="Enter token recovery">
+                <span class="error"><?php if(isset($_GET['tokenError'])) echo $_GET['tokenError']; ?></span>
             </div>
             <!-- Password Field -->
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" placeholder="Enter password">
+                <input type="password" name="password" id="password" placeholder="Enter new password">
+            </div>
+            <!-- Confirm Password Field -->
+            <div class="form-group">
+                <label for="cpassword">Confirm Password</label>
+                <input type="password" name="cpassword" id="cpassword" placeholder="Confirm new password">
+                <span class="error"><?php if(isset($_GET['cpasswordError'])) echo $_GET['cpasswordError']; ?></span>
             </div>
             <!-- Captcha -->
             <div class="form-group-captcha">
@@ -42,7 +41,7 @@
             </div>
             <!-- Submit Button -->
             <div class="form-group">
-                <button type="submit" name="submit">Login</button>
+                <button type="submit" name="recoverPasswordForm">Reset Password</button>
             </div>
             <!-- Error Message -->
             <?php if(isset($_GET['error'])) { ?>
@@ -50,8 +49,7 @@
             <?php } ?>
             <!-- Auth Options -->
             <div class="auth-options">
-                <p>Don't have an account? <a href="register.php">Register</a></p>
-                <p>Forgot Password? <a href="forgot.php">Click here</a></p>
+                <p>Already have an account? <a href="login.php">Login</a></p>
             </div>
         </form>
     </div>

@@ -18,6 +18,14 @@
         gap: 0.5rem;
     }
     
+    .form-group-captcha {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+    }
 }
 
 
@@ -28,10 +36,15 @@
     gap: 1rem;
     padding: 1rem;
     border-radius: 1rem;
-    background-image: url("../img/backgrounds/waves.jpg");
+    background-image: url("../img/backgrounds/greekHome.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5), -4px -4px 4px rgba(0, 0, 0, 0.5);
     width: 100%;
     max-width: 400px;
-    color: var(--light-color);
+    color: var(--dark-color);
 
     /* Styling for Forgot Password Form Children or Elements */
     label {
@@ -62,8 +75,10 @@
     }
 
     .auth-options {
+        font-weight: 800;
 
         a {
+            font-weight: bold;
             text-decoration: none;
             color: var(--light-color);
 
@@ -73,6 +88,19 @@
         }
     }
 
+}
+
+/* Media Queries */
+
+/* Media Query for Mobile Devices */
+@media (min-width: 320px) and (max-width: 600px) {
+    .container {
+        padding: 0.5rem;
+    }
+
+    .forgotForm {
+        padding: 1rem;
+    }
 }
 
 
