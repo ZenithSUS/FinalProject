@@ -13,7 +13,7 @@
 <body>
     <!-- Check if the user id is set -->
     <?php
-    if(isset($_GET['user_id']) && !empty($_GET['user_id'])) {
+    if(isset($_GET['user_id']) && $_GET['user_id'] != "null" && !empty($_GET['user_id'])) {
         $userId = $_GET['user_id'];
     } else {
         header("Location: ../index.php");

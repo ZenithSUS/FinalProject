@@ -62,6 +62,13 @@ document.getElementById("searchInput").addEventListener("keydown", function(even
     }
 })
 
+
+const searchUser = () => {
+    var input = document.getElementById('searchInput').value
+    // Perform search
+    performSearchUser(input)
+}
+
 // Array of search results
 // Create a arrow function to perform the search
 performSearchUser = (query) => {
@@ -108,8 +115,7 @@ performSearchUser = (query) => {
 document.getElementById("searchInput").addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
         var input = document.getElementById('searchInput').value;
-
-        // Set the custom attribute enter-pressed to true
+        // Set the custom attribute enter-pressed to true if the enter key was pressed and there are results
         document.getElementById("search-results").setAttribute("data-enter-pressed", "true");
         performSearchUser(input);
     }
@@ -118,11 +124,12 @@ document.getElementById("searchInput").addEventListener("keydown", function(even
 
 
 
+
 // Search Function to Mobile
 const MobileSearch = () => {
     var input = document.getElementById('searchInput-mobile').value
     // Perform search
-    performMobileSearch(input)
+    performMobileSearch(input);
 }
 
 // Array of search results
