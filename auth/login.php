@@ -1,4 +1,3 @@
-<!-- Intiaties a session -->
 <?php session_start();
         // Check if the session is set 
         if(isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])): 
