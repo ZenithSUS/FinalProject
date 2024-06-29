@@ -35,6 +35,8 @@
                     //Display token if the user is the same as the logged in user
                     if($userId == $_SESSION['user_id']) {
                         echo "<h4 class='token'>" . "Token:" . "<p id='token'>" .  $user['token'] . "</p>" . "<button class='copy-btn' id='copy-btn'>Copy</button></h4>";
+                    } else {
+                        echo "<p id='token' style='display:none'> </p>";
                     }
                     //Display profile settings if user is the same as the logged in user
                     if($userId == $_SESSION['user_id']) {

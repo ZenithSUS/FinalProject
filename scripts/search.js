@@ -238,6 +238,6 @@ document.getElementById("searchInput-mobile").addEventListener("keydown", functi
 
         // Set the custom attribute enter-pressed to true
         document.getElementById("search-results-mobile").setAttribute("data-enter-pressed", "true");
-        performSearchUser(input);
+        performMoblieSearchUser(input);
     }
 })

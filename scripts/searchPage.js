@@ -171,3 +171,14 @@ performMobileSearch = (query) => {
     xhr.open("GET", "actions/search/searchPages.php?q=" + query + "", true);
     xhr.send();
 }
+
+// Add enter key listener to the search input
+document.getElementById("searchInput-mobile").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        var input = document.getElementById('searchInput-mobile').value;
+
+        // Set the custom attribute enter-pressed to true
+        document.getElementById("search-results-mobile").setAttribute("data-enter-pressed", "true");
+        performMobileSearch(input);
+    }
+})

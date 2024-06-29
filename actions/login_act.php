@@ -26,7 +26,7 @@
             exit();
         }
 
-        //Check f the captcha is responded
+        //Check if the captcha is responded
         else if(!$response_data->success) {
             header("Location: ../auth/login.php?captchaError=Please verify that you are not a robot");
             exit();

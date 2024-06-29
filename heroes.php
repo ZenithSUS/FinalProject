@@ -160,7 +160,7 @@
                     <h1>Greeks Discussion <?php echo !isset($_GET['greek_id']) ? "Joined" : "Page";?></h1>
                 </div>
                 <?php
-                    if(isset($_GET['greek_id'])) {
+                    if(isset($_GET['greek_id']) && $_GET['greek_id'] != "null") {
                         getSpecificGreekInfo($conn, $_GET['greek_id']);
                     } else {
                         getGreeksInfos($conn, $userId);
