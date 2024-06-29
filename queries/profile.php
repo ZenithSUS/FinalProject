@@ -134,8 +134,10 @@
 
         //File upload settings
         if(isset($_FILES['profile_pic']) && !empty($_FILES['profile_pic']['name'])) {
-            //Remove previous profile pic in the folder
-            unlink('../img/u/' . $user['profile_pic']);
+            //Remove previous profile pic in the folder if it exists
+            if(isset($user['profile_pic']) && !is_null($user['profile_pic'])) {
+                unlink('../img/u/' . $user['profile_pic']);
+            }
             //Get file name
             $fileName = $_FILES['profile_pic']['name'];
             $fileSize = $_FILES['profile_pic']['size'];

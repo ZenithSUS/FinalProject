@@ -18,8 +18,10 @@
     $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secret}&response={$response}&remoteip={$remote_ip}");
     $response_data = json_decode($verify);
 
+
     //Check if form is submitted
     if(isset($_POST['submit'])) {
+    
         //Check if fields are empty
         if(empty($username) || empty($password)) {
             header("Location: ../auth/login.php?error=Fill all the fields");
@@ -29,6 +31,13 @@
         //Check if the captcha is responded
         else if(!$response_data->success) {
             header("Location: ../auth/login.php?captchaError=Please verify that you are not a robot");
+            exit();
+        }
+
+        //Check if all POST fields are not empty
+        if(!isset($username) || !isset($password) || !isset($response)) {
+            //Redirect to login page
+            header("Location: ../auth/login.php");
             exit();
         }
             
