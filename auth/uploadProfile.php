@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../global.css">
     <link rel="stylesheet" href="../styles/uploadProfile.css">
     <!-- Title -->
-    <title>Login</title>
+    <title>Upload Profile Picture</title>
 </head>
 <body>
     <!-- Profile Form Container -->
