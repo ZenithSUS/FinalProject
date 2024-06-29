@@ -1,3 +1,14 @@
+<?php
+    //Intialize session
+    session_start();
+    
+    //Check if the session is set
+    if(isset($_SESSION['user_id'])) {
+        echo "<script>window.location.href = '../index.php'</script>";
+    }
+
+?>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">

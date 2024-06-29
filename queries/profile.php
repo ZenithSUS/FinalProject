@@ -158,17 +158,17 @@
                         move_uploaded_file($fileTmpName, $fileDestination);
                     //If file size is over 1mb
                     } else {
-                        header("Location: ../user/editProfile.php?error=File is too big!");
+                        header("Location: ../user/editProfile.php?profileError=File is too big!&user_id=" . $userId);
                         exit();
                     }
                 //If there is an error
                 } else {
-                    header("Location: ../user/editProfile.php?error=There was an error uploading your file!");
+                    header("Location: ../user/editProfile.php?profilError=There was an error uploading your file!&user_id=" . $userId);
                     exit();
                 }
             //If file is not allowed   
             } else {
-                header("Location: ../user/editeProfile.php?error=You cannot upload files of this type!");
+                header("Location: ../user/editProfile.php?profileError=You cannot upload files of this type!&user_id=" . $userId);
                 exit();
             }
             //Bind parameters

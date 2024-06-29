@@ -1,3 +1,19 @@
+<?php
+    session_start();
+    // Include session checker
+    include_once "session.php";
+    // Check if the session is set
+    if(!isset($_SESSION['user_id']) || !isset($_COOKIE['user_id'])){
+        // Unset sessions
+        session_unset();
+        //Destroy session
+        session_destroy();
+        echo "<script>window.location.href = 'auth/login.php'</script>";
+    } else {
+        checkSessionTimeout();
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,24 +35,6 @@
             header("Location: ../index.php"); 
         }
     ?>
-    <!-- Start Session -->
-    <?php
-    session_start();
-    // Include session checker
-    include_once "session.php";
-    // Check if the session is set
-    if(!isset($_SESSION['user_id']) || !isset($_COOKIE['user_id'])){
-        // Unset sessions
-        session_unset();
-        //Destroy session
-        session_destroy();
-        header("Location: ../auth/login.php");
-    } else {
-        checkSessionTimeout();
-    }
-    ?>
-
-    
     <?php
         // include queries
         include "../queries/post.php";

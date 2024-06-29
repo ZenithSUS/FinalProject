@@ -1,3 +1,21 @@
+<?php
+    // Start session
+    session_start();
+    // Include session checker
+    include_once "session.php";
+    // Check if the session or cookie is set
+    if(!isset($_SESSION['user_id']) || !isset($_COOKIE['user_id'])){
+        // Unset sessions
+        session_unset();
+        //Destroy session
+        session_destroy();
+        echo "<script>window.location.href = 'auth/login.php'</script>";
+    } else {
+        // Call checkSessionTimeout function
+        checkSessionTimeout();
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,24 +27,7 @@
     <title>Greek Myth</title>
 </head>
 <body>
-    <!-- Start Session -->
-    <?php
-    session_start();
-    // Include session checker
-    include_once "session.php";
-    // Check if the session or cookie is set
-    if(!isset($_SESSION['user_id']) || !isset($_COOKIE['user_id'])){
-        // Unset sessions
-        session_unset();
-        //Destroy session
-        session_destroy();
-        header("Location: auth/login.php");
-        exit();
-    } else {
-        // Call checkSessionTimeout function
-        checkSessionTimeout();
-    }
-    ?>
+    
     <?php
         // Include queries
         include "queries/post.php";

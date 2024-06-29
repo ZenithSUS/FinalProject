@@ -1,3 +1,12 @@
+<?php 
+    // Initialize session
+    session_start();
+    // Check if the session is set  
+    if(isset($_SESSION['user_id']) ): 
+        echo "<script>window.location.href = '../index.php'</script>";
+?>
+<?php endif; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,19 +17,9 @@
     <link rel="stylesheet" href="../styles/login_register.css">
     <!-- Title -->
     <title>Register</title>
-    <!-- Google Captcha -->
-   
 </head>
 <body 
  style="background-image: url(../img/backgrounds/abandon.jpg); background-size: cover; background-position: center; background-repeat: no-repeat">
-    <?php 
-        // Initialize session
-        session_start();
-        // Check if the session is set  
-        if(isset($_SESSION['user_id']) ): 
-            header("Location: ../index.php"); 
-    ?>
-    <?php endif; ?>
     <!-- Register Container -->
     <div class="regContainer">
         <!-- Register Form -->

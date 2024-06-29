@@ -17,7 +17,12 @@
         //Get form data
         $username = $_POST['username'];
         $email = $_POST['email'];
-        $profilePic = $_FILES['profilePic'];
+        //Check if profile pic is uploaded
+        if(isset($_FILES['profilePic'])) {
+            $profilePic = $_FILES['profilePic'];
+        } else {
+            $profilePic = null;
+        }
         $bio = $_POST['bio'];
 
         //Call editProfile function

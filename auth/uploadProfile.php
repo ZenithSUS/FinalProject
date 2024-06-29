@@ -1,3 +1,16 @@
+<?php
+    // Intiaties a session
+    session_start();
+    // Include session checker
+    include "../session.php";
+    // Check if the session is not set
+    if(!isset($_SESSION['user_id']) && !isset($_COOKIE['user_id'])){
+        echo "<script>window.location.href = '../auth/login.php'</script>";
+    } else {
+        checkSessionTimeout();
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,18 +23,6 @@
     <title>Login</title>
 </head>
 <body>
-    <!-- Intiaties a session -->
-    <?php
-        session_start();
-        // Include session checker
-        include "../session.php";
-        // Check if the session is not set
-        if(!isset($_SESSION['user_id']) && !isset($_COOKIE['user_id'])){
-            header("Location: ../auth/login.php");
-        } else {
-            checkSessionTimeout();
-        }
-    ?>
     <!-- Profile Form Container -->
     <div class="profile-container">
         <!-- Profile Form -->
