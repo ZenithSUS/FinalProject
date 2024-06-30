@@ -208,7 +208,7 @@
                     echo "<h2>" . $row['name'] . "</h2>
                         <p>Creator: <strong>" . $row3['username'] . "</strong></p>
                         <p>Total people joined: " . $row2['total_people'] . "</p>";
-                    echo "<a href='actions/page/deletePage.php?greek_id=" . $row['greek_id'] . "' class='myth-btn' onclick='return confirm(\"Are you sure you want to delete this myth?\")'>Delete Page</a>";
+                    echo "<a href='actions/page/deletepage.php?greek_id=" . $row['greek_id'] . "' class='myth-btn' onclick='return confirm(\"Are you sure you want to delete this myth?\")'>Delete Page</a>";
                     echo "</div>";
                     echo "<div class='myth-info'>
                             <h3>Description</h3>
@@ -540,7 +540,11 @@
             $row = $result->fetch_assoc();
             $image_url = $row['image_url'];
             //Delete image from img folder
-            unlink("../../img/gods/" . $image_url);
+
+            //Check if there is an image to delete
+            if($image_url != null) {
+                unlink("../../img/gods/" . $image_url);
+            }
         }
 
         //Write query to delete page
