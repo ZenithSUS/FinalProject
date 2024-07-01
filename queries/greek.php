@@ -94,8 +94,13 @@
                 //Clean the heroes text
                 //Display heroes
                 echo "<div class='hero-box'>";
-                echo "<a class='greek-link' href='../heroes.php?greek_id=" . $row['greek_id'] . "'>
-                        <img src='../img/gods/" . $row['image_url'] . "' alt='" . $row['name'] . "'>";
+                echo "<a class='greek-link' href='../heroes.php?greek_id=" . $row['greek_id'] . "'>";
+                //If image url is null display default image
+                if($row['image_url'] == null) {
+                    echo "<img src='../img/hero.png' alt='" . $row['name'] . "'>";
+                } else {
+                    echo "<img src='../img/gods/" . $row['image_url'] . "' alt='" . $row['name'] . "'>";
+                }
                 echo "<h2>" . $row['name'] . "</h2></a>";        
                 echo "</div>";
             }
