@@ -127,6 +127,14 @@ document.getElementById("searchInput").addEventListener("keydown", function(even
 })
 
 
+//Add Function to button search from user folder
+document.getElementById("searchButton").addEventListener("click", () => {
+    //Set the custom attribute enter-pressed to true when the search button is clicked
+    document.getElementById("search-results").setAttribute("data-enter-pressed", "true");
+    searchUser();
+});
+
+
 
 // Search Function to Mobile
 const MobileSearch = () => {
