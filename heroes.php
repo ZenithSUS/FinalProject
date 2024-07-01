@@ -45,6 +45,7 @@
             <!-- Search Input -->
             <div class="search-input">
                 <input type="text" placeholder="Search Pages" id="searchInput" data-enter-pressed="false" class="search" oninput="search()">
+                <button class="search-button" id="searchButton">Search</button>
             </div>
             <!-- Search Results -->
             <div class="search-results-container">
@@ -103,6 +104,7 @@
                 <!-- Search Input -->
                  <div class="search-input-mobile">
                     <input type="text" placeholder="Search Pages" id="searchInput-mobile" data-enter-pressed="false" class="search-mobile" oninput="MobileSearch()">
+                    <button class="search-button-mobile" id="searchButton-mobile">Search</button>
                 </div>
                 <!-- Search Results -->
                 <div class="search-results-mobile-container">

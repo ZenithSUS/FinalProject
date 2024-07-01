@@ -62,6 +62,13 @@ document.getElementById("searchInput").addEventListener("keydown", function(even
     }
 })
 
+//Add Function to button search
+document.getElementById("searchButton").addEventListener("click", () => {
+    //Set the custom attribute enter-pressed to true when the search button is clicked
+    document.getElementById("search-results").setAttribute("data-enter-pressed", "true");
+    search();
+});
+
 
 const searchUser = () => {
     var input = document.getElementById('searchInput').value
@@ -122,6 +129,12 @@ document.getElementById("searchInput").addEventListener("keydown", function(even
 })
 
 
+//Add Function to button search from user folder
+document.getElementById("searchButton").addEventListener("click", () => {
+    //Set the custom attribute enter-pressed to true when the search button is clicked
+    document.getElementById("search-results").setAttribute("data-enter-pressed", "true");
+    searchUser();
+});
 
 
 
@@ -241,3 +254,11 @@ document.getElementById("searchInput-mobile").addEventListener("keydown", functi
         performMoblieSearchUser(input);
     }
 })
+
+
+//Add Function to button search mobile
+document.getElementById("searchButton-mobile").addEventListener("click", () => {
+    //Set the custom attribute enter-pressed to true when the search button is clicked
+    document.getElementById("search-results-mobile").setAttribute("data-enter-pressed", "true");
+    MobileSearchUser();
+});

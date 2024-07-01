@@ -9,7 +9,7 @@
         session_unset();
         //Destroy session
         session_destroy();
-        echo "<script>window.location.href = 'auth/login.php'</script>";
+        echo "<script>window.location.href = '../auth/login.php'</script>";
     } else {
         checkSessionTimeout();
     }
@@ -66,6 +66,7 @@
                 <!-- Search Input -->
                  <div class="search-input">
                     <input type="text" placeholder="Search" id="searchInput" data-enter-pressed="false" class="search" oninput="searchUser()">
+                    <button class="search-button" id="searchButton">Search</button>
                 </div>
                 <!-- Search Results -->
                 <div class="search-results-container">
@@ -120,6 +121,7 @@
                 <!-- Search Input -->
                  <div class="search-input-mobile">
                     <input type="text" placeholder="Search" id="searchInput-mobile" data-enter-pressed="false" class="search-mobile" oninput="MobileSearchUser()">
+                    <button class="search-button-mobile" id="searchButton-mobile">Search</button>
                 </div>
                 <!-- Search Results -->
                 <div class="search-results-mobile-container">

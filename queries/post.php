@@ -351,7 +351,6 @@
 
     //Function to edit post
     function editPost($conn, $postId) {
-        session_start();
         //Get post id
         if(isset($_POST['editPost'])) {
             $sql = "UPDATE posts SET title = ?, content = ?, updated_at = NOW() WHERE post_id = ?";
