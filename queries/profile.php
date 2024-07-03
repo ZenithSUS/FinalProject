@@ -44,6 +44,7 @@
                     echo "<div class='profile-settings'>
                         <a href='editProfile.php?user_id=" . $user['user_id'] . "'>Edit Account</a>
                         <a href='editPass.php?user_id=" . $user['user_id'] . "'>Change Password</a>
+                        <a href='../actions/deleteAcc_act.php' onclick=\"return confirm('Are you sure you want to delete your account?')\">Delete Account</a>
                     </div>";
                     } else {
                         //Get user id
@@ -300,5 +301,69 @@
             header("Location: ../user/editPass.php?user_id=" . $userId . "&old_pass_error=Incorrect old password!");
             exit();
         }
+    }
+
+    //Function to delete account
+    function deleteAccount($conn, $userId) {
+        //Unbind picture if it exists
+        $sql = "SELECT profile_pic FROM users WHERE user_id = ?";
+        $stmt = $conn->prepare($sql);
+        //Bind parameters
+        $stmt->bind_param("s", $userId);
+        //Execute statement
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $picture = $row['profile_pic'];
+        if($picture != null) {
+            unlink("../img/u/" . $picture);
+        }
+
+        //Delete user
+        $sql = "DELETE FROM users WHERE user_id = ?";
+        $stmt = $conn->prepare($sql);
+        //Bind parameters
+        $stmt->bind_param("s", $userId);
+        //Execute statement
+        $stmt->execute();
+
+        //Unbind greek picture if it exists
+        $sql = "SELECT image_url FROM greeks WHERE creator = ?";
+        $stmt = $conn->prepare($sql);
+        //Bind parameters
+        $stmt->bind_param("s", $userId);
+        //Execute statement
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $picture = $row['image_url'];
+        if($picture != null) {
+            unlink("../img/gods/" . $picture);
+        }
+
+        //Delete also the page related to the user
+        $sql = "DELETE FROM greeks WHERE creator = ?";
+        $stmt = $conn->prepare($sql);
+        //Bind parameters
+        $stmt->bind_param("s", $userId);
+        //Execute statement
+        $stmt->execute();
+
+
+        //Destroy session
+        session_unset();
+        session_destroy();
+        //Destroy cookies
+        setcookie("user_id", "", time() - 3600);
+        setcookie("username", "", time() - 3600);
+
+        //Close statement
+        $stmt->close();
+
+        //Redirect to login page
+        echo "<script>
+        alert('Account deleted successfully!');
+        window.location.href = '../auth/login.php'
+        </script>";
     }
 ?>

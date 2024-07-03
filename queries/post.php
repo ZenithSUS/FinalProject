@@ -319,17 +319,19 @@
                 $greek_id = null;
             }
 
+            //Check if title is empty
+            if($title == "" || empty($title)) {
+                header("Location: ../user/createPost.php?error=The title cannot be empty");
+                exit();
+            }
+
             //Bind parameters
             $stmt->bind_param("ssss", $title, $output, $author, $greek_id);
             
             //Execute query
             $stmt->execute();
 
-            //Check if title is empty
-            if($title == "" || empty($title)) {
-                header("Location: ../user/createPost.php?error=The title cannot be empty");
-                exit();
-            }
+            
 
             //Get post id related to the user
             $sql = "SELECT post_id FROM posts WHERE author = '$author' AND title = '$title'";
@@ -337,11 +339,22 @@
             $row = $result->fetch_assoc();
             $post_id = $row['post_id'];
 
+            //Fetch the greek group name
+            $sql = "SELECT name FROM greeks WHERE greek_id = '$greek_id'";
+            $result = $conn->query($sql);
+            $row = $result->fetch_assoc();
+            $greek = $row['name'];
+
             //Include activity query
             include "activity.php";
             
-            //Add activity
-            addActivity($conn, $author, "created a post a with title " . $title, $post_id, null);
+            //Add activity if there is a greek group
+            if($greek_id != null) {
+                addActivity($conn, $author, "created a post with title " . $title . " in " . $greek . " discussion", $post_id, null);
+            }
+            else {
+                addActivity($conn, $author, "created a post with title " . $title, $post_id, null);
+            }
             
             //Close statement
             $stmt->close();
