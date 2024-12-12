@@ -185,7 +185,7 @@
             <!-- User All Posts Area -->
             <div class="posts">
                 <div class="userPosts-title">User Posts</div>
-                <?php Userposts($conn, $userId); ?>
+                <?php userPosts($conn, $userId); ?>
             </div>
 
 

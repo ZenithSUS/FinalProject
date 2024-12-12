@@ -480,11 +480,11 @@
         $sql = "SELECT * FROM posts
         JOIN users ON posts.author = users.user_id
         LEFT JOIN greeks ON posts.greek_group = greeks.greek_id 
-        WHERE author = ? ORDER BY created_at DESC";
+        WHERE posts.author = ? ORDER BY created_at DESC";
         //Prepare query
         $stmt = $conn->prepare($sql);
         //Bind parameters
-        $stmt->bind_param("i", $userId);
+        $stmt->bind_param("s", $userId);
         //Execute query
         $stmt->execute();
         //Get result
